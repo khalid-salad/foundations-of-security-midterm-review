@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsthm, amssymb, enumitem, booktabs, mleftright, xfrac}
+\UseCollection{xfrac}{plainmath}
+\usepackage[colorlinks]{hyperref}
+\usepackage[acronym, nopostdot]{glossaries}
+\mleftright
+\renewcommand{\Pr}{\operatorname{\mathbb{P}}}
+\newcommand{\prob}[1]{\Pr\left(#1\right)}
+\newcommand{\given}{\mid}
+\makeglossaries
+\loadglsentries{glossary.tex} 
+\begin{document}
+\section{Introduction to Security}
+\subsection{Objectives}
+\subsubsection{Confidentiality}
+\subsubsection{Data Integrity}
+\subsubsection{System Integrity}
+\subsubsection{Availability}
+\subsubsection{Non-Repudiation}
+\subsubsection{Authenticity}
+\subsubsection{Privacy}
+\subsection{Attacker Modeling Principles}
+\subsubsection{Safe Assumptions}
+\subsubsection{Attacker Capabilities and Knowledge}
+\subsubsection{Rejection of Security by Obscurity}
+
+\section{Introduction to Cryptography}
+\section{Stream Ciphers}
+\section{Block Ciphers}
+\section{Block Cipher Modes of Operation}
+\section{Public-Key Encryption}
+\section{Hash Functions}
+\section{Message Authentication}
+\section{Digital Signatuers}
+\section{Key Distribution}
+\section{Public-Key Distribution}
+\clearpage
+
+\glsaddall
+\printglossary[nonumberlist]
+\printglossary[nonumberlist,type=\acronymtype]
+
+\end{document}

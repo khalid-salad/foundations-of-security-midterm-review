@@ -1,0 +1,581 @@
+
+\newglossaryentry{computer security}
+{
+    name=computersecurity,
+    description={protection afforded to an automated information system in order to attain the applicable objectives of preserving the \gls{integrity}, \gls{availability}, and \gls{confidentiality} of information system resources (includes hardware, software, firmware, information/data, and telecommunications)}
+}
+
+\newglossaryentry{confidentiality}
+{
+    name=confidentiality,
+    description={information is not available to unauthorized entities}
+}
+
+\newglossaryentry{integrity}
+{
+    name=integrity,
+    description={information and system functionality cannot be altered by unauthorized entities}
+}
+
+\newglossaryentry{availability}
+{
+    name=availability,
+    description={information and system functionality is available to authorized entities}
+}
+
+\newglossaryentry{accountability}
+{
+    name=accountability,
+    description={actions can be provably traced back to an entity}
+}
+
+\newglossaryentry{non-repudiation}
+{
+    name={non-repudiation},
+    description={see \gls{accountability}}
+}
+
+\newglossaryentry{authenticity}
+{
+    name={authenticity},
+    description={information comes from verified and trusted sources (e.g., user authentication)}
+}
+
+\newglossaryentry{privacy}
+{
+    name={privacy},
+    description={assures that individuals have control or influence over information related to them}
+}
+
+\newglossaryentry{data integrity}
+{
+    name={data integrity},
+    description={information cannot be modified in an unauthorized and \underline{undetected} way}
+}
+
+
+\newglossaryentry{system integrity}
+{
+    name={system integrity},
+    description={system performs its intended function}
+}
+
+\newglossaryentry{denial of service}
+{
+    name={denial of service},
+    description={attack against availability}
+}
+
+\newglossaryentry{weakest link}
+{
+    name={weakest link},
+    description={principle that the attacker needs to find only a single vulnerability}
+}
+
+\newglossaryentry{attacker model}
+{
+    name={attacker model},
+    description={what the attacker can do, what they know, and what they want to achieve}
+}
+
+\newglossaryentry{security by obscurity}
+{
+    name={security by obscurity},
+    description={providing security by keeping the design or implementation of a system secret}
+}
+
+\newglossaryentry{security through minority}
+{
+    name={security through minority},
+    description={providing security by using software products that are not widely adopted}
+}
+
+\newglossaryentry{caesar cipher}
+{
+    name={caesar cipher},description={a cipher in which each letter of the plaintext is replaced by a letter some fixed number of positions down the alphabet}
+}
+
+\newglossaryentry{brute-force attack}
+{
+    name={brute-force attack},
+    description={attack model in which every possible key is tried on a given ciphertext until the original plaintext is recovered}
+}
+
+\newglossaryentry{ciphertext only attack}
+{
+    name={ciphertext only attack},
+    description={attack model in which only the algorithms used and the ciphertext are known}
+}
+
+\newglossaryentry{known plaintext attack}
+{
+    name={known plaintext attack},
+    description={attack model in which one or more plaintext-cipher pairs is known}
+}
+
+\newglossaryentry{chosen ciphertext attack}
+{
+    name={chosen ciphertext attack},
+    description={attack model in which one or more \emph{chosen} plaintext-cipher pairs is known}
+}
+
+\newglossaryentry{chosen plaintext attack}
+{
+    name={chosen plaintext attack},
+    description={attack model in which the attacker can obtain the ciphertext for any plaintext}
+}
+
+\newglossaryentry{chosen text attack}
+{
+    name={chosen text attack},
+    description={attack model in which the attacker can obtain the ciphertext for any plaintext \emph{and} one or more chosen plaintext-cipher pairs is known}
+}
+
+\newglossaryentry{affine cipher}
+{
+    name={affine cipher},
+    description={cipher $E(x) = (ax + b)\bmod{m}$}
+}
+
+\newglossaryentry{substitution cipher}
+{
+    name={substitution cipher},
+    description={permutation over the alphabet}
+}
+
+\newglossaryentry{cryptanalytic attack}
+{
+    name={cryptanalytic attack},
+    description={attack model in which the attacker relies on the nature of the algorithm and knowledge of the general characteristics of the plaintext}
+}
+
+\newglossaryentry{Kerckhoffs}
+{
+    name={Kerckhoffs’s Principle},
+    description={principle that a cryptographic system should be secure, even if all of its details, except for the key, are publicly known}
+}
+
+\newglossaryentry{perfect security}
+{
+    name={perfect security},
+    description={attacker gains no information about the plaintext from observing the ciphertext, formally, \[\prob{P = p} = \prob{P = p \given E(K, P) = c}\] i.e., that the plaintext and ciphertext are independent}
+}
+
+\newglossaryentry{one-time pad}
+{
+    name={one-time pad},
+    description={perfect security in which a single-use encryption key at least as long as the plaintext is chosen randomly and used to encrypt only a single message}
+}
+
+\newglossaryentry{stream cipher}
+{
+    name={stream cipher},
+    description={takes fixed-length seed and uses a \gls{pseudorandom number generator} to produce sequence of bits as long as the plaintext then encrypts with XOR}
+}
+
+\newglossaryentry{pseudorandom number generator}
+{
+    name={pseudorandom number generator},
+    description={takes fixed-length seed and generates a sequence of bits using a deterministic algorithm}
+}
+
+\newglossaryentry{key-reuse problem}
+{
+    name={key-reuse problem},
+    description={security flaw in which attacker can decipher plaintext given multiple ciphertexts encrypted with the same key}
+}
+
+\newglossaryentry{nonce}
+{
+    name={nonce},
+    description={number used once}
+}
+
+\newglossaryentry{rc4}
+{
+    name={RC4},
+    description={(Rivest Cipher 4) stream cipher with variable key length and which uses byte-oriented operations. No longer in use}
+}
+
+\newglossaryentry{salsa20}
+{
+    name={Salsa20},
+    description={fixed-length key stream cipher that uses 32-bit operations and which can seek to any position in output sequence. 64-bit \gls{nonce} is part of the algorithm to mitigate \gls{key-reuse problem}}
+}
+
+\newglossaryentry{chacha20}
+{
+    name={ChaCha20},
+    description={more secure and efficient variant of \gls{salsa20}}
+}
+
+\newglossaryentry{block cipher}
+{
+    name={block cipher},
+    description={a cipher in which plaintext is encrypted in fixed-size blocks and decryption is a different operation than encryption}
+}
+
+\newglossaryentry{secure block cipher}
+{
+    name={secure block cipher},
+    description={a block cipher that is indistinguishable from a random permutation of the blocks (for a computationally bounded attacker)}
+}
+
+\newglossaryentry{diffusion}
+{
+    name={diffusion},
+    description={each plaintext bit should affect the value of many ciphertext bits}
+}
+
+\newglossaryentry{confusion}
+{
+    name={confusion},
+    description={each bit of the ciphertext should depend on many bits of the key}
+}
+
+\newglossaryentry{data encryption standard}
+{
+    name={Data Encryption Standard},
+    description={federally approved encryption standard consisting of iterated substitution-permutation cipher of 16 rounds with 64-bit block size and 56-bit key size}
+}
+
+\newglossaryentry{advanced encryption standard}
+{
+    name={Advanced Encryption Standard},
+    description={encryption standard consisting of invertible rounds in which a different key is generated each round}
+}
+
+\newglossaryentry{meet in the middle attack}
+{
+    name={meet-in-the-middle attack},
+    description={a \gls{known plaintext attack} in which stores intermediate values from encryptions and decryptions to reduce the time necessary to brute-force the decryption keys, effectively trading off time for storage}
+}
+
+\newglossaryentry{triple des}
+{
+    name={Triple DES},
+    description={DES utilizing 3 56-bit keys. Effective security is only 112-bits}
+}
+
+
+\newglossaryentry{double des}
+{
+    name={Double DES},
+    description={DES utilizing 2 56-bits. Effective security is only 80-bits}
+}
+
+\newglossaryentry{block cipher mode of operation}
+{
+    name={block cipher mode of operation},
+    description={technique for enhancing the effect of a cryptographic algorithm or adapting the algorithm for an application}
+}
+
+\newglossaryentry{electronic code book}
+{
+    name={Electronic Code Book},
+    description={Block-oriented Block Cipher Mode that allows for parallel encryption and decryption of blocks, but in which identical plaintext blocks result in identical ciphertext blocks and allows for attackers to rearrange or remove blocks from ciphertext. Application --- secure transmission of a single block}
+}
+
+\newglossaryentry{cipher block chaining}
+{
+    name={Cipher Block Chaining},
+    description={Block-oriented Block Cipher Mode that allows for parallel decryption (but not encryption) of blocks and hides patterns in the plaintext. Possible for attacker to rearrange or remove blocks from the ciphertext or tamper with bits of the plaintext and IV must have integrity protection. Application --- general-purpose block-oriented transmission}
+}
+
+\newglossaryentry{output feedback}
+{
+    name={Output Feedback},
+    description={Stream-oriented Block Cipher Mode in which bit errors do not propagate and pre-computation is possible, but blocks cannot be encrypted or decrypted in parallel and attacker can tamper with bits of the plaintext. Application --- stream-oriented transmission over noisy channel}
+}
+
+\newglossaryentry{cipher feedback}
+{
+    name={Cipher Feedback},
+    description={Stream-oriented Block Cipher Mode with self-synchronizing stream cipher in which blocks can be decrypted (but not encrypted) in parallel. Attacker can potentially tamper with bits of the plaintext or rearrange or remove blocks. Application --- general-purpose stream-oriented transmission}
+}
+
+\newglossaryentry{counter mode}
+{
+    name={Counter Mode},
+    description={Stream-oriented Block Cipher Mode in which blocks can be encrypted and decrypted in parallel, pre-computation is possible, and bit errors do not propagate. Attacker can potentially tamper with the bits of the plaintext. Application --- general-purpose transmission}
+}
+
+\newglossaryentry{public-key cryptography}
+{
+    name={public-key cryptography},
+    description={using a pair of keys -- one private and one public}
+}
+
+\newglossaryentry{asymmetric-key cryptography}
+{
+    name={asymmetric-key cryptography},
+    description={see \gls{public-key cryptography}}
+}
+
+\newglossaryentry{rsa cryptosystem}
+{
+    name={RSA Cryptosystem},
+    description={encryption scheme which depends on the difficulty of factoring large numbers}
+}
+
+\newglossaryentry{elgamal encryption}
+{
+    name={ElGamal Encryption},
+    description={encryption scheme which depends on the difficulty of computing discrete logarithms}
+}
+
+\newglossaryentry{elliptic curve cryptography}
+{
+    name={Elliptic Curve Cryptography},
+    description={approach to public-key cryptography based on the algebraic structure of elliptic curves over finite fields}
+}
+
+\newglossaryentry{cryptographic hash function}
+{
+    name={cryptographic hash function},
+    description={pseudorandom, efficient, collision-resistant, one-way function that maps a variable-length input to a fixed-length hash value}
+}
+
+\newglossaryentry{birthday paradox}
+{
+    name={birthday paradox},
+    description={probability that two people share a birthday in a group of $N$ is \[\prod_{i=1}^{N-1}\frac{365 - i}{365} \approx e^{-\frac{N^2}{730}}\] which is approximately 0.5 at $N=23$. More generally, if we sample $N$ values from a set of $M$ elements, a collision is likely if $N > \sqrt{M}$}
+}
+
+\newglossaryentry{birthday attack}
+{
+    name={birthday attack},
+    description={for an $m$-bit hash, trying $\sqrt{2^m} = 2^{\sfrac{m}{2}}$ inputs until a collision is found}
+}
+
+\newglossaryentry{non-cryptographic hash function}
+{
+    name={non-cryptographic hash function},
+    description={computationally inexpensive but generally insecure hash function that can be used for error detection and error correction}
+}
+
+\newglossaryentry{one-way property}
+{
+    name={one-way property},
+    description={given a hash value $h$, it is computationally infeasible to find an input $y$ such that $H(y) = h$}
+}
+
+\newglossaryentry{preimage resistance}
+{
+    name={preimage resistance},
+    description={see \gls{one-way property}}
+}
+
+\newglossaryentry{weak collision resistance}
+{
+    name={weak collision resistance},
+    description={given input $x$, it is computationally infeasible to find $y$ such that $x\neq y$ but $H(x) = H(y)$}
+}
+
+\newglossaryentry{second preimage resistance}
+{
+    name={second preimage resistance},
+    description={see \gls{weak collision resistance}}
+}
+
+\newglossaryentry{strong collision resistance}
+{
+    name={strong collision resistance},
+    description={it is computationally infeasible to find any pair of inputs $(x, y)$ such that $x\neq y$ but $H(x) = H(y)$; implies \gls{weak collision resistance}}
+}
+
+\newglossaryentry{collision resistance}
+{
+    name={collision resistance},
+    description={see \gls{strong collision resistance}}
+}
+
+\newglossaryentry{iterative hash function}
+{
+    name={iterative hash function},
+    description={hash in which the input is divided into fixed-length blocks and each block is hashed}
+}
+
+\newglossaryentry{merkle-damgard construction}
+{
+    name={Merkle-Damg\r{a}rd Construction},
+    description={general method for building a cryptographic hash function from a collision-resistant, one-way compression function; collision-resistant with sufficiently long padding}
+}
+
+\newglossaryentry{md5 message-digest algorithm}
+{
+    name={MD5 Message-Digest Algorithm},
+    description={hash function based on \gls{merkle-damgard construction} consisting of four rounds, each consisting of 16 operations, with 512-bit block length and 128-bit hash length; not collision resistant -- can be broken in $2^{18} = 262144$ steps, less than a second on an average computer}
+}
+
+\newglossaryentry{sha1}
+{
+    name={SHA-1},
+    description={160-bit hash with \gls{merkle-damgard construction}; collision can be found in $2^{65}$ steps}
+}
+
+\newglossaryentry{sha2}
+{
+    name={SHA-2},
+    description={family of functions: SHA-224, 256, 384, and 512, producing 224, 256, 384, and 512-bit ouputs, respectively; same underlying structure and operations as \gls{sha1}; some weaknesses have been found}
+}
+
+\newglossaryentry{sha3}
+{
+    name={SHA-3},
+    description={hash function to replace \gls{sha2}, uses \gls{sponge construction}; output length can be arbitrary}
+}
+
+\newglossaryentry{sponge construction}
+{
+    name={Sponge Construction},
+    description={hash function that can take an input stream of arbitrary length and return an output stream of any desired length; data is ``absorbed'' into the sponge and the result is ``squeezed'' out}
+}
+
+\newglossaryentry{content modification}
+{
+    name={content modification},
+    description={communication channel attack in which the content of a message is changed}
+}
+
+\newglossaryentry{sequence modification}
+{
+    name={sequence modification},
+    description={communication channel attack in which the sequence of messages is changed, including potential deletion of messages}
+}
+
+\newglossaryentry{timing modification}
+{
+    name={timing modification},
+    description={communication channel attack in which messages are delayed or repeated}
+}
+
+\newglossaryentry{masquerade}
+{
+    name={masquerade},
+    description={communication channel attack in which messages from a fraudulent source are inserted}
+}
+
+\newglossaryentry{message authentication code}
+{
+    name={message authentication code},
+    description={takes a secret key $K$ and an arbitrary-length input $M$ and produces tag $T$}
+}
+
+\newglossaryentry{cbcmac}
+{
+    name={CBC-MAC},
+    description={\acrshort{mac} based on \acrfull{cbc} mode of operation; uses different keys for \acrshort*{cbc} encryption and \gls*{cbcmac} auth; not secure for variable-length messages}
+}
+
+\newglossaryentry{cipher-based mac}
+{
+    name={cipher-based MAC},
+    description={\acrshort{mac} that thwarts forgery for variable-length messages}
+}
+
+\newglossaryentry{hash-based mac}
+{
+    name={hash-based MAC},
+    description={\acrshort{mac} that uses a hash function; provably secure if the hash is pseudorandom; more efficient with \gls{iterative hash function}; used in IPSsec and SSL/TLS protocols}
+}
+
+\newglossaryentry{authenticated encryption}
+{
+    name={authenticated encryption},
+    description={encryption system that provides both \gls{confidentiality} and \gls{integrity}}
+}
+
+\newglossaryentry{counter with cbc-mac}
+{
+    name={counter with CBC-MAC},
+    description={encryption based on \acrfull{ctr}; authentication based on \gls{cbcmac}; authenticate, then encrypt}
+}
+
+\newglossaryentry{galois/counter mode}
+{
+    name={Galois/Counter Mode},
+    description={encryption based on \acrfull{ctr}; authentication -- $\operatorname{GHASH}_H(X)$ takes hash key $H$ and 128-bit message blocks $X = X_1, X_2, \dots, X_m$ and outputs \[(X_1\cdot H^m)\oplus(X_2\cdot H^{m-1})\oplus\dots\oplus(X_{m-1}\cdot H^2)\oplus(X_m\cdot H)\]}
+}
+
+\newglossaryentry{digital signature}
+{
+    name={digital signature},
+    description={a mathematical scheme to provide both message \gls{authenticity} and \gls{non-repudiation}/\gls{accountability}}
+}
+
+\newglossaryentry{hash-then-sign}
+{
+    name={hash-then-sign},
+    description={sign a cryptographic hash of the message; compatibile with most public-key encryption algorithms, efficient, and prevents existential forgery}
+}
+
+\newglossaryentry{rsa signature}
+{
+    name={RSA signature},
+    description={apply RSA encryption to the hash of the message and send both the encrypted message and hash --- receiver decrypts message with public key and applies same hash function and verifies the the hash is the same; commonly used with SHA-256}
+}
+
+\newglossaryentry{pkcs}
+{
+    name={PKCS \#1},
+    description={an RSA signature published by RSA Laboratories republished as RFC 3447; older standard of RSASSA-PKCS1-v1\textunderscore5}
+}
+
+\newglossaryentry{salt}
+{
+    name={salt},
+    description={randomized padding added to a message}
+}
+
+\newglossaryentry{rsassa-pss}
+{
+    name={RSASSA-PSS},
+    description={\acrfull{pss} form of RSA encryption which adds a \gls{salt}; provably secure assuming RSA is secure}
+}
+
+\newglossaryentry{digital signature standard}
+{
+    name={digital signature standard},
+    description={\acrfull{fips} 186, introducted in 1993; latest version includes \acrshort{rsa}, \acrshort{dsa}, elliptic-curve signatures}
+}
+
+\newglossaryentry{digital signature algorithm}
+{
+    name={digital signature algorithm},
+    description={NIST algorithm designed for signature; cannot be used for encryption; efficient variant of \gls{elgamal encryption} with much smaller signatures and modular arithmetic operations with smaller moduli}
+}
+
+\newglossaryentry{elliptic curve digital signature algorithm}
+{
+    name={elliptic curve digital signature algorithm},
+    description={signature algorithm based on elliptic curve cryptography with shorter keys and increased efficiency}
+}
+
+\newacronym{cia}{CIA}{\gls{confidentiality}, \gls{integrity}, and \gls{availability}}
+\newacronym{dos}{DoS}{\gls{denial of service}}
+\newacronym{cca}{CCA}{\gls{chosen ciphertext attack}}
+\newacronym{cpa}{CPA}{\gls{chosen plaintext attack}}
+\newacronym{coa}{COA}{\gls{ciphertext only attack}}
+\newacronym{kpa}{KPA}{\gls{known plaintext attack}}
+\newacronym{prng}{PRNG}{\gls{pseudorandom number generator}}
+\newacronym{des}{DES}{\gls{data encryption standard}}
+\newacronym{aes}{AES}{\gls{advanced encryption standard}}
+\newacronym{3des}{3DES}{\gls{triple des}}
+\newacronym{2des}{2DES}{\gls{double des}}
+\newacronym{ecb}{ECB}{\gls{electronic code book}}
+\newacronym{cbc}{CBC}{\gls{cipher block chaining}}
+\newacronym{ofb}{OFB}{\gls{output feedback}}
+\newacronym{cfb}{CFB}{\gls{cipher feedback}}
+\newacronym{ctr}{CTR}{\gls{counter mode}}
+\newacronym{rsa}{RSA}{Rivest, Shamir, Adleman \gls{rsa cryptosystem}}
+\newacronym{md5}{MD5}{\gls{md5 message-digest algorithm}}
+\newacronym{sha}{SHA}{Secure Hash Algorithm \gls{sha1}, \gls{sha2}, \gls{sha3}}
+\newacronym{mac}{MAC}{\gls{message authentication code}}
+\newacronym{cmac}{CMAC}{\gls{cipher-based mac}}
+\newacronym{hmac}{HMAC}{\gls{hash-based mac}}
+\newacronym{ccm}{CCM}{\gls{counter with cbc-mac}}
+\newacronym{pss}{PSS}{probabilistic signature scheme}
+\newacronym{dsa}{DSA}{\gls{digital signature algorithm}}
+\newacronym{fips}{FIPS}{Federal Information Processing Standard}
+\newacronym{ecdsa}{ECDSA}{\gls{elliptic curve digital signature algorithm}}
