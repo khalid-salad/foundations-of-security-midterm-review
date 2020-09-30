@@ -1,3 +1,11 @@
+\glsaddkey*{shortname}% key
+{\glsentrytext{\glslabel}}% default value
+{\glsentryshortname}% command analogous to \glsentrytext
+{\Glsentryshortname}% command analogous to \Glsentrytext
+{\glsshortname}% command analogous to \glstext
+{\Glsshortname}% command analogous to \Glstext
+{\GLSshortname}% command analogous to \GLStext
+
 
 \newglossaryentry{computer security}
 {
@@ -8,19 +16,22 @@
 \newglossaryentry{confidentiality}
 {
     name=confidentiality,
-    description={information is not available to unauthorized entities}
+    description={information is not available to unauthorized entities},
+    text={not available to unauthorized entities}
 }
 
 \newglossaryentry{integrity}
 {
     name=integrity,
-    description={information and system functionality cannot be altered by unauthorized entities}
+    description={information and system functionality cannot be altered by unauthorized entities},
+    text={cannot be altered by unauthorized entities}
 }
 
 \newglossaryentry{availability}
 {
     name=availability,
-    description={information and system functionality is available to authorized entities}
+    description={information and system functionality is available to authorized entities},
+    text={available to authorized entities}
 }
 
 \newglossaryentry{accountability}
@@ -44,7 +55,8 @@
 \newglossaryentry{privacy}
 {
     name={privacy},
-    description={assures that individuals have control or influence over information related to them}
+    description={assures that individuals have control or influence over information related to them},
+    text={individuals have control over information related to them}
 }
 
 \newglossaryentry{data integrity}
@@ -69,7 +81,7 @@
 \newglossaryentry{weakest link}
 {
     name={weakest link},
-    description={principle that the attacker needs to find only a single vulnerability}
+    description={principle that the defender needs to find and fix all vulnerabilities, but attacker needs to find only a single vulnerability}
 }
 
 \newglossaryentry{attacker model}
@@ -98,37 +110,49 @@
 \newglossaryentry{brute-force attack}
 {
     name={brute-force attack},
-    description={attack model in which every possible key is tried on a given ciphertext until the original plaintext is recovered}
+    shortname={brute-force},
+    description={attack model in which every possible key is tried on a given ciphertext until the original plaintext is recovered},
+    text={every possible key is tried}
 }
 
 \newglossaryentry{ciphertext only attack}
 {
     name={ciphertext only attack},
-    description={attack model in which only the algorithms used and the ciphertext are known}
+    shortname={ciphertext only},
+    description={attack model in which only the algorithms used and the ciphertext are known},
+    text={only the algorithms used and the ciphertext are known}
 }
 
 \newglossaryentry{known plaintext attack}
 {
     name={known plaintext attack},
-    description={attack model in which one or more plaintext-cipher pairs is known}
+    shortname={known plaintext},
+    description={attack model in which one or more plaintext-cipher pairs is known},
+    text={one or more plaintext-cipher pairs is known}
 }
 
 \newglossaryentry{chosen ciphertext attack}
 {
     name={chosen ciphertext attack},
-    description={attack model in which one or more \emph{chosen} plaintext-cipher pairs is known}
+    shortname={chosen ciphertext},
+    description={attack model in which one or more \emph{chosen} plaintext-cipher pairs is known},
+    text={one or more \emph{chosen} plaintext-cipher pairs is known}
 }
 
 \newglossaryentry{chosen plaintext attack}
 {
     name={chosen plaintext attack},
-    description={attack model in which the attacker can obtain the ciphertext for any plaintext}
+    shortname={chosen plaintext},
+    description={attack model in which the attacker can obtain the ciphertext for any plaintext},
+    text={can obtain the ciphertext for any plaintext}
 }
 
 \newglossaryentry{chosen text attack}
 {
     name={chosen text attack},
-    description={attack model in which the attacker can obtain the ciphertext for any plaintext \emph{and} one or more chosen plaintext-cipher pairs is known}
+    shortname={chosen text},
+    description={attack model in which the attacker can obtain the ciphertext for any plaintext \emph{and} one or more chosen plaintext-cipher pairs is known},
+    text={both \glsshortname{chosen ciphertext attack} and \glsshortname{chosen plaintext attack}}
 }
 
 \newglossaryentry{affine cipher}
@@ -146,19 +170,27 @@
 \newglossaryentry{cryptanalytic attack}
 {
     name={cryptanalytic attack},
-    description={attack model in which the attacker relies on the nature of the algorithm and knowledge of the general characteristics of the plaintext}
+    shortname={cryptanalytic},
+    description={attack model in which the attacker relies on the nature of the algorithm and knowledge of the general characteristics of the plaintext},
+    text={relies on the nature of the algorithm/characteristics of the plaintext}
 }
 
 \newglossaryentry{Kerckhoffs}
 {
     name={Kerckhoffs’s Principle},
-    description={principle that a cryptographic system should be secure, even if all of its details, except for the key, are publicly known}
+    description={a cryptographic system should be secure, even if all of its details, except for the key, are publicly known}
 }
 
 \newglossaryentry{perfect security}
 {
     name={perfect security},
     description={attacker gains no information about the plaintext from observing the ciphertext, formally, \[\prob{P = p} = \prob{P = p \given E(K, P) = c}\] i.e., that the plaintext and ciphertext are independent}
+}
+
+\newglossaryentry{semantic security}
+{
+    name={semantic security},
+    description={attacker advantage for any efficiently computable guess is negligible over random guessing}
 }
 
 \newglossaryentry{one-time pad}
@@ -170,7 +202,7 @@
 \newglossaryentry{stream cipher}
 {
     name={stream cipher},
-    description={takes fixed-length seed and uses a \gls{pseudorandom number generator} to produce sequence of bits as long as the plaintext then encrypts with XOR}
+    description={takes fixed-length seed and uses a \acrshort{prng} to produce sequence of bits as long as the plaintext then encrypts with XOR}
 }
 
 \newglossaryentry{pseudorandom number generator}
@@ -236,7 +268,7 @@
 \newglossaryentry{data encryption standard}
 {
     name={Data Encryption Standard},
-    description={federally approved encryption standard consisting of iterated substitution-permutation cipher of 16 rounds with 64-bit block size and 56-bit key size}
+    description={federally approved encryption standard which uses an iterated substitution\nobreakdash-permutation cipher of 16 rounds with 64-bit block size and 56-bit key size}
 }
 
 \newglossaryentry{advanced encryption standard}
@@ -333,7 +365,7 @@
 \newglossaryentry{cryptographic hash function}
 {
     name={cryptographic hash function},
-    description={pseudorandom, efficient, collision-resistant, one-way function that maps a variable-length input to a fixed-length hash value}
+    description={pseudorandom, efficient, collision-resistant and one-way function that maps a variable-length input to a fixed-length hash value}
 }
 
 \newglossaryentry{birthday paradox}
@@ -357,7 +389,7 @@
 \newglossaryentry{one-way property}
 {
     name={one-way property},
-    description={given a hash value $h$, it is computationally infeasible to find an input $y$ such that $H(y) = h$}
+    description={hash with property that, given a hash value $h$, it is computationally infeasible to find an input $y$ such that $H(y) = h$}
 }
 
 \newglossaryentry{preimage resistance}
@@ -369,7 +401,7 @@
 \newglossaryentry{weak collision resistance}
 {
     name={weak collision resistance},
-    description={given input $x$, it is computationally infeasible to find $y$ such that $x\neq y$ but $H(x) = H(y)$}
+    description={hash with property that, given input $x$, it is computationally infeasible to find $y$ such that $x\neq y$ but $H(x) = H(y)$}
 }
 
 \newglossaryentry{second preimage resistance}
@@ -381,7 +413,7 @@
 \newglossaryentry{strong collision resistance}
 {
     name={strong collision resistance},
-    description={it is computationally infeasible to find any pair of inputs $(x, y)$ such that $x\neq y$ but $H(x) = H(y)$; implies \gls{weak collision resistance}}
+    description={hash with property that it is computationally infeasible to find any pair of inputs $(x, y)$ such that $x\neq y$ but $H(x) = H(y)$; implies \gls{weak collision resistance}}
 }
 
 \newglossaryentry{collision resistance}
@@ -501,7 +533,7 @@
 \newglossaryentry{digital signature}
 {
     name={digital signature},
-    description={a mathematical scheme to provide both message \gls{authenticity} and \gls{non-repudiation}/\gls{accountability}}
+    description={a mathematical scheme to provide both message \gls{authenticity} and \gls{non-repudiation}}
 }
 
 \newglossaryentry{hash-then-sign}
@@ -552,30 +584,117 @@
     description={signature algorithm based on elliptic curve cryptography with shorter keys and increased efficiency}
 }
 
-\newacronym{cia}{CIA}{\gls{confidentiality}, \gls{integrity}, and \gls{availability}}
-\newacronym{dos}{DoS}{\gls{denial of service}}
-\newacronym{cca}{CCA}{\gls{chosen ciphertext attack}}
-\newacronym{cpa}{CPA}{\gls{chosen plaintext attack}}
-\newacronym{coa}{COA}{\gls{ciphertext only attack}}
-\newacronym{kpa}{KPA}{\gls{known plaintext attack}}
-\newacronym{prng}{PRNG}{\gls{pseudorandom number generator}}
-\newacronym{des}{DES}{\gls{data encryption standard}}
-\newacronym{aes}{AES}{\gls{advanced encryption standard}}
-\newacronym{3des}{3DES}{\gls{triple des}}
-\newacronym{2des}{2DES}{\gls{double des}}
-\newacronym{ecb}{ECB}{\gls{electronic code book}}
-\newacronym{cbc}{CBC}{\gls{cipher block chaining}}
-\newacronym{ofb}{OFB}{\gls{output feedback}}
-\newacronym{cfb}{CFB}{\gls{cipher feedback}}
-\newacronym{ctr}{CTR}{\gls{counter mode}}
-\newacronym{rsa}{RSA}{Rivest, Shamir, Adleman \gls{rsa cryptosystem}}
-\newacronym{md5}{MD5}{\gls{md5 message-digest algorithm}}
-\newacronym{sha}{SHA}{Secure Hash Algorithm \gls{sha1}, \gls{sha2}, \gls{sha3}}
-\newacronym{mac}{MAC}{\gls{message authentication code}}
-\newacronym{cmac}{CMAC}{\gls{cipher-based mac}}
-\newacronym{hmac}{HMAC}{\gls{hash-based mac}}
-\newacronym{ccm}{CCM}{\gls{counter with cbc-mac}}
+\newglossaryentry{session key}
+{
+    name={session key},
+    description={a frequently renewed key used to encrypt and authenticate data}
+}
+
+\newglossaryentry{master key}
+{
+    name={master key},
+    description={a key that is renewed infrequently, used to distribute \glspl{session key}}
+}
+
+\newglossaryentry{decentralized secret-key}
+{
+    name={decentralized secret-key},
+    description={system in which each pair of communication parties shares a secret \gls{master key}; easy to set up but does not scale well, as it requires $\binom{n}{2}=\sfrac{(n)(n-1)}{2}$ keys}
+}
+
+\newglossaryentry{key distribution center}
+{
+    name={key distribution center},
+    description={a centralized key distributor, acting as a trusted third party, shares a secret \gls{master key} with each communication party; scales well, requiring only $n$ keys, but must trust third party}
+}
+
+\newglossaryentry{public-key cryptography key distribution}
+{
+    name={public-key cryptography key distribution},
+    description={one communication party needs the public key of the other}
+}
+
+\newglossaryentry{man-in-the-middle attack}
+{
+    name={man-in-the-middle attack},
+    description={attack in which the attacker secretly relays and possibly alters communications between parties who believe they are directly communicating with each other}
+}
+
+\newglossaryentry{extended needham-schroeder protocol}
+{
+    name={Extended Needham-Schroeder Protocol},
+    description={protocol that aims to establish a \gls{session key} between two parties on a network}
+}
+
+\newglossaryentry{kerberos network authentication protocol}
+{
+    name={Kerberos Network Authentication Protocol},
+    description={protocol based on the \gls{extended needham-schroeder protocol} that allows communication over non-secure network; uses timestamps instead of \glsplural{nonce}}
+}
+
+\newglossaryentry{diffie-hellman key exchange}
+{
+    name={Diffie-Hellman Key Exchange},
+    description={the first public-key algorithm; security is based on the difficulty of computing discrete logarithms}
+}
+
+\newglossaryentry{station-to-station protocol}
+{
+    name={Station-to-Station Protocol},
+    description={cryptographic key agreement scheme based on \gls{diffie-hellman key exchange}; provides key and entity authentication and security against \glspl{man-in-the-middle attack}}
+}
+
+\newglossaryentry{public-key certificate}
+{
+    name={public-key certificate},
+    description={electronic document used to prove the ownership of a public key}
+}
+
+\newglossaryentry{X.509 certificate}
+{
+    name={X.509 Certificate},
+    description={ITU-T standard for \glspl{public-key certificate} and related functions}
+}
+
+\newglossaryentry{certificate authority}
+{
+    name={certificate authority},
+    description={entity that issues \glspl{public-key certificate}}
+}
+
+\newglossaryentry{certificate chain}
+{
+    name={cerificate chain},
+    description={chain of \glspl{certificate authority} used to verify a \gls{public-key certificate} should two entities not share a common \gls*{certificate authority}}
+}
+
+\newacronym{cia}{CIA}{\glsname{confidentiality}, \glsname{integrity}, and \glsname{availability}}
+\newacronym{dos}{DoS}{\glsname{denial of service}}
+\newacronym{cca}{CCA}{\glsname{chosen ciphertext attack}}
+\newacronym{cpa}{CPA}{\glsname{chosen plaintext attack}}
+\newacronym{coa}{COA}{\glsname{ciphertext only attack}}
+\newacronym{cta}{CTA}{\glsname{chosen text attack}}
+\newacronym{kpa}{KPA}{\glsname{known plaintext attack}}
+\newacronym{prng}{PRNG}{\glsname{pseudorandom number generator}}
+\newacronym{des}{DES}{\glsname{data encryption standard}}
+\newacronym{aes}{AES}{\glsname{advanced encryption standard}}
+\newacronym{3des}{3DES}{\glsname{triple des}}
+\newacronym{2des}{2DES}{\glsname{double des}}
+\newacronym{ecb}{ECB}{\glsname{electronic code book}}
+\newacronym{cbc}{CBC}{\glsname{cipher block chaining}}
+\newacronym{ofb}{OFB}{\glsname{output feedback}}
+\newacronym{cfb}{CFB}{\glsname{cipher feedback}}
+\newacronym{ctr}{CTR}{\glsname{counter mode}}
+\newacronym{rsa}{RSA}{Rivest, Shamir, Adleman \glsname{rsa cryptosystem}}
+\newacronym{md5}{MD5}{\glsname{md5 message-digest algorithm}}
+\newacronym{sha}{SHA}{Secure Hash Algorithm \glsname{sha1}, \glsname{sha2}, \glsname{sha3}}
+\newacronym{mac}{MAC}{\glsname{message authentication code}}
+\newacronym{cmac}{CMAC}{\glsname{cipher-based mac}}
+\newacronym{hmac}{HMAC}{\glsname{hash-based mac}}
+\newacronym{ccm}{CCM}{\glsname{counter with cbc-mac}}
 \newacronym{pss}{PSS}{probabilistic signature scheme}
-\newacronym{dsa}{DSA}{\gls{digital signature algorithm}}
+\newacronym{dsa}{DSA}{\glsname{digital signature algorithm}}
 \newacronym{fips}{FIPS}{Federal Information Processing Standard}
-\newacronym{ecdsa}{ECDSA}{\gls{elliptic curve digital signature algorithm}}
+\newacronym{ecdsa}{ECDSA}{\glsname{elliptic curve digital signature algorithm}}
+\newacronym{kdc}{KDC}{\glsname{key distribution center}}
+\newacronym{mitm}{MITM}{\glsname{man-in-the-middle attack}; sometimes also \glsname{meet in the middle attack}}

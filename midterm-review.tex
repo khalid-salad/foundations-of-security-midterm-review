@@ -1,32 +1,210 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage{amsmath, amsthm, amssymb, enumitem, booktabs, mleftright, xfrac}
-\UseCollection{xfrac}{plainmath}
-\usepackage[colorlinks]{hyperref}
-\usepackage[acronym, nopostdot]{glossaries}
-\mleftright
-\renewcommand{\Pr}{\operatorname{\mathbb{P}}}
-\newcommand{\prob}[1]{\Pr\left(#1\right)}
-\newcommand{\given}{\mid}
-\makeglossaries
-\loadglsentries{glossary.tex} 
+\documentclass[draft]{article}
+\usepackage{midterm-review}
 \begin{document}
+\include{titlepage}
+
 \section{Introduction to Security}
 \subsection{Objectives}
-\subsubsection{Confidentiality}
-\subsubsection{Data Integrity}
-\subsubsection{System Integrity}
-\subsubsection{Availability}
-\subsubsection{Non-Repudiation}
-\subsubsection{Authenticity}
-\subsubsection{Privacy}
-\subsection{Attacker Modeling Principles}
-\subsubsection{Safe Assumptions}
-\subsubsection{Attacker Capabilities and Knowledge}
-\subsubsection{Rejection of Security by Obscurity}
+\begin{center}
+    \begin{tabular}{lll}
+                                        & \multicolumn{1}{c}{Term}  & \multicolumn{1}{c}{Definition}             \\\toprule
+        \multirow{3}{*}{\acrshort{cia}} & \Glsname{confidentiality} & \glstext*{confidentiality}                 \\
+                                        & \Glsname{integrity}       & \glstext*{integrity}                       \\
+                                        & \Glsname{availability}    & \glstext*{availability}                    \\\midrule
+                                        & \Glsname{non-repudiation} & \multirow{2}{*}{\glsdesc*{accountability}} \\
+                                        & \Glsname{accountability}  &                                            \\\midrule
+                                        & \Glsname{privacy}         & \glstext*{privacy}                         \\\bottomrule
+    \end{tabular}
+\end{center}
+
+\subsection{Challenges}
+\Gls{weakest link} -- \glsdesc*{weakest link}
+
+Security is a process, not a product -- attackers continuously looking for new vulnerabilities, so systems must be regularly updated and continuously monitored.
+
+Tension between security and
+\begin{itemize}[nosep]
+    \item usability
+    \item functionality
+    \item efficiency
+    \item time-to-market
+    \item development cost
+\end{itemize}
+
+Value of security often only perceived when there is a security failure
+
+Can be measured by
+\begin{itemize}[nosep]
+    \item checking compliance
+    \item pentesting
+\end{itemize}
 
 \section{Introduction to Cryptography}
+\subsection{Attacker Modeling Principles}
+Security is defined with respect to an \gls{attacker model} -- what the attacker
+\begin{itemize}[nosep]
+    \item can do
+    \item knows
+    \item wants to achieve
+\end{itemize}
+
+Generally better to overestimate the attacker's capabilities, knowledge, and determination. Safe to assume attacker knows
+\begin{itemize}[nosep]
+    \item algorithms
+    \item system design
+    \item implementation
+    \item configuaration
+\end{itemize}
+but the attacker cannot know \emph{truly} random values.
+
+\subsection{Security by Obscurity}
+\Gls{security by obscurity} -- \glsdesc*{security by obscurity}
+
+Generally rejected by security experts, researchers, standard bodies, i.e., everyone.
+
+Obscurity can slow down, but not stop, an attack:
+\begin{itemize}[nosep]
+    \item if we thought of something, attacker might also
+    \item attacker might try attack for many possible design/implementation choices
+\end{itemize}
+Can create false sense of security.
+\subsection{Symmetric-Key Ciphers}
+Sender and receiver share a secret key $k$
+\begin{center}
+    \begin{tikzpicture}[node distance=3cm]
+        \node[label=below:{$p$}] (p) {plaintext};
+        \node[draw,rectangle,label=below:{encryption}, right of=p] (e) {$E$};
+        \node[label=below:{$c=E(k,p)$}, right of=e] (c) {ciphertext};
+        \node[draw,rectangle,label=below:{decryption}, right of=c] (d) {$D$};
+        \node[label=below:{$p=D(k,c)$}, right of=d] (pd) {plaintext};
+        \node[label=below:{$k$}, above=1cm of c] (k) {secret key};
+
+        \draw[gray,thick,->] (p) -- (e);
+        \draw[gray,thick,->] (e) -- (c);
+        \draw[gray,thick,->] (c) -- (d);
+        \draw[gray,thick,->] (d) -- (pd);
+        \draw[gray,thick,->] (k.west) -- (e.north);
+        \draw[gray,thick,->] (k.east) -- (d.north);
+    \end{tikzpicture}
+\end{center}
+Types of attacks:
+\begin{center}
+    \begin{tabular}{lll}
+        \multicolumn{1}{c}{Acronym} & \multicolumn{1}{c}{Attack}              & \multicolumn{1}{c}{Description}     \\\toprule
+        \acrshort*{coa}             & \glsshortname{ciphertext only attack}   & \glstext*{ciphertext only attack}   \\
+        \acrshort*{kpa}             & \glsshortname{known plaintext attack}   & \glstext*{known plaintext attack}   \\
+        \acrshort*{cca}             & \glsshortname{chosen ciphertext attack} & \glstext*{chosen ciphertext attack} \\
+        \acrshort*{cpa}             & \glsshortname{chosen plaintext attack}  & \glstext*{chosen plaintext attack}  \\
+        \acrshort*{cta}             & \glsshortname{chosen text attack}       & \glstext*{chosen text attack}       \\\midrule
+                                    & \glsshortname{brute-force attack}       & \glstext*{brute-force attack}       \\
+                                    & \glsshortname{cryptanalytic attack}     & \glstext*{cryptanalytic attack}     \\\bottomrule
+    \end{tabular}
+\end{center}
+
+\subsection{Kerckhoffs’s Principle}
+\Glsname{Kerckhoffs} -- \glsdesc*{Kerckhoffs}. Rejection of \glsname{security by obscurity}
 \section{Stream Ciphers}
+\subsection{Perfect Security}
+\Gls{perfect security} -- \glsdesc*{perfect security}
+
+\Gls{one-time pad} -- \glsdesc*{one-time pad}
+
+\subsection{Semantic Security}
+\Gls{semantic security} -- \glsdesc*{semantic security}
+
+Many-time pad: reusing the one-time key for multiple plaintext. Attacker can recover $p_1 \xor p_2$:
+\begin{align*}c_1 \xor c_2
+     & = (p_1 \xor k) \xor (p_2 \xor k) \\
+     & = (p_1 \xor p_2) \xor (k \xor k) \\
+     & = p_1 \xor p_2
+\end{align*}
+and if attacker knows $p_1$, can recover $p_2$:
+\begin{align*}p_1 \xor (c_1 \xor c_2)
+     & = p_1 \xor (p_1 \xor p_2) \\
+     & = (p_1 \xor p_1) \xor p_2 \\
+     & = p_2
+\end{align*}
+\subsection{General Model of Stream Ciphers}
+Make one-time pad practical by securely extending the key.
+\subsubsection*{Pseudorandom Number Generator}
+\acrfull{prng} -- \glsdesc*{pseudorandom number generator}
+
+Requirements:
+\begin{itemize}[nosep]
+    \item performance -- generates key as long as plaintext, so must be computationally efficient
+    \item security -- generated sequence must be indistinguishable from true randomness
+          \begin{itemize}
+              \item \glsname{cryptanalytic attack}
+                    \begin{itemize}[nosep]
+                        \item uniform distribution -- 0s and 1s occur with approximately same frequency
+                        \item independence -- no subsequence can be inferred from another, disjoint subsequence
+                    \end{itemize}
+              \item \glsname{brute-force attack}
+                    \begin{itemize}[nosep]
+                        \item $n$ bit key has $2^n$ possible values -- attacker can try all
+                        \item key must be sufficiently long -- in 2014, NIST recommends 112-bits
+                        \item as computers become faster, key length must be increased
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+
+\subsubsection*{How Stream Cipher Works}
+\glsname{stream cipher} -- \glsdesc*{stream cipher}
+
+Use \acrshort{prng} to generate the sequence up to the length of the plaintext, then to
+\begin{itemize}[nosep, align=left, leftmargin=1in]
+    \item[\textbf{encrypt} ---] \texttt{xor} plaintext with key
+    \item[\textbf{decrypt} ---] \texttt{xor} ciphertext with key
+\end{itemize}
+\subsection{Key-Reuse Problem}
+If attacker learns $p_1 \xor p_2$, $p_2 \xor p_3$, $p_1 \xor p_3$, $\dots$, they can recover other plaintexts.
+Solutions:
+\begin{itemize}[nosep]
+    \item one continuous sequence that allows seeking to any position in the key
+    \item \glsname{nonce} -- \glsdesc{nonce}
+          \begin{itemize}[nosep]\item xor key with \glsname{nonce} for each plaintext to produce different key\end{itemize}
+\end{itemize}
+\subsection{RC4}
+Old WiFi and Web Security standard
+
+\glsname{rc4}
+Advantages
+\begin{itemize}[nosep]
+    \item variable key length (from 8 to 2048 bits)
+    \item very simple, uses byte-oriented operations:
+          \begin{itemize}[nosep]\item only 8 to 16 machine operations required per output byte\end{itemize}
+\end{itemize}
+Applications
+\begin{itemize}[nosep]
+    \item Wifi: WEP and WPA
+          \begin{itemize}[nosep]\item broken in 2001, deprecated in 2004\end{itemize}
+    \item Web Security (HTTPS): SSL and TLS
+          \begin{itemize}[nosep]\item broken in 2013, deprecated in 2015\end{itemize}
+\end{itemize}
+RC4 has been retired.
+\subsection{Salsa20/ChaCha20}
+State of the Art Stream Cipher
+\glsname{salsa20} (and more secure, more efficient variant \glsname{chacha20})
+
+Key length is 128 or 256 bits.
+
+\subsubsection*{Advantages}
+\begin{itemize}[nosep]
+    \item fast software implementation (simple 32-bit operations)
+    \item can seek to any position in output sequence
+    \item 64-bit nonce part of algorithm to prevent key-reuse
+\end{itemize}
+currently, no attacks better than \glsname{brute-force attack} known.
+
+\subsubsection*{Algorithm}
+\begin{itemize}[nosep]
+    \item Output in blocks of $16\times32$ bits
+    \item internal state: $16\times 32$ bits
+          \begin{itemize}[nosep]\item initialized using key, nonce, and seek position\end{itemize}
+    \item State updated with \texttt{xor}, 32-bit addition mod $2^{32}$, and rotating 32 bit values
+    \item Performs 20 rounds of \texttt{xor}-add-rotate, each of which updates all values in state
+    \item State added to original state to obtain output
+\end{itemize}
 \section{Block Ciphers}
 \section{Block Cipher Modes of Operation}
 \section{Public-Key Encryption}
