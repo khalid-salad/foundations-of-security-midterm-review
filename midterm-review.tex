@@ -873,7 +873,8 @@ Using 3 keys instead of 2. Naive implementation suffers same vulnerability to \g
     \draw[->] (bk3) -- (b3);
 \end{tikzpicture}
 
-Above has 3 keys, butvulnerable to more sophisted effectively MITM attack -- only 112-bit security. Taking $k_1=k_3$ provides 80-bits of effective security while still preventing the MITM attack when using 2 keys.
+Above has 3 keys, but vulnerable to more sophisted MITM attack -- effectively only 112-bit security. Taking $k_1=k_3$ provides 80-bits of effective security.
+
 \begin{tikzpicture}[every node/.style={minimum width=1.5cm,minimum height=0.75cm,draw,fill=gray!40,drop shadow={top color=black, bottom color=white, shadow xshift=0.25em, shadow yshift=-0.25em}, rounded corners}]
     \node[minimum size=0cm,style=reset preactions,draw=none,fill=none] (tp) {$P$};
     \node[right=of tp] (t1) {$E$};
@@ -938,6 +939,7 @@ Above has 3 keys, butvulnerable to more sophisted effectively MITM attack -- onl
     \end{tabular}
 \end{center}
 \section{Public-Key Encryption}
+
 \section{Hash Functions}
 \section{Message Authentication}
 \section{Digital Signatuers}
