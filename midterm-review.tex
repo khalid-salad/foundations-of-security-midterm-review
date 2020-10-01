@@ -938,8 +938,79 @@ Above has 3 keys, but vulnerable to more sophisted MITM attack -- effectively on
                                         & pre-computation is possible                          &                                                                      \\\bottomrule
     \end{tabular}
 \end{center}
-\section{Public-Key Encryption}
+\section{Public-Key Cryptography}
+\glsname{public-key cryptography}, also called \glsname{asymmetric-key cryptography}
 
+Use a pair of keys, one public, one private. Solves
+\begin{itemize}[nosep]
+    \item public-key encryption $\rightarrow$ key exchange
+    \item digital signature $\rightarrow$ non-repudiation
+\end{itemize}
+\subsection{Public-Key Encryption}
+\begin{itemize}[nosep]
+    \item everyone knows public key $\rightarrow$ sender can encrypt
+    \item received knows private key $\rightarrow$ receiver can decrypt
+    \item attacker does not know private key $\rightarrow$ cannot decrypt
+    \item public key can be published
+\end{itemize}
+3 algorithms:
+\begin{itemize}[nosep]
+    \item key generation $G \rightarrow (PU, PR)$
+    \item encryption -- $E(PU, M) \rightarrow C$
+          \begin{itemize}[nosep]\item takes public key $PU$ and plaintext $M$ and outputs ciphertext $C$\end{itemize}
+    \item encryption -- $D(PR, C) \rightarrow P$
+          \begin{itemize}[nosep]\item takes private key $PR$ and ciphertext $C$ and outputs plaintext $P$\end{itemize}
+\end{itemize}
+Unlike symmetric-key, requires largest keys and is much slower
+
+\begin{tabular}{lll}
+                   & Symmetric                  & Asymmetric                               \\\toprule
+    Typical Design & series of subs. and perms. & hard mathematical problems               \\
+    Key            & completely random          & special structure, expensive to generate \\
+    Rec. Key Size  & 128 - 256 bits             & 2048 - 15360 bits                        \\
+    Performance    & fast                       & slow                                     \\\bottomrule
+\end{tabular}
+\begin{multicols}{2}
+    \subsection{RSA}
+    Choose two large primes $p$ and $q$, set $n=pq$ and choose $e$ such that $\gcd(e, \varphi(n)) = 1$. Set $d=e^{-1}\bmod\varphi(n)$, then
+    \begin{align*}PU&=(e, n)\\PR&=(d, n)\end{align*}
+
+    Encrypt plaintext $M$ with $C=M^e \bmod{n}$ and decrypt with $M = C^d\bmod{n}$.
+
+    \subsection{Security of RSA}
+    Security comes from difficulty of determining $C^{\sfrac{1}{e}}\bmod{n}$ efficiently. Best known algorithm is to factor $n=pq$ and compute $e^{-1}\bmod{\varphi(n)}$. Integer factorization is assumed to be hard but this is unproved.
+
+    Very slow encryption, so commonly used to encrypt a secret key for use with symmetric-key encryption. Comparable symmetric key security (number of bits):
+
+    \begin{tabular}{ll}
+        Symmetric & RSA   \\\toprule
+        80        & 1024  \\
+        128       & 3072  \\
+        256       & 15360 \\\bottomrule
+    \end{tabular}
+
+    \subsection{ElGamal Encryption}
+    Choose a large prime $q$, primitive root $\alpha$ of $q$, and $X \in \set{1, 2, \hdots, q - 1}$. Set $Y = \alpha^x\bmod{q}$ and \begin{align*}PU&=(q,\alpha,U)\\PR&=(q,\alpha,X)\end{align*}
+
+    Encryption:
+
+    Choose random $k\in\set{0,1,\hdots, q-2}$ and set $K=y^k\bmod{q}$. Then return $(C_1, C_2)$ where \begin{align*}C_1&=\alpha^k\bmod{q}\\C_2&=KM\bmod{q}\end{align*}
+
+    Decryption:
+
+    Set $K=C_1^X\bmod{q}$, then $M = C_2K^{-1}\bmod{q}$.
+
+    \subsection{Security of ElGamal}
+    Security comes from difficulty of discrete logarithm, widely believed to be computationally hard.
+
+    Recover $X$ requires computing discrete-$\log_{\alpha}$ of $Y$ $\bmod{q}$.
+
+    Recover $k$ requires computing discrete-$\log_{\alpha}$ of $C_1$ $\bmod{q}$.
+    \subsection{Elliptic Curve Cryptography}
+    Elliptic Curve is a set of points $(x,y)$ such that \[y^2=x^3+ax+b\] Binary operation $P + Q$: draw line through $P$ and $Q$, find where it intersects the curve, call this $R$. Then $P+Q = -R$. Combined with a point at infinity (the identity), forms an abelian (commutative) group. Can naturally define $kP = \underbrace{P + P + \dots + P}_{k-\text{times}}$ and so can implement ElGamal in a straightforward fashion.
+
+    160-bit ECC is comparable in security to 1024-bit RSA key.
+\end{multicols}
 \section{Hash Functions}
 \section{Message Authentication}
 \section{Digital Signatuers}
