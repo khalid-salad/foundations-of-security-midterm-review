@@ -390,37 +390,40 @@
 \newglossaryentry{one-way property}
 {
     name={one-way property},
-    description={hash with property that, given a hash value $h$, it is computationally infeasible to find an input $y$ such that $H(y) = h$}
+    description={hash with property that, given a hash value $h$, it is computationally infeasible to find an input $y$ such that $H(y) = h$},
+    text={given a hash value $h$, it is computationally infeasible to find an input $y$ such that $H(y) = h$}
 }
 
 \newglossaryentry{preimage resistance}
 {
     name={preimage resistance},
-    description={see \gls{one-way property}}
+    description={see \glsname{one-way property}}
 }
 
 \newglossaryentry{weak collision resistance}
 {
     name={weak collision resistance},
-    description={hash with property that, given input $x$, it is computationally infeasible to find $y$ such that $x\neq y$ but $H(x) = H(y)$}
+    description={hash with property that, given input $x$, it is computationally infeasible to find $y$ such that $x\neq y$ but $H(x) = H(y)$},
+    text={given input $x$, it is computationally infeasible to find $y$ such that $x\neq y$ but $H(x) = H(y)$}
 }
 
 \newglossaryentry{second preimage resistance}
 {
     name={second preimage resistance},
-    description={see \gls{weak collision resistance}}
+    description={see \glsname{weak collision resistance}}
 }
 
 \newglossaryentry{strong collision resistance}
 {
     name={strong collision resistance},
-    description={hash with property that it is computationally infeasible to find any pair of inputs $(x, y)$ such that $x\neq y$ but $H(x) = H(y)$; implies \gls{weak collision resistance}}
+    description={hash with property that it is computationally infeasible to find any pair of inputs $(x, y)$ such that $x\neq y$ but $H(x) = H(y)$; implies \glsname{weak collision resistance}},
+    text={computationally infeasible to find any pair of inputs $(x, y)$ such that $x\neq y$ but $H(x) = H(y)$; implies \glsname{weak collision resistance}}
 }
 
 \newglossaryentry{collision resistance}
 {
     name={collision resistance},
-    description={see \gls{strong collision resistance}}
+    description={see \glsname{strong collision resistance}}
 }
 
 \newglossaryentry{iterative hash function}

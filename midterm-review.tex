@@ -1012,6 +1012,32 @@ Unlike symmetric-key, requires largest keys and is much slower
     160-bit ECC is comparable in security to 1024-bit RSA key.
 \end{multicols}
 \section{Hash Functions}
+A hash function $H$ maps a variable-length input to a fixed-length hash value. It must be
+\begin{itemize}[nosep]
+    \item efficient -- computing $H(M)$ is easy
+    \item one-way -- finding an input for which the output is a given hash-value is hard
+    \item collision-resistant -- finding two inputs for which the hash-values are the same is hard
+    \item pseudorandom
+\end{itemize}
+\subsection{Security Requirements}
+\begin{tabular}{lp{0.65\textwidth}}
+    Requirement                           & Definition                                                          \\\toprule
+    \glsname{preimage resistance}         & \multirow{2}{0.65\textwidth}{\glstext{one-way property}}            \\
+    \glsname{one-way property}            &                                                                     \\\midrule
+    \glsname{second preimage resistance}  & \multirow{2}{0.65\textwidth}{\glstext{weak collision resistance}}   \\
+    \glsname{weak collision resistance}   &                                                                     \\\midrule
+    \glsname{collision resistance}        & \multirow{2}{0.65\textwidth}{\glstext{strong collision resistance}} \\
+    \glsname{strong collision resistance} &                                                                     \\\bottomrule
+\end{tabular}
+\subsection{Brute-Force Attacks}
+Try random inputs until a collision is found. If output is $m$ bits, then probability of success for a single try is $2^{-m}$. Expected number of tries until success is $2^m$.
+
+Collision resistance attacks are a consequence of the birthday paradox:
+\begin{theorem}{The Birthday Paradox}{}
+    The probability that a collision occurs given a random map from $\set{1, 2, \dots, n}$ to $\set{1, 2, \dots, m}$ is \[1 - \prod_{i=1}^{n-1}1 - \frac{i}{m}\]
+\end{theorem}
+Since $1-x\approx e^{-x}$, we have \[1 - \prod_{i=1}^{n-1}1 - \frac{i}{m}\approx 1 - e^{-\frac{n^2}{2m}}\]
+so when $n=\bigOm{\sqrt{m}}$, a collision is likely.
 \section{Message Authentication}
 \section{Digital Signatuers}
 \section{Key Distribution}
