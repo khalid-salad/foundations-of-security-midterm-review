@@ -206,6 +206,426 @@ currently, no attacks better than \glsname{brute-force attack} known.
     \item State added to original state to obtain output
 \end{itemize}
 \section{Block Ciphers}
+Unlike \glspl{stream cipher}, \glspl{block cipher} have different encryption and decryption operations. A block cipher encrypts plaintext in fixed-length blocks
+\begin{center}
+    \begin{tikzpicture}[node distance=2.25cm, every node/.style={rectangle, draw, minimum width=2cm}]
+        \node[label=above:{key}] (k) {$k$};
+        \node[above right = 0.25cm and 0.5cm of k] (p1) {$p_1$};
+        \node[right of=p1, label=above:{plaintext}] (p2) {$p_2$};
+        \node[right of=p2] (p3) {$p_3$};
+
+        \node[below of=p1] (e1) {$E(k, p_1)$};
+        \node[below of=p2] (e2) {$E(k, p_2)$};
+        \node[below of=p3] (e3) {$E(k, p_3)$};
+
+        \node[below of=e1] (c1) {$c_1$};
+        \node[below of=e2, label=below:{ciphertext}] (c2) {$c_2$};
+        \node[below of=e3] (c3) {$c_3$};
+
+        \draw[->] (p1) -- (e1);
+        \draw[->] (e1) -- (c1);
+
+        \draw[->] (p2) -- (e2);
+        \draw[->] (e2) -- (c2);
+
+        \draw[->] (p3) -- (e3);
+        \draw[->] (e3) -- (c3);
+
+        \draw[->] (k) -| ([xshift=0.5cm]e1.north west);
+        \draw[->] (k) -| ([xshift=0.5cm]e2.north west);
+        \draw[->] (k) -| ([xshift=0.5cm]e3.north west);
+    \end{tikzpicture}
+\end{center}
+\subsection{Design Considerations}
+\begin{itemize}[nosep]
+    \item Key Size
+          \begin{itemize}[nosep]
+              \item number of possible $k$-bit keys is $2^k$
+              \item $k$ must be sufficiently large to prevent \glsplural{brute-force attack}
+          \end{itemize}
+    \item Block Size
+          \begin{itemize}
+              \item too short $\rightarrow$ does not hide patterns in plaintext
+                    \begin{itemize}
+                        \item e.g. $n=8$ bits is 1 character
+                        \item same as \glsname{substitution cipher}
+                    \end{itemize}
+              \item too long -- impractical, wasteful
+          \end{itemize}
+    \item encryption must be invertible
+          \begin{itemize}
+              \item different input blocks must be transformed into different output blocks
+              \item can be viewed as a permutation on all $n$-bit blocks
+              \item $(2^n)!$ possible permutations
+          \end{itemize}
+\end{itemize}
+\subsection{Secure Block Cipher}
+An $n$-bit \glsname{block cipher} is secure (for a computationally bounded attacker) if it is indistinguishable from a random permutation of $n$-bit blocks.
+
+\glsname{diffusion} -- \glsdesc{diffusion}
+\hrule
+\begin{center}
+    \begin{tikzpicture}[every node/.style={draw, rectangle}, minimum size=0.5cm, node distance=0.05cm]
+        \node[label=left:{plaintext block}] (b1) {1};
+        \node[right=of b1] (b2) {0};
+        \node[right=of b2] (b3) {0};
+        \node[right=of b3] (b4) {0};
+        \node[right=of b4,draw=red!32!black,fill=yellow,thick] (b5) {1};
+        \node[right=of b5] (b6) {0};
+        \node[right=of b6] (b7) {0};
+        \node[right=of b7] (b8) {1};
+        \node[right=of b8] (b9) {1};
+        \node[right=of b9] (b10) {1};
+        \node[right=of b10] (b11) {0};
+        \node[right=of b11] (b12) {1};
+
+        \node[right=1cm of b12] (k1) {1};
+        \node[right=of k1] (k2) {1};
+        \node[right=of k2] (k3) {0};
+        \node[right=of k3] (k4) {0};
+        \node[right=of k4] (k5) {0};
+        \node[right=of k5,label=right:{key}] (k6) {0};
+
+
+        \node[below=2cm of b1, label=left:{ciphertext block}] (c1) {0};
+        \node[below=2cm of b2,draw=red!32!black,fill=yellow,thick] (c2) {1};
+        \node[below=2cm of b3,draw=red!32!black,fill=yellow,thick] (c3) {0};
+        \node[below=2cm of b4] (c4) {1};
+        \node[below=2cm of b5,draw=red!32!black,fill=yellow,thick] (c5) {0};
+        \node[below=2cm of b6] (c6) {0};
+        \node[below=2cm of b7] (c7) {1};
+        \node[below=2cm of b8,draw=red!32!black,fill=yellow,thick] (c8) {1};
+        \node[below=2cm of b9,draw=red!32!black,fill=yellow,thick] (c9) {0};
+        \node[below=2cm of b10] (c10) {0};
+        \node[below=2cm of b11] (c11) {1};
+        \node[below=2cm of b12,draw=red!32!black,fill=yellow,thick] (c12) {0};
+
+        \fill[gray!40] ([yshift=-0.25cm]b1.south west) rectangle ([yshift=0.25cm]c12.north east);
+        \node[below=0.75cm of b1,draw=none,label=left:{encryption}] {};
+
+        \draw[draw=none] (b5.south) -- ([yshift=-1.5cm]b5.south) node[draw=none, pos=0.5] (center) {};
+        \path[draw,thick,red!32!black] (b5.south) -- (center.center);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c2);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c3);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c5);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c8);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c9);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c12);
+    \end{tikzpicture}
+\end{center}
+\glsname{confusion} -- \glsdesc{confusion}
+\hrule
+\begin{center}
+    \begin{tikzpicture}[every node/.style={draw, rectangle}, minimum size=0.5cm, node distance=0.05cm]
+        \node[label=left:{plaintext block}] (b1) {1};
+        \node[right=of b1] (b2) {0};
+        \node[right=of b2] (b3) {0};
+        \node[right=of b3] (b4) {0};
+        \node[right=of b4] (b5) {1};
+        \node[right=of b5] (b6) {0};
+        \node[right=of b6] (b7) {0};
+        \node[right=of b7] (b8) {1};
+        \node[right=of b8] (b9) {1};
+        \node[right=of b9] (b10) {1};
+        \node[right=of b10] (b11) {0};
+        \node[right=of b11] (b12) {1};
+
+        \node[right=1cm of b12] (k1) {1};
+        \node[right=of k1,draw=red!32!black,fill=yellow,thick] (k2) {1};
+        \node[right=of k2] (k3) {0};
+        \node[right=of k3] (k4) {0};
+        \node[right=of k4] (k5) {0};
+        \node[right=of k5,label=right:{key}] (k6) {0};
+
+        \node[below=2cm of b1, label=left:{ciphertext block}] (c1) {0};
+        \node[below=2cm of b2,draw=red!32!black,fill=yellow,thick] (c2) {1};
+        \node[below=2cm of b3,draw=red!32!black,fill=yellow,thick] (c3) {0};
+        \node[below=2cm of b4] (c4) {1};
+        \node[below=2cm of b5,draw=red!32!black,fill=yellow,thick] (c5) {0};
+        \node[below=2cm of b6] (c6) {0};
+        \node[below=2cm of b7] (c7) {1};
+        \node[below=2cm of b8,draw=red!32!black,fill=yellow,thick] (c8) {1};
+        \node[below=2cm of b9,draw=red!32!black,fill=yellow,thick] (c9) {0};
+        \node[below=2cm of b10] (c10) {0};
+        \node[below=2cm of b11] (c11) {1};
+        \node[below=2cm of b12,draw=red!32!black,fill=yellow,thick] (c12) {0};
+
+        \fill[gray!40] ([yshift=-0.25cm]b1.south west) rectangle ([yshift=0.25cm]c12.north east);
+        \node[below=0.75cm of b1,draw=none,label=left:{encryption}] {};
+
+        \draw[draw=none] (k2.south) -- ([yshift=-1.5cm]k2.south) node[draw=none, pos=0.5] (center) {};
+        \path[draw,thick,red!32!black] (k2.south) -- (center.center);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c2);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c3);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c5);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c8);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c9);
+        \path[draw,->,thick,red!32!black] (center.center) -| (c12);
+    \end{tikzpicture}
+\end{center}
+
+\subsection{Iterated Block Ciphers}
+Hard to design a single invertible function that satisfies \glsname{diffusion} and \glsname{confusion}. Use a round function
+\begin{itemize}[nosep]
+    \item $R$ -- round function
+          \begin{itemize}[nosep]
+              \item relatively weak transformation that introduces \glsname{diffusion} and \glsname{confusion}
+              \item by iterating, builds strong block cipher
+          \end{itemize}
+\end{itemize}
+\begin{center}
+    \begin{tikzpicture}[node distance=1cm]
+        \node (k) {key $k$};
+        \node[below left=2cm and 2.5cm of k] (k1) {$k_1$};
+        \node[right= of k1] (k2) {$k_2$};
+        \node[right= of k2] (k3) {$k_3$};
+        \node[below right=2cm and 2.5cm of k] (km) {$k_m$};
+        \draw[draw=none] (k3) -- (km) node[pos=0.5] (emptydots) {};
+
+
+        \node[minimum size=1cm,draw,rectangle,below= of k1] (r1) {$R$};
+        \node[minimum size=1cm,draw,rectangle,below= of k2] (r2) {$R$};
+        \node[minimum size=1cm,draw,rectangle,below= of k3] (r3) {$R$};
+        \node[below= 1.5cm of emptydots] (dots) {$\dots$};
+        \node[minimum size=1cm,draw,rectangle,below= of km] (rm) {$R$};
+        \node[left= of r1, align=center] (plaintext) {plaintext\\block};
+        \node[right= of rm, align=center] (ciphertext) {ciphertext\\block};
+        \node[left=of k1] {round keys};
+
+        \fill[gray!40] (k1.north) -- ([yshift=-0.5cm]k.south west) -- ([yshift=-0.5cm]k.south east) -- (km.north);
+        \node[below =0.75cm of k,align=center] {key\\expansion};
+
+        \draw[->] (k) -- ([yshift=-0.5cm]k.south);
+
+        \draw[->] (k1) -- (r1.north);
+        \draw[->] (k2) -- (r2.north);
+        \draw[->] (k3) -- (r3.north);
+        \draw[->] (km) -- (rm.north);
+
+        \draw[->] (plaintext) -- (r1);
+        \draw[->] (r1) -- (r2);
+        \draw[->] (r2) -- (r3);
+        \draw[->] (r3) -- (dots);
+        \draw[->] (dots) -- (rm);
+        \draw[->] (rm) -- (ciphertext);
+    \end{tikzpicture}
+\end{center}
+
+\subsection{Substitution-Permutation Ciphers}
+Common subtype of iterated block cipher, each round $R$ consists of
+\begin{itemize}[nosep]
+    \item Substitution $S$
+          \begin{itemize}[nosep]
+              \item substitutes small block with another small block
+              \item ideally, changing one input bit changes half of output bits
+          \end{itemize}
+    \item Permutation $P$
+          \begin{itemize}[nosep]
+              \item permutation of all bits
+          \end{itemize}
+\end{itemize}
+\begin{center}
+    \begin{tikzpicture}[every node/.style={rectangle, draw, minimum width=1.25cm}, node distance=0.25cm]
+        \node[draw=none] (p) {plaintext block};
+        \node[below left=0.5cm and 0.5cm of p] (firsts1) {$S_1$};
+        \node[right=of firsts1] (firsts2) {$S_2$};
+        \node[right=of firsts2] (firsts3) {$S_3$};
+        \node[right=of firsts3] (firsts4) {$S_4$};
+        \draw[draw=none] ([yshift=-1.5cm]firsts1.south west) rectangle ([yshift=-2cm]firsts4.south east) node[pos=0.5, minimum width=5.75cm] (mix1) {mix with key};
+        \node[draw=none,right=of mix1] (k1) {$k_1$};
+        \node[draw=none,below left=of firsts1] {$P$};
+        \draw[->] ([xshift=0.25cm]k1.west) -- (mix1);
+
+        \draw[draw=none] (mix1.north west) -- (mix1.north east)
+        node[draw=none,pos=0.043] (firstmix1) {}
+        node[draw=none,pos=0.087] (firstmix2) {}
+        node[draw=none,pos=0.130] (firstmix3) {}
+        node[draw=none,pos=0.174] (firstmix4) {}
+        node[draw=none,pos=0.304] (firstmix5) {}
+        node[draw=none,pos=0.348] (firstmix6) {}
+        node[draw=none,pos=0.391] (firstmix7) {}
+        node[draw=none,pos=0.435] (firstmix8) {}
+        node[draw=none,pos=0.565] (firstmix9) {}
+        node[draw=none,pos=0.609] (firstmix10) {}
+        node[draw=none,pos=0.652] (firstmix11) {}
+        node[draw=none,pos=0.696] (firstmix12) {}
+        node[draw=none,pos=0.826] (firstmix13) {}
+        node[draw=none,pos=0.870] (firstmix14) {}
+        node[draw=none,pos=0.913] (firstmix15) {}
+        node[draw=none,pos=0.957] (firstmix16) {};
+
+        \draw[draw=none] (firsts1.south west) -- (firsts1.south east)
+        node[draw=none, pos=0.2] (firsts11) {}
+        node[draw=none, pos=0.4] (firsts12) {}
+        node[draw=none, pos=0.6] (firsts13) {}
+        node[draw=none, pos=0.8] (firsts14) {};
+        \path[draw,->] (firsts11.center) -- ([yshift=-0.3cm]firsts11.south) -- ([yshift=0.3cm]firstmix6.north) -- (firstmix6.center);
+        \path[draw,->] (firsts12.center) -- ([yshift=-0.3cm]firsts12.south) -- ([yshift=0.3cm]firstmix4.north) -- (firstmix4.center);
+        \path[draw,->] (firsts13.center) -- ([yshift=-0.3cm]firsts13.south) -- ([yshift=0.3cm]firstmix9.north) -- (firstmix9.center);
+        \path[draw,->] (firsts14.center) -- ([yshift=-0.3cm]firsts14.south) -- ([yshift=0.3cm]firstmix1.north) -- (firstmix1.center);
+
+        \draw[draw=none] (firsts2.south west) -- (firsts2.south east)
+        node[draw=none, pos=0.2] (firsts21) {}
+        node[draw=none, pos=0.4] (firsts22) {}
+        node[draw=none, pos=0.6] (firsts23) {}
+        node[draw=none, pos=0.8] (firsts24) {};
+        \path[draw,->] (firsts21.center) -- ([yshift=-0.3cm]firsts21.south) -- ([yshift=0.3cm]firstmix2.north) -- (firstmix2.center);
+        \path[draw,->] (firsts22.center) -- ([yshift=-0.3cm]firsts22.south) -- ([yshift=0.3cm]firstmix7.north) -- (firstmix7.center);
+        \path[draw,->] (firsts23.center) -- ([yshift=-0.3cm]firsts23.south) -- ([yshift=0.3cm]firstmix5.north) -- (firstmix5.center);
+        \path[draw,->] (firsts24.center) -- ([yshift=-0.3cm]firsts24.south) -- ([yshift=0.3cm]firstmix14.north) -- (firstmix14.center);
+
+        \draw[draw=none] (firsts3.south west) -- (firsts3.south east)
+        node[draw=none, pos=0.2] (firsts31) {}
+        node[draw=none, pos=0.4] (firsts32) {}
+        node[draw=none, pos=0.6] (firsts33) {}
+        node[draw=none, pos=0.8] (firsts34) {};
+        \path[draw,->] (firsts31.center) -- ([yshift=-0.3cm]firsts31.south) -- ([yshift=0.3cm]firstmix11.north) -- (firstmix11.center);
+        \path[draw,->] (firsts32.center) -- ([yshift=-0.3cm]firsts32.south) -- ([yshift=0.3cm]firstmix10.north) -- (firstmix10.center);
+        \path[draw,->] (firsts33.center) -- ([yshift=-0.3cm]firsts33.south) -- ([yshift=0.3cm]firstmix16.north) -- (firstmix16.center);
+        \path[draw,->] (firsts34.center) -- ([yshift=-0.3cm]firsts34.south) -- ([yshift=0.3cm]firstmix3.north) -- (firstmix3.center);
+
+        \draw[draw=none] (firsts4.south west) -- (firsts4.south east)
+        node[draw=none, pos=0.2] (firsts41) {}
+        node[draw=none, pos=0.4] (firsts42) {}
+        node[draw=none, pos=0.6] (firsts43) {}
+        node[draw=none, pos=0.8] (firsts44) {};
+        \path[draw,->] (firsts41.center) -- ([yshift=-0.3cm]firsts41.south) -- ([yshift=0.3cm]firstmix12.north) -- (firstmix12.center);
+        \path[draw,->] (firsts42.center) -- ([yshift=-0.3cm]firsts42.south) -- ([yshift=0.3cm]firstmix8.north) -- (firstmix8.center);
+        \path[draw,->] (firsts43.center) -- ([yshift=-0.3cm]firsts43.south) -- ([yshift=0.3cm]firstmix13.north) -- (firstmix13.center);
+        \path[draw,->] (firsts44.center) -- ([yshift=-0.3cm]firsts44.south) -- ([yshift=0.3cm]firstmix15.north) -- (firstmix15.center);
+
+        \node[below=2.5cm of firsts1] (seconds1) {$S_1$};
+        \draw[draw=none] (seconds1.north west) -- (seconds1.north east)
+        node[draw=none, pos=0.2] (top11) {}
+        node[draw=none, pos=0.4] (top12) {}
+        node[draw=none, pos=0.6] (top13) {}
+        node[draw=none, pos=0.8] (top14) {};
+        \node[right=of seconds1] (seconds2) {$S_2$};
+        \draw[draw=none] (seconds2.north west) -- (seconds2.north east)
+        node[draw=none, pos=0.2] (top21) {}
+        node[draw=none, pos=0.4] (top22) {}
+        node[draw=none, pos=0.6] (top23) {}
+        node[draw=none, pos=0.8] (top24) {};
+        \node[right=of seconds2] (seconds3) {$S_3$};
+        \draw[draw=none] (seconds3.north west) -- (seconds3.north east)
+        node[draw=none, pos=0.2] (top31) {}
+        node[draw=none, pos=0.4] (top32) {}
+        node[draw=none, pos=0.6] (top33) {}
+        node[draw=none, pos=0.8] (top34) {};
+        \node[right=of seconds3] (seconds4) {$S_4$};
+        \draw[draw=none] (seconds4.north west) -- (seconds4.north east)
+        node[draw=none, pos=0.2] (top41) {}
+        node[draw=none, pos=0.4] (top42) {}
+        node[draw=none, pos=0.6] (top43) {}
+        node[draw=none, pos=0.8] (top44) {};
+        \draw[->] ([yshift=0.35cm]top11.north) -- (top11.center);
+        \draw[->] ([yshift=0.35cm]top12.north) -- (top12.center);
+        \draw[->] ([yshift=0.35cm]top13.north) -- (top13.center);
+        \draw[->] ([yshift=0.35cm]top14.north) -- (top14.center);
+        \draw[->] ([yshift=0.35cm]top21.north) -- (top21.center);
+        \draw[->] ([yshift=0.35cm]top22.north) -- (top22.center);
+        \draw[->] ([yshift=0.35cm]top23.north) -- (top23.center);
+        \draw[->] ([yshift=0.35cm]top24.north) -- (top24.center);
+        \draw[->] ([yshift=0.35cm]top31.north) -- (top31.center);
+        \draw[->] ([yshift=0.35cm]top32.north) -- (top32.center);
+        \draw[->] ([yshift=0.35cm]top33.north) -- (top33.center);
+        \draw[->] ([yshift=0.35cm]top34.north) -- (top34.center);
+        \draw[->] ([yshift=0.35cm]top41.north) -- (top41.center);
+        \draw[->] ([yshift=0.35cm]top42.north) -- (top42.center);
+        \draw[->] ([yshift=0.35cm]top43.north) -- (top43.center);
+        \draw[->] ([yshift=0.35cm]top44.north) -- (top44.center);
+
+        \draw[draw=none] ([yshift=-1.5cm]seconds1.south west) rectangle ([yshift=-2cm]seconds4.south east) node[pos=0.5, minimum width=5.75cm] (mix2) {mix with key};
+        \node[draw=none,right=of mix2] (k2) {$k_2$};
+        \node[draw=none,below left=of seconds1] {$P$};
+        \draw[->] ([xshift=0.25cm]k2.west) -- (mix2);
+
+        \draw[draw=none] (mix2.north west) -- (mix2.north east)
+        node[draw=none,pos=0.043] (secondmix1) {}
+        node[draw=none,pos=0.087] (secondmix2) {}
+        node[draw=none,pos=0.130] (secondmix3) {}
+        node[draw=none,pos=0.174] (secondmix4) {}
+        node[draw=none,pos=0.304] (secondmix5) {}
+        node[draw=none,pos=0.348] (secondmix6) {}
+        node[draw=none,pos=0.391] (secondmix7) {}
+        node[draw=none,pos=0.435] (secondmix8) {}
+        node[draw=none,pos=0.565] (secondmix9) {}
+        node[draw=none,pos=0.609] (secondmix10) {}
+        node[draw=none,pos=0.652] (secondmix11) {}
+        node[draw=none,pos=0.696] (secondmix12) {}
+        node[draw=none,pos=0.826] (secondmix13) {}
+        node[draw=none,pos=0.870] (secondmix14) {}
+        node[draw=none,pos=0.913] (secondmix15) {}
+        node[draw=none,pos=0.957] (secondmix16) {};
+
+        \draw[draw=none] (seconds1.south west) -- (seconds1.south east)
+        node[draw=none, pos=0.2] (seconds11) {}
+        node[draw=none, pos=0.4] (seconds12) {}
+        node[draw=none, pos=0.6] (seconds13) {}
+        node[draw=none, pos=0.8] (seconds14) {};
+        \path[draw,->] (seconds11.center) -- ([yshift=-0.3cm]seconds11.south) -- ([yshift=0.3cm]secondmix6.north) -- (secondmix6.center);
+        \path[draw,->] (seconds12.center) -- ([yshift=-0.3cm]seconds12.south) -- ([yshift=0.3cm]secondmix4.north) -- (secondmix4.center);
+        \path[draw,->] (seconds13.center) -- ([yshift=-0.3cm]seconds13.south) -- ([yshift=0.3cm]secondmix9.north) -- (secondmix9.center);
+        \path[draw,->] (seconds14.center) -- ([yshift=-0.3cm]seconds14.south) -- ([yshift=0.3cm]secondmix1.north) -- (secondmix1.center);
+
+        \draw[draw=none] (seconds2.south west) -- (seconds2.south east)
+        node[draw=none, pos=0.2] (seconds21) {}
+        node[draw=none, pos=0.4] (seconds22) {}
+        node[draw=none, pos=0.6] (seconds23) {}
+        node[draw=none, pos=0.8] (seconds24) {};
+        \path[draw,->] (seconds21.center) -- ([yshift=-0.3cm]seconds21.south) -- ([yshift=0.3cm]secondmix2.north) -- (secondmix2.center);
+        \path[draw,->] (seconds22.center) -- ([yshift=-0.3cm]seconds22.south) -- ([yshift=0.3cm]secondmix7.north) -- (secondmix7.center);
+        \path[draw,->] (seconds23.center) -- ([yshift=-0.3cm]seconds23.south) -- ([yshift=0.3cm]secondmix5.north) -- (secondmix5.center);
+        \path[draw,->] (seconds24.center) -- ([yshift=-0.3cm]seconds24.south) -- ([yshift=0.3cm]secondmix14.north) -- (secondmix14.center);
+
+        \draw[draw=none] (seconds3.south west) -- (seconds3.south east)
+        node[draw=none, pos=0.2] (seconds31) {}
+        node[draw=none, pos=0.4] (seconds32) {}
+        node[draw=none, pos=0.6] (seconds33) {}
+        node[draw=none, pos=0.8] (seconds34) {};
+        \path[draw,->] (seconds31.center) -- ([yshift=-0.3cm]seconds31.south) -- ([yshift=0.3cm]secondmix11.north) -- (secondmix11.center);
+        \path[draw,->] (seconds32.center) -- ([yshift=-0.3cm]seconds32.south) -- ([yshift=0.3cm]secondmix10.north) -- (secondmix10.center);
+        \path[draw,->] (seconds33.center) -- ([yshift=-0.3cm]seconds33.south) -- ([yshift=0.3cm]secondmix16.north) -- (secondmix16.center);
+        \path[draw,->] (seconds34.center) -- ([yshift=-0.3cm]seconds34.south) -- ([yshift=0.3cm]secondmix3.north) -- (secondmix3.center);
+
+        \draw[draw=none] (seconds4.south west) -- (seconds4.south east)
+        node[draw=none, pos=0.2] (seconds41) {}
+        node[draw=none, pos=0.4] (seconds42) {}
+        node[draw=none, pos=0.6] (seconds43) {}
+        node[draw=none, pos=0.8] (seconds44) {};
+        \path[draw,->] (seconds41.center) -- ([yshift=-0.3cm]seconds41.south) -- ([yshift=0.3cm]secondmix12.north) -- (secondmix12.center);
+        \path[draw,->] (seconds42.center) -- ([yshift=-0.3cm]seconds42.south) -- ([yshift=0.3cm]secondmix8.north) -- (secondmix8.center);
+        \path[draw,->] (seconds43.center) -- ([yshift=-0.3cm]seconds43.south) -- ([yshift=0.3cm]secondmix13.north) -- (secondmix13.center);
+        \path[draw,->] (seconds44.center) -- ([yshift=-0.3cm]seconds44.south) -- ([yshift=0.3cm]secondmix15.north) -- (secondmix15.center);
+
+        \node[draw=none,below=of mix2] {$\vdots$};
+    \end{tikzpicture}
+\end{center}
+\subsection{DES}
+\acrfull{des}
+\begin{itemize}[nosep]
+    \item block size -- 64 bits
+    \item key size -- 56 bits
+          \begin{itemize}[nosep]
+              \item 56 bit random
+              \item 8 bit parity check
+          \end{itemize}
+    \item iterated substitution cipher of 16 rounds
+\end{itemize}
+
+\begin{itemize}[nosep]
+    \item initial permutation
+          \begin{itemize}[nosep]
+              \item no cryptographic significance
+              \item facilities loading blocks in and out of 8-bit hardware
+          \end{itemize}
+    \item key permutation
+          \begin{itemize}[nosep]
+              \item discards parity bits
+              \item no cryptographic significance
+          \end{itemize}
+\end{itemize}
+\subsection{Feistel Network}
 \section{Block Cipher Modes of Operation}
 \section{Public-Key Encryption}
 \section{Hash Functions}
