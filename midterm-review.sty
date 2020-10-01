@@ -279,3 +279,9 @@
 \makeglossaries
 \loadglsentries{glossary.tex} 
 
+
+\makeatletter
+\tikzset{reset preactions/.code={\def\tikz@preactions{}}}
+\makeatother
+
+\usetikzlibrary{decorations.pathreplacing,angles,quotes}
