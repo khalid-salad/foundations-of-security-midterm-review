@@ -632,6 +632,14 @@ Hard to design a single invertible function that satisfies \glsname{diffusion} a
                   \item no cryptographic significance
               \end{itemize}
     \end{itemize}
+    \subsubsection*{Advantages}
+    \begin{itemize}[nosep]
+        \item relatively secure against cryptanalytic attacks -- best attack in $2^{43}$ steps
+        \item thoroughly studied and widely supported
+    \end{itemize}
+    \subsubsection*{Disadvantages}
+    Vulnerable to \glspl{brute-force attack} -- $56$-bit key $\rightarrow$ $2^{56}$ possible keys.
+
     \resizebox{0.45\textwidth}{!}{
         \begin{tikzpicture}[every node/.style={rectangle, draw, fill=gray!40, minimum width=3.5cm, minimum height=1cm, drop shadow={top color=black, bottom color=white, shadow xshift=0.25em, shadow yshift=-0.25em}, rounded corners}, node distance=1cm]
             \node (initial) {Initial Permutation};
@@ -705,7 +713,6 @@ Consists of encryption and decrpytion round
                         \end{align*}
               \end{itemize}
     \end{itemize}
-    DES is vulnerable to \glspl{brute-force attack}.
 \end{multicols}
 \begin{multicols}{2}
     \subsection{AES}
@@ -801,9 +808,135 @@ Consists of encryption and decrpytion round
     \item Operations on bytes and 32-bit words
           \begin{itemize}[nosep]\item most operations can be precomputed\end{itemize}
     \item Supported by hardware -- AES instruction set for CPUs
-    \item Best known attack takes $2^{126}$ steps, only 4x faster than \glsname{brute-force attack}
+    \item very secure -- best known attack takes $2^{126}$ steps, only 4x faster than \glsname{brute-force attack}
 \end{itemize}
+\subsection{Multiple Encryption}
+Use same encryption algorithm multiple times, each time with a different key
+
+\glsname{2des}
+
+\begin{tikzpicture}[every node/.style={minimum width=1.5cm,minimum height=0.75cm,draw,fill=gray!40,drop shadow={top color=black, bottom color=white, shadow xshift=0.25em, shadow yshift=-0.25em}, rounded corners}]
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none] (p) {$P$};
+    \node[right=of p] (e1) {$E$};
+    \node[right=of e1] (e2) {$E$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,right=of e2] (c) {$C=E(k_2, E(k_1, P))$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of e1] (k1) {$k_1$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of e2] (k2) {$k_2$};
+    \draw[->] (p) -- (e1);
+    \draw[->] (e1) -- (e2);
+    \draw[->] (e2) -- (c);
+    \draw[->] (k1) -- (e1);
+    \draw[->] (k2) -- (e2);
+\end{tikzpicture}
+\subsubsection{Meet in the Middle}
+\glsname{meet in the middle attack} -- trade time for storage
+\begin{itemize}[nosep]
+    \item \glsname{brute-force attack} requires $2^{112}$ steps
+    \item store $\sqrt{2^{112}} = 2^{56}$ values, $\approx 2^{56}$ steps
+    \item generally, storing $2^{56 - m} \rightarrow \approx 2^{56+m}$ steps
+\end{itemize}
+
+\glsname{3des}
+Using 3 keys instead of 2. Naive implementation suffers same vulnerability to \glsname{meet in the middle attack} as \glsname{2des}. Instead use EDE -- Encryption-Decryption-Encryption
+
+\begin{tikzpicture}[every node/.style={minimum width=1.5cm,minimum height=0.75cm,draw,fill=gray!40,drop shadow={top color=black, bottom color=white, shadow xshift=0.25em, shadow yshift=-0.25em}, rounded corners}]
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none] (tp) {$P$};
+    \node[right=of tp] (t1) {$E$};
+    \node[right=of t1] (t2) {$D$};
+    \node[right=of t2] (t3) {$E$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,right=of t3] (tc) {$C=E(k_3, D(k_2, E(k_1, P)))$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of t1] (tk1) {$k_1$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of t2] (tk2) {$k_2$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of t3] (tk3) {$k_3$};
+    \draw[->] (tp) -- (t1);
+    \draw[->] (t1) -- (t2);
+    \draw[->] (t2) -- (t3);
+    \draw[->] (t3) -- (tc);
+    \draw[->] (tk1) -- (t1);
+    \draw[->] (tk2) -- (t2);
+    \draw[->] (tk3) -- (t3);
+
+    \node[below=2cm of tp,minimum size=0cm,style=reset preactions,draw=none,fill=none] (bp) {$C$};
+    \node[right=of bp] (b1) {$D$};
+    \node[right=of b1] (b2) {$E$};
+    \node[right=of b2] (b3) {$D$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,right=of b3] (bc) {$P=D(k_1, E(k_2, D(k_3, C)))$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of b1] (bk1) {$k_3$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of b2] (bk2) {$k_2$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of b3] (bk3) {$k_1$};
+    \draw[->] (bp) -- (b1);
+    \draw[->] (b1) -- (b2);
+    \draw[->] (b2) -- (b3);
+    \draw[->] (b3) -- (bc);
+    \draw[->] (bk1) -- (b1);
+    \draw[->] (bk2) -- (b2);
+    \draw[->] (bk3) -- (b3);
+\end{tikzpicture}
+
+Above has 3 keys, butvulnerable to more sophisted effectively MITM attack -- only 112-bit security. Taking $k_1=k_3$ provides 80-bits of effective security while still preventing the MITM attack when using 2 keys.
+\begin{tikzpicture}[every node/.style={minimum width=1.5cm,minimum height=0.75cm,draw,fill=gray!40,drop shadow={top color=black, bottom color=white, shadow xshift=0.25em, shadow yshift=-0.25em}, rounded corners}]
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none] (tp) {$P$};
+    \node[right=of tp] (t1) {$E$};
+    \node[right=of t1] (t2) {$D$};
+    \node[right=of t2] (t3) {$E$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,right=of t3] (tc) {$C=E(k_1, D(k_2, E(k_1, P)))$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of t1] (tk1) {$k_1$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of t2] (tk2) {$k_2$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of t3] (tk3) {$k_1$};
+    \draw[->] (tp) -- (t1);
+    \draw[->] (t1) -- (t2);
+    \draw[->] (t2) -- (t3);
+    \draw[->] (t3) -- (tc);
+    \draw[->] (tk1) -- (t1);
+    \draw[->] (tk2) -- (t2);
+    \draw[->] (tk3) -- (t3);
+
+    \node[below=2cm of tp,minimum size=0cm,style=reset preactions,draw=none,fill=none] (bp) {$C$};
+    \node[right=of bp] (b1) {$D$};
+    \node[right=of b1] (b2) {$E$};
+    \node[right=of b2] (b3) {$D$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,right=of b3] (bc) {$P=D(k_1, E(k_2, D(k_1, C)))$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of b1] (bk1) {$k_1$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of b2] (bk2) {$k_2$};
+    \node[minimum size=0cm,style=reset preactions,draw=none,fill=none,above=of b3] (bk3) {$k_1$};
+    \draw[->] (bp) -- (b1);
+    \draw[->] (b1) -- (b2);
+    \draw[->] (b2) -- (b3);
+    \draw[->] (b3) -- (bc);
+    \draw[->] (bk1) -- (b1);
+    \draw[->] (bk2) -- (b2);
+    \draw[->] (bk3) -- (b3);
+\end{tikzpicture}
 \section{Block Cipher Modes of Operation}
+\begin{center}\begin{tabular}{llll}
+        \multicolumn{1}{c}{Orientation} & \multicolumn{2}{c}{Mode} & \multicolumn{1}{c}{Use}                                      \\\toprule
+        \multirow{2}{*}{Block}          & \acrshort{ecb}           & \acrlong{ecb}           & single block                       \\
+                                        & \acrshort{cbc}           & \acrlong{cbc}           & commonly used                      \\\midrule
+        \multirow{3}{*}{Stream}         & \acrshort{ofb}           & \acrlong{ofb}           & no random access                   \\
+                                        & \acrshort{cfb}           & \acrlong{cfb}           & self-synchronized stream cipher    \\
+                                        & \acrshort{ctr}           & \acrlong{ctr}           & very efficient, very commonly used \\\bottomrule
+    \end{tabular}
+\end{center}
+\vspace*{0.25in}
+\begin{center}
+    \begin{tabular}{lp{0.4\textwidth}p{0.4\textwidth}}
+        \multicolumn{1}{c}{Mode}        & \multicolumn{1}{c}{Advantages}                       & \multicolumn{1}{c}{Disadvantages}                                    \\\toprule
+        \multirow{3}{*}{\acrshort{ecb}} & blocks can be encrypted/decrypted in parallel        & identical plaintext $\rightarrow$ identical ciphertext               \\\cmidrule{2-3}
+                                        &                                                      & attacker can rearrange or remove blocks from ciphertext              \\\midrule
+        \multirow{7}{*}{\acrshort{cbc}} & hides patterns in the plaintext                      & blocks cannot be encrypted in parallel                               \\\cmidrule{2-3}
+                                        & \multirow{2}{*}{blocks can be decrypted in parallel} & attacker might be able to rearrange or remove blocks from ciphertext \\\cmidrule{2-3}
+                                        &                                                      & IV needs integrity protection                                        \\\cmidrule{3-3}
+                                        &                                                      & attacker might be able to tamper with bits of the plaintext          \\\midrule
+        \multirow{4}{*}{\acrshort{ofb}} & \multirow{2}{*}{bit errors do not propagate}         & blocks cannot be encrypted or decrypted in parallel                  \\\cmidrule{2-3}
+                                        & \multirow{2}{*}{pre-computation is possible}         & attacker can tamper with the bits of the plaintext                   \\\midrule
+        \multirow{6}{*}{\acrshort{cfb}} & blocks can be decrypted in parallel                  & blocks cannot be encrypted in parallel                               \\\cmidrule{2-3}
+                                        & \multirow{2}{*}{self-synchronizing stream cipher}    & attacker might be able to tamper with the bits of the plaintext      \\\cmidrule{2-3}
+                                        &                                                      & attacker might be able to rearrange or remove blocks                 \\\midrule
+        \acrshort{ctr}                  & blocks can be encrypted and decrypted in parallel    & attacker can tamper with bits of the plaintext                       \\\cmidrule{2-3}
+                                        & bit errors do not propagate                          &                                                                      \\\cmidrule{2-2}
+                                        & pre-computation is possible                          &                                                                      \\\bottomrule
+    \end{tabular}
+\end{center}
 \section{Public-Key Encryption}
 \section{Hash Functions}
 \section{Message Authentication}
