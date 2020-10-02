@@ -1038,6 +1038,107 @@ Collision resistance attacks are a consequence of the birthday paradox:
 \end{theorem}
 Since $1-x\approx e^{-x}$, we have \[1 - \prod_{i=1}^{n-1}1 - \frac{i}{m}\approx 1 - e^{-\frac{n^2}{2m}}\]
 so when $n=\bigOm{\sqrt{m}}$, a collision is likely.
+\subsection{Iterative Hash Function}
+Divide input $M$ into fixed-length blocks $M_1$, $M_2$, $\dots$, $M_n$. Then
+
+\begin{tikzpicture}[node distance=1cm]
+    \node[below left=2cm and 2.5cm of k] (k1) {$M_1$};
+    \node[right= of k1] (k2) {$M_2$};
+    \node[right= of k2] (k3) {$M_3$};
+    \node[below right=2cm and 2.5cm of k] (km) {$M_n$};
+    \draw[draw=none] (k3) -- (km) node[pos=0.5] (emptydots) {};
+
+
+    \node[minimum size=1cm,draw,rectangle,below= of k1] (r1) {$f$};
+    \node[minimum size=1cm,draw,rectangle,below= of k2] (r2) {$f$};
+    \node[minimum size=1cm,draw,rectangle,below= of k3] (r3) {$f$};
+    \node[below= 1.5cm of emptydots] (dots) {$\dots$};
+    \node[minimum size=1cm,draw,rectangle,below= of km] (rm) {$f$};
+    \node[left= of r1, align=center] (plaintext) {IV};
+    \node[right= of rm, align=center] (ciphertext) {Hash Value};
+
+    \draw[->] (k1) -- (r1.north);
+    \draw[->] (k2) -- (r2.north);
+    \draw[->] (k3) -- (r3.north);
+    \draw[->] (km) -- (rm.north);
+
+    \draw[->] (plaintext) -- (r1);
+    \draw[->] (r1) -- (r2);
+    \draw[->] (r2) -- (r3);
+    \draw[->] (r3) -- (dots);
+    \draw[->] (dots) -- (rm);
+    \draw[->] (rm) -- (ciphertext);
+\end{tikzpicture}
+\begin{itemize}[nosep]
+    \item IV: initialization vector
+    \item $f$: compression function
+          \begin{itemize}[nosep]
+              \item one-way and collision resistant
+              \item takes two fixed-length inputs, produces one fixed-length output
+          \end{itemize}
+\end{itemize}
+\subsection{Merkle-Damg\r{a}rd Construction}
+Method to build cryptographic hash frunctions from compression functions.
+
+\begin{tikzpicture}[node distance=1cm]
+    \node (m1) {$M_1$};
+    \node[right= of m1] (m2) {$M_2$};
+    \node[right=2cm of m2] (mn) {$M_n$};
+    \draw[draw=none] (m2) -- (mn) node[pos=0.5] (emptydots) {};
+    \node[node distance=0.25cm, right= of mn] (pad) {length padding};
+
+
+
+    \node[minimum size=1cm,draw,rectangle,below= of m1] (f1) {$f$};
+    \node[minimum size=1cm,draw,rectangle,below= of m2] (f2) {$f$};
+    \node[minimum size=1cm,draw,rectangle,below= of mn] (fn) {$f$};
+    \draw[draw=none] (f2) -- (fn) node[pos=0.5] (dots) {$\dots$};
+    \node[minimum size=1cm,draw,rectangle,below= of pad] (lp) {$f$};
+    \node[left= of f1, align=center] (iv) {IV};
+    \node[draw=none,right=of lp] (fin) {finalization};
+    \node[right= of fin, align=center] (hash) {Hash};
+
+    \draw[->] (m1) -- (f1.north);
+    \draw[->] (m2) -- (f2.north);
+    \draw[->] (mn) -- (fn.north);
+    \draw[->] (pad) -- (lp);
+
+    \draw[->] (iv) -- (f1);
+    \draw[->] (f1) -- (f2);
+    \draw[->] (f2) -- (dots);
+    \draw[->] (dots) -- (fn);
+    \draw[->] (fn) -- (lp);
+    \draw[->,dashed] (lp) -- (fin);
+    \draw[->,dashed] (fin) -- (hash);
+
+    \draw[dashed] (fin.south west) rectangle (fin.north east);
+\end{tikzpicture}
+
+length padding (Merkle-Damg\r{a}rd Strengthening) includes the length of the input as well as a fixed pattern
+
+if $f$ is collision resistant and proper length padding is used, hash function is collision resistant
+
+\subsection{CBC Hash Functions}
+\begin{tabular}{lll}
+    Algorithm              & Properties                             & Security                                  \\\toprule
+    \multirow{4}{*}{MD5}   & based on Merkle-Damg\r{a}rd            & not collision resistant                   \\
+                           & compression func 4 rounds, 16 ops each & cryptanalysis can break in $2^{18}$ steps \\
+                           & 512-bit block                          & less than 1 sec on average computer       \\
+                           & 128-bit hash                           &                                           \\\midrule
+    SHA-1                  & 160-bit hash                           & collision in $2^{65}$ steps               \\\midrule
+    \multirow{2}{*}{SHA-2} & family: SHA-224, 256, 384, 512         & similar to SHA-1, some weaknesses         \\
+                           & output 224, 256, 384, 512 bit hash     & no practical attacks yet                  \\\midrule
+    \multirow{2}{*}{SHA-3} & sponge construction                    &                                           \\
+                           & arbitrary output length                &                                           \\\bottomrule
+\end{tabular}
+
+\begin{tabular}{ll}
+    Algorithm & Security          \\\toprule
+    MD5       & not secure at all \\
+    SHA-1     & not secure        \\
+    SHA-2     & mostly secure     \\
+    SHA-3     & secure            \\\bottomrule
+\end{tabular}
 \section{Message Authentication}
 \section{Digital Signatuers}
 \section{Key Distribution}
