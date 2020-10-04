@@ -21,45 +21,41 @@
 \Gls{weakest link} -- \glsdesc*{weakest link}
 
 Security is a process, not a product -- attackers continuously looking for new vulnerabilities, so systems must be regularly updated and continuously monitored.
-\begin{multicols}{2}
-    Tension between security and
-    \begin{itemize}[nosep]
-        \item usability
-        \item functionality
-        \item efficiency
-        \item time-to-market
-        \item development cost
-    \end{itemize}
+Tension between security and
+\begin{itemize}[nosep]
+    \item usability
+    \item functionality
+    \item efficiency
+    \item time-to-market
+    \item development cost
+\end{itemize}
 
-    Value of security often only perceived when there is a security failure
+Value of security often only perceived when there is a security failure
 
-    Can be measured by
-    \begin{itemize}[nosep]
-        \item checking compliance
-        \item pentesting
-    \end{itemize}
-\end{multicols}
+Can be measured by
+\begin{itemize}[nosep]
+    \item checking compliance
+    \item pentesting
+\end{itemize}
 \section{Introduction to Cryptography}
 \subsection{Attacker Modeling Principles}
-\begin{multicols}{2}
-    Security is defined with respect to an \gls{attacker model} -- what the attacker
-    \begin{itemize}[nosep]
-        \item can do
-        \item knows
-        \item wants to achieve
-    \end{itemize}
+Security is defined with respect to an \gls{attacker model} -- what the attacker
+\begin{itemize}[nosep]
+    \item can do
+    \item knows
+    \item wants to achieve
+\end{itemize}
 
-    Generally better to overestimate the attacker's capabilities, knowledge, and determination.
+Generally better to overestimate the attacker's capabilities, knowledge, and determination.
 
-    Safe to assume attacker knows
-    \begin{itemize}[nosep]
-        \item algorithms
-        \item system design
-        \item implementation
-        \item configuaration
-    \end{itemize}
-    but the attacker cannot know \emph{truly} random values.
-\end{multicols}
+Safe to assume attacker knows
+\begin{itemize}[nosep]
+    \item algorithms
+    \item system design
+    \item implementation
+    \item configuaration
+\end{itemize}
+but the attacker cannot know \emph{truly} random values.
 \subsection{Security by Obscurity}
 \Gls{security by obscurity} -- \glsdesc*{security by obscurity}
 
@@ -108,27 +104,23 @@ Types of attacks:
 \Glsname{Kerckhoffs} -- \glsdesc*{Kerckhoffs}. Rejection of \glsname{security by obscurity}
 \section{Stream Ciphers}
 \subsection{Perfect Security}
-\begin{multicols}{2}
-    \Gls{perfect security} -- \glsdesc*{perfect security}
+\Gls{perfect security} -- \glsdesc*{perfect security}
 
-    \Gls{one-time pad} -- \glsdesc*{one-time pad}
-\end{multicols}
+\Gls{one-time pad} -- \glsdesc*{one-time pad}
 \subsection{Semantic Security}
 \Gls{semantic security} -- \glsdesc*{semantic security}
-\begin{multicols}{2}
-    Many-time pad: reusing the one-time key for multiple plaintext. Attacker can recover $p_1 \xor p_2$:
-    \begin{align*}c_1 \xor c_2
-         & = (p_1 \xor k) \xor (p_2 \xor k) \\
-         & = (p_1 \xor p_2) \xor (k \xor k) \\
-         & = p_1 \xor p_2
-    \end{align*}
-    and if attacker knows $p_1$, can recover $p_2$:
-    \begin{align*}p_1 \xor (c_1 \xor c_2)
-         & = p_1 \xor (p_1 \xor p_2) \\
-         & = (p_1 \xor p_1) \xor p_2 \\
-         & = p_2
-    \end{align*}
-\end{multicols}
+Many-time pad: reusing the one-time key for multiple plaintext. Attacker can recover $p_1 \xor p_2$:
+\begin{align*}c_1 \xor c_2
+     & = (p_1 \xor k) \xor (p_2 \xor k) \\
+     & = (p_1 \xor p_2) \xor (k \xor k) \\
+     & = p_1 \xor p_2
+\end{align*}
+and if attacker knows $p_1$, can recover $p_2$:
+\begin{align*}p_1 \xor (c_1 \xor c_2)
+     & = p_1 \xor (p_1 \xor p_2) \\
+     & = (p_1 \xor p_1) \xor p_2 \\
+     & = p_2
+\end{align*}
 \subsection{General Model of Stream Ciphers}
 Make one-time pad practical by securely extending the key.
 \subsubsection*{Pseudorandom Number Generator}
@@ -169,104 +161,99 @@ Solutions:
     \item \glsname{nonce} -- \glsdesc{nonce}
           \begin{itemize}[nosep]\item xor key with \glsname{nonce} for each plaintext to produce different key\end{itemize}
 \end{itemize}
-\begin{multicols}{2}
-    \subsection{RC4}
-    Old WiFi and Web Security standard
+\subsection{RC4}
+Old WiFi and Web Security standard
 
-    \glsname{rc4}
-    Advantages
-    \begin{itemize}[nosep]
-        \item variable key length (from 8 to 2048 bits)
-        \item very simple, uses byte-oriented operations:
-              \begin{itemize}[nosep]\item only 8 to 16 machine operations required per output byte\end{itemize}
-    \end{itemize}
-    Applications
-    \begin{itemize}[nosep]
-        \item Wifi: WEP and WPA
-              \begin{itemize}[nosep]\item broken in 2001, deprecated in 2004\end{itemize}
-        \item Web Security (HTTPS): SSL and TLS
-              \begin{itemize}[nosep]\item broken in 2013, deprecated in 2015\end{itemize}
-    \end{itemize}
-    RC4 has been retired.
-    \subsection{Salsa20/ChaCha20}
-    State of the Art Stream Cipher
-    \glsname{salsa20} (and more secure, more efficient variant \glsname{chacha20})
+\glsname{rc4}
+Advantages
+\begin{itemize}[nosep]
+    \item variable key length (from 8 to 2048 bits)
+    \item very simple, uses byte-oriented operations:
+          \begin{itemize}[nosep]\item only 8 to 16 machine operations required per output byte\end{itemize}
+\end{itemize}
+Applications
+\begin{itemize}[nosep]
+    \item Wifi: WEP and WPA
+          \begin{itemize}[nosep]\item broken in 2001, deprecated in 2004\end{itemize}
+    \item Web Security (HTTPS): SSL and TLS
+          \begin{itemize}[nosep]\item broken in 2013, deprecated in 2015\end{itemize}
+\end{itemize}
+RC4 has been retired.
+\subsection{Salsa20/ChaCha20}
+State of the Art Stream Cipher
+\glsname{salsa20} (and more secure, more efficient variant \glsname{chacha20})
 
-    Key length is 128 or 256 bits.
+Key length is 128 or 256 bits.
 
-    \subsubsection*{Advantages}
-    \begin{itemize}[nosep]
-        \item fast software implementation (simple 32-bit operations)
-        \item can seek to any position in output sequence
-        \item 64-bit nonce part of algorithm to prevent key-reuse
-    \end{itemize}
-    currently, no attacks better than \glsname{brute-force attack} known.
+\subsubsection*{Advantages}
+\begin{itemize}[nosep]
+    \item fast software implementation (simple 32-bit operations)
+    \item can seek to any position in output sequence
+    \item 64-bit nonce part of algorithm to prevent key-reuse
+\end{itemize}
+currently, no attacks better than \glsname{brute-force attack} known.
 
-    \subsubsection*{Algorithm}
-    \begin{itemize}[nosep]
-        \item Output in blocks of $16\times32$ bits
-        \item internal state: $16\times 32$ bits
-              \begin{itemize}[nosep]\item initialized using key, nonce, and seek position\end{itemize}
-        \item State updated with \textproc{xor}, 32-bit addition mod $2^{32}$, and rotating 32 bit values
-        \item Performs 20 rounds of \textproc{xor}-add-rotate, each of which updates all values in state
-        \item State added to original state to obtain output
-    \end{itemize}
-\end{multicols}
+\subsubsection*{Algorithm}
+\begin{itemize}[nosep]
+    \item Output in blocks of $16\times32$ bits
+    \item internal state: $16\times 32$ bits
+          \begin{itemize}[nosep]\item initialized using key, nonce, and seek position\end{itemize}
+    \item State updated with \textproc{xor}, 32-bit addition mod $2^{32}$, and rotating 32 bit values
+    \item Performs 20 rounds of \textproc{xor}-add-rotate, each of which updates all values in state
+    \item State added to original state to obtain output
+\end{itemize}
 \section{Block Ciphers}
-\begin{multicols}{2}
-    Unlike \glspl{stream cipher}, \glspl{block cipher} have different encryption and decryption operations. A block cipher encrypts plaintext in fixed-length blocks
-    \subsection{Design Considerations}
-    \begin{itemize}[nosep]
-        \item Key Size
-              \begin{itemize}[nosep]
-                  \item number of possible $k$-bit keys is $2^k$
-                  \item $k$ must be sufficiently large to prevent \glsplural{brute-force attack}
-              \end{itemize}
-        \item Block Size
-              \begin{itemize}
-                  \item too short $\rightarrow$ does not hide patterns in plaintext
-                        \begin{itemize}
-                            \item e.g. $n=8$ bits is 1 character
-                            \item same as \glsname{substitution cipher}
-                        \end{itemize}
-                  \item too long -- impractical, wasteful
-              \end{itemize}
-        \item encryption must be invertible
-              \begin{itemize}
-                  \item different input blocks must be transformed into different output blocks
-                  \item can be viewed as a permutation on all $n$-bit blocks
-                  \item $(2^n)!$ possible permutations
-              \end{itemize}
-    \end{itemize}
-    \resizebox{0.45\textwidth}{!}{
-        \begin{tikzpicture}[node distance=2.25cm, every node/.style={rectangle, draw, minimum width=2cm}]
-            \node[label=above:{key}] (k) {$k$};
-            \node[above right = 0.25cm and 0.5cm of k] (p1) {$p_1$};
-            \node[right of=p1, label=above:{plaintext}] (p2) {$p_2$};
-            \node[right of=p2] (p3) {$p_3$};
+Unlike \glspl{stream cipher}, \glspl{block cipher} have different encryption and decryption operations. A block cipher encrypts plaintext in fixed-length blocks
+\subsection{Design Considerations}
+\begin{itemize}[nosep]
+    \item Key Size
+          \begin{itemize}[nosep]
+              \item number of possible $k$-bit keys is $2^k$
+              \item $k$ must be sufficiently large to prevent \glsplural{brute-force attack}
+          \end{itemize}
+    \item Block Size
+          \begin{itemize}
+              \item too short $\rightarrow$ does not hide patterns in plaintext
+                    \begin{itemize}
+                        \item e.g. $n=8$ bits is 1 character
+                        \item same as \glsname{substitution cipher}
+                    \end{itemize}
+              \item too long -- impractical, wasteful
+          \end{itemize}
+    \item encryption must be invertible
+          \begin{itemize}
+              \item different input blocks must be transformed into different output blocks
+              \item can be viewed as a permutation on all $n$-bit blocks
+              \item $(2^n)!$ possible permutations
+          \end{itemize}
+\end{itemize}
+\begin{tikzpicture}[node distance=2.25cm, every node/.style={rectangle, draw, minimum width=2cm}]
+    \node[label=above:{key}] (k) {$k$};
+    \node[above right = 0.25cm and 0.5cm of k] (p1) {$p_1$};
+    \node[right of=p1, label=above:{plaintext}] (p2) {$p_2$};
+    \node[right of=p2] (p3) {$p_3$};
 
-            \node[below of=p1] (e1) {$E(k, p_1)$};
-            \node[below of=p2] (e2) {$E(k, p_2)$};
-            \node[below of=p3] (e3) {$E(k, p_3)$};
+    \node[below of=p1] (e1) {$E(k, p_1)$};
+    \node[below of=p2] (e2) {$E(k, p_2)$};
+    \node[below of=p3] (e3) {$E(k, p_3)$};
 
-            \node[below of=e1] (c1) {$c_1$};
-            \node[below of=e2, label=below:{ciphertext}] (c2) {$c_2$};
-            \node[below of=e3] (c3) {$c_3$};
+    \node[below of=e1] (c1) {$c_1$};
+    \node[below of=e2, label=below:{ciphertext}] (c2) {$c_2$};
+    \node[below of=e3] (c3) {$c_3$};
 
-            \draw[->] (p1) -- (e1);
-            \draw[->] (e1) -- (c1);
+    \draw[->] (p1) -- (e1);
+    \draw[->] (e1) -- (c1);
 
-            \draw[->] (p2) -- (e2);
-            \draw[->] (e2) -- (c2);
+    \draw[->] (p2) -- (e2);
+    \draw[->] (e2) -- (c2);
 
-            \draw[->] (p3) -- (e3);
-            \draw[->] (e3) -- (c3);
+    \draw[->] (p3) -- (e3);
+    \draw[->] (e3) -- (c3);
 
-            \draw[->] (k) -| ([xshift=0.5cm]e1.north west);
-            \draw[->] (k) -| ([xshift=0.5cm]e2.north west);
-            \draw[->] (k) -| ([xshift=0.5cm]e3.north west);
-        \end{tikzpicture}}
-\end{multicols}
+    \draw[->] (k) -| ([xshift=0.5cm]e1.north west);
+    \draw[->] (k) -| ([xshift=0.5cm]e2.north west);
+    \draw[->] (k) -| ([xshift=0.5cm]e3.north west);
+\end{tikzpicture}
 \subsection{Secure Block Cipher}
 An $n$-bit \glsname{block cipher} is secure (for a computationally bounded attacker) if it is indistinguishable from a random permutation of $n$-bit blocks.
 
@@ -420,378 +407,366 @@ Hard to design a single invertible function that satisfies \glsname{diffusion} a
 \end{center}
 
 \subsection{Substitution-Permutation Ciphers}
-\begin{multicols}{2}
-    Common subtype of iterated block cipher, each round $R$ consists of
-    \begin{itemize}[nosep]
-        \item Substitution $S$
-              \begin{itemize}[nosep]
-                  \item substitutes small block with another small block
-                  \item ideally, changing one input bit changes half of output bits
-              \end{itemize}
-        \item Permutation $P$
-              \begin{itemize}[nosep]
-                  \item permutation of all bits
-              \end{itemize}
-    \end{itemize}
-    \resizebox{0.4\textwidth}{!}{
-        \begin{tikzpicture}[every node/.style={rectangle, draw, minimum width=1.25cm}, node distance=0.25cm]
-            \node[draw=none] (p) {plaintext block};
-            \node[below left=0.5cm and 0.5cm of p] (firsts1) {$S_1$};
-            \node[right=of firsts1] (firsts2) {$S_2$};
-            \node[right=of firsts2] (firsts3) {$S_3$};
-            \node[right=of firsts3] (firsts4) {$S_4$};
-            \draw[draw=none] ([yshift=-1.5cm]firsts1.south west) rectangle ([yshift=-2cm]firsts4.south east) node[pos=0.5, minimum width=5.75cm] (mix1) {mix with key};
-            \node[draw=none,right=of mix1] (k1) {$k_1$};
-            \node[draw=none,below left=of firsts1] {$P$};
-            \draw[->] ([xshift=0.25cm]k1.west) -- (mix1);
+Common subtype of iterated block cipher, each round $R$ consists of
+\begin{itemize}[nosep]
+    \item Substitution $S$
+          \begin{itemize}[nosep]
+              \item substitutes small block with another small block
+              \item ideally, changing one input bit changes half of output bits
+          \end{itemize}
+    \item Permutation $P$
+          \begin{itemize}[nosep]
+              \item permutation of all bits
+          \end{itemize}
+\end{itemize}
+\begin{tikzpicture}[every node/.style={rectangle, draw, minimum width=1.25cm}, node distance=0.25cm]
+    \node[draw=none] (p) {plaintext block};
+    \node[below left=0.5cm and 0.5cm of p] (firsts1) {$S_1$};
+    \node[right=of firsts1] (firsts2) {$S_2$};
+    \node[right=of firsts2] (firsts3) {$S_3$};
+    \node[right=of firsts3] (firsts4) {$S_4$};
+    \draw[draw=none] ([yshift=-1.5cm]firsts1.south west) rectangle ([yshift=-2cm]firsts4.south east) node[pos=0.5, minimum width=5.75cm] (mix1) {mix with key};
+    \node[draw=none,right=of mix1] (k1) {$k_1$};
+    \node[draw=none,below left=of firsts1] {$P$};
+    \draw[->] ([xshift=0.25cm]k1.west) -- (mix1);
 
-            \draw[draw=none] (mix1.north west) -- (mix1.north east)
-            node[draw=none,pos=0.043] (firstmix1) {}
-            node[draw=none,pos=0.087] (firstmix2) {}
-            node[draw=none,pos=0.130] (firstmix3) {}
-            node[draw=none,pos=0.174] (firstmix4) {}
-            node[draw=none,pos=0.304] (firstmix5) {}
-            node[draw=none,pos=0.348] (firstmix6) {}
-            node[draw=none,pos=0.391] (firstmix7) {}
-            node[draw=none,pos=0.435] (firstmix8) {}
-            node[draw=none,pos=0.565] (firstmix9) {}
-            node[draw=none,pos=0.609] (firstmix10) {}
-            node[draw=none,pos=0.652] (firstmix11) {}
-            node[draw=none,pos=0.696] (firstmix12) {}
-            node[draw=none,pos=0.826] (firstmix13) {}
-            node[draw=none,pos=0.870] (firstmix14) {}
-            node[draw=none,pos=0.913] (firstmix15) {}
-            node[draw=none,pos=0.957] (firstmix16) {};
+    \draw[draw=none] (mix1.north west) -- (mix1.north east)
+    node[draw=none,pos=0.043] (firstmix1) {}
+    node[draw=none,pos=0.087] (firstmix2) {}
+    node[draw=none,pos=0.130] (firstmix3) {}
+    node[draw=none,pos=0.174] (firstmix4) {}
+    node[draw=none,pos=0.304] (firstmix5) {}
+    node[draw=none,pos=0.348] (firstmix6) {}
+    node[draw=none,pos=0.391] (firstmix7) {}
+    node[draw=none,pos=0.435] (firstmix8) {}
+    node[draw=none,pos=0.565] (firstmix9) {}
+    node[draw=none,pos=0.609] (firstmix10) {}
+    node[draw=none,pos=0.652] (firstmix11) {}
+    node[draw=none,pos=0.696] (firstmix12) {}
+    node[draw=none,pos=0.826] (firstmix13) {}
+    node[draw=none,pos=0.870] (firstmix14) {}
+    node[draw=none,pos=0.913] (firstmix15) {}
+    node[draw=none,pos=0.957] (firstmix16) {};
 
-            \draw[draw=none] (firsts1.south west) -- (firsts1.south east)
-            node[draw=none, pos=0.2] (firsts11) {}
-            node[draw=none, pos=0.4] (firsts12) {}
-            node[draw=none, pos=0.6] (firsts13) {}
-            node[draw=none, pos=0.8] (firsts14) {};
-            \path[draw,->] (firsts11.center) -- ([yshift=-0.3cm]firsts11.south) -- ([yshift=0.3cm]firstmix6.north) -- (firstmix6.center);
-            \path[draw,->] (firsts12.center) -- ([yshift=-0.3cm]firsts12.south) -- ([yshift=0.3cm]firstmix4.north) -- (firstmix4.center);
-            \path[draw,->] (firsts13.center) -- ([yshift=-0.3cm]firsts13.south) -- ([yshift=0.3cm]firstmix9.north) -- (firstmix9.center);
-            \path[draw,->] (firsts14.center) -- ([yshift=-0.3cm]firsts14.south) -- ([yshift=0.3cm]firstmix1.north) -- (firstmix1.center);
+    \draw[draw=none] (firsts1.south west) -- (firsts1.south east)
+    node[draw=none, pos=0.2] (firsts11) {}
+    node[draw=none, pos=0.4] (firsts12) {}
+    node[draw=none, pos=0.6] (firsts13) {}
+    node[draw=none, pos=0.8] (firsts14) {};
+    \path[draw,->] (firsts11.center) -- ([yshift=-0.3cm]firsts11.south) -- ([yshift=0.3cm]firstmix6.north) -- (firstmix6.center);
+    \path[draw,->] (firsts12.center) -- ([yshift=-0.3cm]firsts12.south) -- ([yshift=0.3cm]firstmix4.north) -- (firstmix4.center);
+    \path[draw,->] (firsts13.center) -- ([yshift=-0.3cm]firsts13.south) -- ([yshift=0.3cm]firstmix9.north) -- (firstmix9.center);
+    \path[draw,->] (firsts14.center) -- ([yshift=-0.3cm]firsts14.south) -- ([yshift=0.3cm]firstmix1.north) -- (firstmix1.center);
 
-            \draw[draw=none] (firsts2.south west) -- (firsts2.south east)
-            node[draw=none, pos=0.2] (firsts21) {}
-            node[draw=none, pos=0.4] (firsts22) {}
-            node[draw=none, pos=0.6] (firsts23) {}
-            node[draw=none, pos=0.8] (firsts24) {};
-            \path[draw,->] (firsts21.center) -- ([yshift=-0.3cm]firsts21.south) -- ([yshift=0.3cm]firstmix2.north) -- (firstmix2.center);
-            \path[draw,->] (firsts22.center) -- ([yshift=-0.3cm]firsts22.south) -- ([yshift=0.3cm]firstmix7.north) -- (firstmix7.center);
-            \path[draw,->] (firsts23.center) -- ([yshift=-0.3cm]firsts23.south) -- ([yshift=0.3cm]firstmix5.north) -- (firstmix5.center);
-            \path[draw,->] (firsts24.center) -- ([yshift=-0.3cm]firsts24.south) -- ([yshift=0.3cm]firstmix14.north) -- (firstmix14.center);
+    \draw[draw=none] (firsts2.south west) -- (firsts2.south east)
+    node[draw=none, pos=0.2] (firsts21) {}
+    node[draw=none, pos=0.4] (firsts22) {}
+    node[draw=none, pos=0.6] (firsts23) {}
+    node[draw=none, pos=0.8] (firsts24) {};
+    \path[draw,->] (firsts21.center) -- ([yshift=-0.3cm]firsts21.south) -- ([yshift=0.3cm]firstmix2.north) -- (firstmix2.center);
+    \path[draw,->] (firsts22.center) -- ([yshift=-0.3cm]firsts22.south) -- ([yshift=0.3cm]firstmix7.north) -- (firstmix7.center);
+    \path[draw,->] (firsts23.center) -- ([yshift=-0.3cm]firsts23.south) -- ([yshift=0.3cm]firstmix5.north) -- (firstmix5.center);
+    \path[draw,->] (firsts24.center) -- ([yshift=-0.3cm]firsts24.south) -- ([yshift=0.3cm]firstmix14.north) -- (firstmix14.center);
 
-            \draw[draw=none] (firsts3.south west) -- (firsts3.south east)
-            node[draw=none, pos=0.2] (firsts31) {}
-            node[draw=none, pos=0.4] (firsts32) {}
-            node[draw=none, pos=0.6] (firsts33) {}
-            node[draw=none, pos=0.8] (firsts34) {};
-            \path[draw,->] (firsts31.center) -- ([yshift=-0.3cm]firsts31.south) -- ([yshift=0.3cm]firstmix11.north) -- (firstmix11.center);
-            \path[draw,->] (firsts32.center) -- ([yshift=-0.3cm]firsts32.south) -- ([yshift=0.3cm]firstmix10.north) -- (firstmix10.center);
-            \path[draw,->] (firsts33.center) -- ([yshift=-0.3cm]firsts33.south) -- ([yshift=0.3cm]firstmix16.north) -- (firstmix16.center);
-            \path[draw,->] (firsts34.center) -- ([yshift=-0.3cm]firsts34.south) -- ([yshift=0.3cm]firstmix3.north) -- (firstmix3.center);
+    \draw[draw=none] (firsts3.south west) -- (firsts3.south east)
+    node[draw=none, pos=0.2] (firsts31) {}
+    node[draw=none, pos=0.4] (firsts32) {}
+    node[draw=none, pos=0.6] (firsts33) {}
+    node[draw=none, pos=0.8] (firsts34) {};
+    \path[draw,->] (firsts31.center) -- ([yshift=-0.3cm]firsts31.south) -- ([yshift=0.3cm]firstmix11.north) -- (firstmix11.center);
+    \path[draw,->] (firsts32.center) -- ([yshift=-0.3cm]firsts32.south) -- ([yshift=0.3cm]firstmix10.north) -- (firstmix10.center);
+    \path[draw,->] (firsts33.center) -- ([yshift=-0.3cm]firsts33.south) -- ([yshift=0.3cm]firstmix16.north) -- (firstmix16.center);
+    \path[draw,->] (firsts34.center) -- ([yshift=-0.3cm]firsts34.south) -- ([yshift=0.3cm]firstmix3.north) -- (firstmix3.center);
 
-            \draw[draw=none] (firsts4.south west) -- (firsts4.south east)
-            node[draw=none, pos=0.2] (firsts41) {}
-            node[draw=none, pos=0.4] (firsts42) {}
-            node[draw=none, pos=0.6] (firsts43) {}
-            node[draw=none, pos=0.8] (firsts44) {};
-            \path[draw,->] (firsts41.center) -- ([yshift=-0.3cm]firsts41.south) -- ([yshift=0.3cm]firstmix12.north) -- (firstmix12.center);
-            \path[draw,->] (firsts42.center) -- ([yshift=-0.3cm]firsts42.south) -- ([yshift=0.3cm]firstmix8.north) -- (firstmix8.center);
-            \path[draw,->] (firsts43.center) -- ([yshift=-0.3cm]firsts43.south) -- ([yshift=0.3cm]firstmix13.north) -- (firstmix13.center);
-            \path[draw,->] (firsts44.center) -- ([yshift=-0.3cm]firsts44.south) -- ([yshift=0.3cm]firstmix15.north) -- (firstmix15.center);
+    \draw[draw=none] (firsts4.south west) -- (firsts4.south east)
+    node[draw=none, pos=0.2] (firsts41) {}
+    node[draw=none, pos=0.4] (firsts42) {}
+    node[draw=none, pos=0.6] (firsts43) {}
+    node[draw=none, pos=0.8] (firsts44) {};
+    \path[draw,->] (firsts41.center) -- ([yshift=-0.3cm]firsts41.south) -- ([yshift=0.3cm]firstmix12.north) -- (firstmix12.center);
+    \path[draw,->] (firsts42.center) -- ([yshift=-0.3cm]firsts42.south) -- ([yshift=0.3cm]firstmix8.north) -- (firstmix8.center);
+    \path[draw,->] (firsts43.center) -- ([yshift=-0.3cm]firsts43.south) -- ([yshift=0.3cm]firstmix13.north) -- (firstmix13.center);
+    \path[draw,->] (firsts44.center) -- ([yshift=-0.3cm]firsts44.south) -- ([yshift=0.3cm]firstmix15.north) -- (firstmix15.center);
 
-            \node[below=2.5cm of firsts1] (seconds1) {$S_1$};
-            \draw[draw=none] (seconds1.north west) -- (seconds1.north east)
-            node[draw=none, pos=0.2] (top11) {}
-            node[draw=none, pos=0.4] (top12) {}
-            node[draw=none, pos=0.6] (top13) {}
-            node[draw=none, pos=0.8] (top14) {};
-            \node[right=of seconds1] (seconds2) {$S_2$};
-            \draw[draw=none] (seconds2.north west) -- (seconds2.north east)
-            node[draw=none, pos=0.2] (top21) {}
-            node[draw=none, pos=0.4] (top22) {}
-            node[draw=none, pos=0.6] (top23) {}
-            node[draw=none, pos=0.8] (top24) {};
-            \node[right=of seconds2] (seconds3) {$S_3$};
-            \draw[draw=none] (seconds3.north west) -- (seconds3.north east)
-            node[draw=none, pos=0.2] (top31) {}
-            node[draw=none, pos=0.4] (top32) {}
-            node[draw=none, pos=0.6] (top33) {}
-            node[draw=none, pos=0.8] (top34) {};
-            \node[right=of seconds3] (seconds4) {$S_4$};
-            \draw[draw=none] (seconds4.north west) -- (seconds4.north east)
-            node[draw=none, pos=0.2] (top41) {}
-            node[draw=none, pos=0.4] (top42) {}
-            node[draw=none, pos=0.6] (top43) {}
-            node[draw=none, pos=0.8] (top44) {};
-            \draw[->] ([yshift=0.35cm]top11.north) -- (top11.center);
-            \draw[->] ([yshift=0.35cm]top12.north) -- (top12.center);
-            \draw[->] ([yshift=0.35cm]top13.north) -- (top13.center);
-            \draw[->] ([yshift=0.35cm]top14.north) -- (top14.center);
-            \draw[->] ([yshift=0.35cm]top21.north) -- (top21.center);
-            \draw[->] ([yshift=0.35cm]top22.north) -- (top22.center);
-            \draw[->] ([yshift=0.35cm]top23.north) -- (top23.center);
-            \draw[->] ([yshift=0.35cm]top24.north) -- (top24.center);
-            \draw[->] ([yshift=0.35cm]top31.north) -- (top31.center);
-            \draw[->] ([yshift=0.35cm]top32.north) -- (top32.center);
-            \draw[->] ([yshift=0.35cm]top33.north) -- (top33.center);
-            \draw[->] ([yshift=0.35cm]top34.north) -- (top34.center);
-            \draw[->] ([yshift=0.35cm]top41.north) -- (top41.center);
-            \draw[->] ([yshift=0.35cm]top42.north) -- (top42.center);
-            \draw[->] ([yshift=0.35cm]top43.north) -- (top43.center);
-            \draw[->] ([yshift=0.35cm]top44.north) -- (top44.center);
+    \node[below=2.5cm of firsts1] (seconds1) {$S_1$};
+    \draw[draw=none] (seconds1.north west) -- (seconds1.north east)
+    node[draw=none, pos=0.2] (top11) {}
+    node[draw=none, pos=0.4] (top12) {}
+    node[draw=none, pos=0.6] (top13) {}
+    node[draw=none, pos=0.8] (top14) {};
+    \node[right=of seconds1] (seconds2) {$S_2$};
+    \draw[draw=none] (seconds2.north west) -- (seconds2.north east)
+    node[draw=none, pos=0.2] (top21) {}
+    node[draw=none, pos=0.4] (top22) {}
+    node[draw=none, pos=0.6] (top23) {}
+    node[draw=none, pos=0.8] (top24) {};
+    \node[right=of seconds2] (seconds3) {$S_3$};
+    \draw[draw=none] (seconds3.north west) -- (seconds3.north east)
+    node[draw=none, pos=0.2] (top31) {}
+    node[draw=none, pos=0.4] (top32) {}
+    node[draw=none, pos=0.6] (top33) {}
+    node[draw=none, pos=0.8] (top34) {};
+    \node[right=of seconds3] (seconds4) {$S_4$};
+    \draw[draw=none] (seconds4.north west) -- (seconds4.north east)
+    node[draw=none, pos=0.2] (top41) {}
+    node[draw=none, pos=0.4] (top42) {}
+    node[draw=none, pos=0.6] (top43) {}
+    node[draw=none, pos=0.8] (top44) {};
+    \draw[->] ([yshift=0.35cm]top11.north) -- (top11.center);
+    \draw[->] ([yshift=0.35cm]top12.north) -- (top12.center);
+    \draw[->] ([yshift=0.35cm]top13.north) -- (top13.center);
+    \draw[->] ([yshift=0.35cm]top14.north) -- (top14.center);
+    \draw[->] ([yshift=0.35cm]top21.north) -- (top21.center);
+    \draw[->] ([yshift=0.35cm]top22.north) -- (top22.center);
+    \draw[->] ([yshift=0.35cm]top23.north) -- (top23.center);
+    \draw[->] ([yshift=0.35cm]top24.north) -- (top24.center);
+    \draw[->] ([yshift=0.35cm]top31.north) -- (top31.center);
+    \draw[->] ([yshift=0.35cm]top32.north) -- (top32.center);
+    \draw[->] ([yshift=0.35cm]top33.north) -- (top33.center);
+    \draw[->] ([yshift=0.35cm]top34.north) -- (top34.center);
+    \draw[->] ([yshift=0.35cm]top41.north) -- (top41.center);
+    \draw[->] ([yshift=0.35cm]top42.north) -- (top42.center);
+    \draw[->] ([yshift=0.35cm]top43.north) -- (top43.center);
+    \draw[->] ([yshift=0.35cm]top44.north) -- (top44.center);
 
-            \draw[draw=none] ([yshift=-1.5cm]seconds1.south west) rectangle ([yshift=-2cm]seconds4.south east) node[pos=0.5, minimum width=5.75cm] (mix2) {mix with key};
-            \node[draw=none,right=of mix2] (k2) {$k_2$};
-            \node[draw=none,below left=of seconds1] {$P$};
-            \draw[->] ([xshift=0.25cm]k2.west) -- (mix2);
+    \draw[draw=none] ([yshift=-1.5cm]seconds1.south west) rectangle ([yshift=-2cm]seconds4.south east) node[pos=0.5, minimum width=5.75cm] (mix2) {mix with key};
+    \node[draw=none,right=of mix2] (k2) {$k_2$};
+    \node[draw=none,below left=of seconds1] {$P$};
+    \draw[->] ([xshift=0.25cm]k2.west) -- (mix2);
 
-            \draw[draw=none] (mix2.north west) -- (mix2.north east)
-            node[draw=none,pos=0.043] (secondmix1) {}
-            node[draw=none,pos=0.087] (secondmix2) {}
-            node[draw=none,pos=0.130] (secondmix3) {}
-            node[draw=none,pos=0.174] (secondmix4) {}
-            node[draw=none,pos=0.304] (secondmix5) {}
-            node[draw=none,pos=0.348] (secondmix6) {}
-            node[draw=none,pos=0.391] (secondmix7) {}
-            node[draw=none,pos=0.435] (secondmix8) {}
-            node[draw=none,pos=0.565] (secondmix9) {}
-            node[draw=none,pos=0.609] (secondmix10) {}
-            node[draw=none,pos=0.652] (secondmix11) {}
-            node[draw=none,pos=0.696] (secondmix12) {}
-            node[draw=none,pos=0.826] (secondmix13) {}
-            node[draw=none,pos=0.870] (secondmix14) {}
-            node[draw=none,pos=0.913] (secondmix15) {}
-            node[draw=none,pos=0.957] (secondmix16) {};
+    \draw[draw=none] (mix2.north west) -- (mix2.north east)
+    node[draw=none,pos=0.043] (secondmix1) {}
+    node[draw=none,pos=0.087] (secondmix2) {}
+    node[draw=none,pos=0.130] (secondmix3) {}
+    node[draw=none,pos=0.174] (secondmix4) {}
+    node[draw=none,pos=0.304] (secondmix5) {}
+    node[draw=none,pos=0.348] (secondmix6) {}
+    node[draw=none,pos=0.391] (secondmix7) {}
+    node[draw=none,pos=0.435] (secondmix8) {}
+    node[draw=none,pos=0.565] (secondmix9) {}
+    node[draw=none,pos=0.609] (secondmix10) {}
+    node[draw=none,pos=0.652] (secondmix11) {}
+    node[draw=none,pos=0.696] (secondmix12) {}
+    node[draw=none,pos=0.826] (secondmix13) {}
+    node[draw=none,pos=0.870] (secondmix14) {}
+    node[draw=none,pos=0.913] (secondmix15) {}
+    node[draw=none,pos=0.957] (secondmix16) {};
 
-            \draw[draw=none] (seconds1.south west) -- (seconds1.south east)
-            node[draw=none, pos=0.2] (seconds11) {}
-            node[draw=none, pos=0.4] (seconds12) {}
-            node[draw=none, pos=0.6] (seconds13) {}
-            node[draw=none, pos=0.8] (seconds14) {};
-            \path[draw,->] (seconds11.center) -- ([yshift=-0.3cm]seconds11.south) -- ([yshift=0.3cm]secondmix6.north) -- (secondmix6.center);
-            \path[draw,->] (seconds12.center) -- ([yshift=-0.3cm]seconds12.south) -- ([yshift=0.3cm]secondmix4.north) -- (secondmix4.center);
-            \path[draw,->] (seconds13.center) -- ([yshift=-0.3cm]seconds13.south) -- ([yshift=0.3cm]secondmix9.north) -- (secondmix9.center);
-            \path[draw,->] (seconds14.center) -- ([yshift=-0.3cm]seconds14.south) -- ([yshift=0.3cm]secondmix1.north) -- (secondmix1.center);
+    \draw[draw=none] (seconds1.south west) -- (seconds1.south east)
+    node[draw=none, pos=0.2] (seconds11) {}
+    node[draw=none, pos=0.4] (seconds12) {}
+    node[draw=none, pos=0.6] (seconds13) {}
+    node[draw=none, pos=0.8] (seconds14) {};
+    \path[draw,->] (seconds11.center) -- ([yshift=-0.3cm]seconds11.south) -- ([yshift=0.3cm]secondmix6.north) -- (secondmix6.center);
+    \path[draw,->] (seconds12.center) -- ([yshift=-0.3cm]seconds12.south) -- ([yshift=0.3cm]secondmix4.north) -- (secondmix4.center);
+    \path[draw,->] (seconds13.center) -- ([yshift=-0.3cm]seconds13.south) -- ([yshift=0.3cm]secondmix9.north) -- (secondmix9.center);
+    \path[draw,->] (seconds14.center) -- ([yshift=-0.3cm]seconds14.south) -- ([yshift=0.3cm]secondmix1.north) -- (secondmix1.center);
 
-            \draw[draw=none] (seconds2.south west) -- (seconds2.south east)
-            node[draw=none, pos=0.2] (seconds21) {}
-            node[draw=none, pos=0.4] (seconds22) {}
-            node[draw=none, pos=0.6] (seconds23) {}
-            node[draw=none, pos=0.8] (seconds24) {};
-            \path[draw,->] (seconds21.center) -- ([yshift=-0.3cm]seconds21.south) -- ([yshift=0.3cm]secondmix2.north) -- (secondmix2.center);
-            \path[draw,->] (seconds22.center) -- ([yshift=-0.3cm]seconds22.south) -- ([yshift=0.3cm]secondmix7.north) -- (secondmix7.center);
-            \path[draw,->] (seconds23.center) -- ([yshift=-0.3cm]seconds23.south) -- ([yshift=0.3cm]secondmix5.north) -- (secondmix5.center);
-            \path[draw,->] (seconds24.center) -- ([yshift=-0.3cm]seconds24.south) -- ([yshift=0.3cm]secondmix14.north) -- (secondmix14.center);
+    \draw[draw=none] (seconds2.south west) -- (seconds2.south east)
+    node[draw=none, pos=0.2] (seconds21) {}
+    node[draw=none, pos=0.4] (seconds22) {}
+    node[draw=none, pos=0.6] (seconds23) {}
+    node[draw=none, pos=0.8] (seconds24) {};
+    \path[draw,->] (seconds21.center) -- ([yshift=-0.3cm]seconds21.south) -- ([yshift=0.3cm]secondmix2.north) -- (secondmix2.center);
+    \path[draw,->] (seconds22.center) -- ([yshift=-0.3cm]seconds22.south) -- ([yshift=0.3cm]secondmix7.north) -- (secondmix7.center);
+    \path[draw,->] (seconds23.center) -- ([yshift=-0.3cm]seconds23.south) -- ([yshift=0.3cm]secondmix5.north) -- (secondmix5.center);
+    \path[draw,->] (seconds24.center) -- ([yshift=-0.3cm]seconds24.south) -- ([yshift=0.3cm]secondmix14.north) -- (secondmix14.center);
 
-            \draw[draw=none] (seconds3.south west) -- (seconds3.south east)
-            node[draw=none, pos=0.2] (seconds31) {}
-            node[draw=none, pos=0.4] (seconds32) {}
-            node[draw=none, pos=0.6] (seconds33) {}
-            node[draw=none, pos=0.8] (seconds34) {};
-            \path[draw,->] (seconds31.center) -- ([yshift=-0.3cm]seconds31.south) -- ([yshift=0.3cm]secondmix11.north) -- (secondmix11.center);
-            \path[draw,->] (seconds32.center) -- ([yshift=-0.3cm]seconds32.south) -- ([yshift=0.3cm]secondmix10.north) -- (secondmix10.center);
-            \path[draw,->] (seconds33.center) -- ([yshift=-0.3cm]seconds33.south) -- ([yshift=0.3cm]secondmix16.north) -- (secondmix16.center);
-            \path[draw,->] (seconds34.center) -- ([yshift=-0.3cm]seconds34.south) -- ([yshift=0.3cm]secondmix3.north) -- (secondmix3.center);
+    \draw[draw=none] (seconds3.south west) -- (seconds3.south east)
+    node[draw=none, pos=0.2] (seconds31) {}
+    node[draw=none, pos=0.4] (seconds32) {}
+    node[draw=none, pos=0.6] (seconds33) {}
+    node[draw=none, pos=0.8] (seconds34) {};
+    \path[draw,->] (seconds31.center) -- ([yshift=-0.3cm]seconds31.south) -- ([yshift=0.3cm]secondmix11.north) -- (secondmix11.center);
+    \path[draw,->] (seconds32.center) -- ([yshift=-0.3cm]seconds32.south) -- ([yshift=0.3cm]secondmix10.north) -- (secondmix10.center);
+    \path[draw,->] (seconds33.center) -- ([yshift=-0.3cm]seconds33.south) -- ([yshift=0.3cm]secondmix16.north) -- (secondmix16.center);
+    \path[draw,->] (seconds34.center) -- ([yshift=-0.3cm]seconds34.south) -- ([yshift=0.3cm]secondmix3.north) -- (secondmix3.center);
 
-            \draw[draw=none] (seconds4.south west) -- (seconds4.south east)
-            node[draw=none, pos=0.2] (seconds41) {}
-            node[draw=none, pos=0.4] (seconds42) {}
-            node[draw=none, pos=0.6] (seconds43) {}
-            node[draw=none, pos=0.8] (seconds44) {};
-            \path[draw,->] (seconds41.center) -- ([yshift=-0.3cm]seconds41.south) -- ([yshift=0.3cm]secondmix12.north) -- (secondmix12.center);
-            \path[draw,->] (seconds42.center) -- ([yshift=-0.3cm]seconds42.south) -- ([yshift=0.3cm]secondmix8.north) -- (secondmix8.center);
-            \path[draw,->] (seconds43.center) -- ([yshift=-0.3cm]seconds43.south) -- ([yshift=0.3cm]secondmix13.north) -- (secondmix13.center);
-            \path[draw,->] (seconds44.center) -- ([yshift=-0.3cm]seconds44.south) -- ([yshift=0.3cm]secondmix15.north) -- (secondmix15.center);
+    \draw[draw=none] (seconds4.south west) -- (seconds4.south east)
+    node[draw=none, pos=0.2] (seconds41) {}
+    node[draw=none, pos=0.4] (seconds42) {}
+    node[draw=none, pos=0.6] (seconds43) {}
+    node[draw=none, pos=0.8] (seconds44) {};
+    \path[draw,->] (seconds41.center) -- ([yshift=-0.3cm]seconds41.south) -- ([yshift=0.3cm]secondmix12.north) -- (secondmix12.center);
+    \path[draw,->] (seconds42.center) -- ([yshift=-0.3cm]seconds42.south) -- ([yshift=0.3cm]secondmix8.north) -- (secondmix8.center);
+    \path[draw,->] (seconds43.center) -- ([yshift=-0.3cm]seconds43.south) -- ([yshift=0.3cm]secondmix13.north) -- (secondmix13.center);
+    \path[draw,->] (seconds44.center) -- ([yshift=-0.3cm]seconds44.south) -- ([yshift=0.3cm]secondmix15.north) -- (secondmix15.center);
 
-            \node[draw=none,below=of mix2] {$\vdots$};
-        \end{tikzpicture}}
-\end{multicols}
+    \node[draw=none,below=of mix2] {$\vdots$};
+\end{tikzpicture}
 \subsection{DES}
 \acrfull{des}
-\begin{multicols}{2}
-    \begin{itemize}[nosep]
-        \item block size -- 64 bits
-        \item key size -- 56 bits
-              \begin{itemize}[nosep]
-                  \item 56 bit random
-                  \item 8 bit parity check
-              \end{itemize}
-        \item iterated substitution cipher of 16 rounds
-        \item initial permutation
-              \begin{itemize}[nosep]
-                  \item no cryptographic significance
-                  \item facilities loading blocks in and out of 8-bit hardware
-              \end{itemize}
-        \item key permutation
-              \begin{itemize}[nosep]
-                  \item discards parity bits
-                  \item no cryptographic significance
-              \end{itemize}
-    \end{itemize}
-    \subsubsection*{Advantages}
-    \begin{itemize}[nosep]
-        \item relatively secure against cryptanalytic attacks -- best attack in $2^{43}$ steps
-        \item thoroughly studied and widely supported
-    \end{itemize}
-    \subsubsection*{Disadvantages}
-    Vulnerable to \glspl{brute-force attack} -- $56$-bit key $\rightarrow$ $2^{56}$ possible keys.
+\begin{itemize}[nosep]
+    \item block size -- 64 bits
+    \item key size -- 56 bits
+          \begin{itemize}[nosep]
+              \item 56 bit random
+              \item 8 bit parity check
+          \end{itemize}
+    \item iterated substitution cipher of 16 rounds
+    \item initial permutation
+          \begin{itemize}[nosep]
+              \item no cryptographic significance
+              \item facilities loading blocks in and out of 8-bit hardware
+          \end{itemize}
+    \item key permutation
+          \begin{itemize}[nosep]
+              \item discards parity bits
+              \item no cryptographic significance
+          \end{itemize}
+\end{itemize}
+\subsubsection*{Advantages}
+\begin{itemize}[nosep]
+    \item relatively secure against cryptanalytic attacks -- best attack in $2^{43}$ steps
+    \item thoroughly studied and widely supported
+\end{itemize}
+\subsubsection*{Disadvantages}
+Vulnerable to \glspl{brute-force attack} -- $56$-bit key $\rightarrow$ $2^{56}$ possible keys.
 
-    \resizebox{0.45\textwidth}{!}{
-        \begin{tikzpicture}[every node/.style={rectangle, draw, fill=gray!40, minimum width=3.5cm, minimum height=1cm, drop shadow={top color=black, bottom color=white, shadow xshift=0.25em, shadow yshift=-0.25em}, rounded corners}, node distance=1cm]
-            \node (initial) {Initial Permutation};
-            \node[right=5.5cm of initial] (permuted) {Permuted Choice 1};
-            \draw[decoration={brace,raise=0.5cm,amplitude=5mm},decorate] (initial.north west) -- (initial.north east) node[draw=none,fill=none,style=reset preactions,pos=0.5,above=1cm] {64-bit plaintext};
-            \draw[decoration={brace,raise=0.5cm,amplitude=5mm},decorate] (permuted.north west) -- (permuted.north east) node[draw=none,fill=none,style=reset preactions,pos=0.5,above=1cm] {64-bit key};
-            \foreach \i in {0.2,0.6,...,3.5}
-            \draw[->] ([xshift=\i cm,yshift=0.5cm]initial.north west) -- ([xshift=\i cm]initial.north west);
-            \foreach \i in {0.2,0.6,...,3.5}
-            \draw[->] ([xshift=\i cm,yshift=0.5cm]permuted.north west) -- ([xshift=\i cm]permuted.north west);
+\begin{tikzpicture}[every node/.style={rectangle, draw, fill=gray!40, minimum width=3.5cm, minimum height=1cm, drop shadow={top color=black, bottom color=white, shadow xshift=0.25em, shadow yshift=-0.25em}, rounded corners}, node distance=1cm]
+    \node (initial) {Initial Permutation};
+    \node[right=5.5cm of initial] (permuted) {Permuted Choice 1};
+    \draw[decoration={brace,raise=0.5cm,amplitude=5mm},decorate] (initial.north west) -- (initial.north east) node[draw=none,fill=none,style=reset preactions,pos=0.5,above=1cm] {64-bit plaintext};
+    \draw[decoration={brace,raise=0.5cm,amplitude=5mm},decorate] (permuted.north west) -- (permuted.north east) node[draw=none,fill=none,style=reset preactions,pos=0.5,above=1cm] {64-bit key};
+    \foreach \i in {0.2,0.6,...,3.5}
+    \draw[->] ([xshift=\i cm,yshift=0.5cm]initial.north west) -- ([xshift=\i cm]initial.north west);
+    \foreach \i in {0.2,0.6,...,3.5}
+    \draw[->] ([xshift=\i cm,yshift=0.5cm]permuted.north west) -- ([xshift=\i cm]permuted.north west);
 
-            \node[below=of initial] (round 1) {Round 1};
-            \node[right=of round 1] (pc1) {Permuted Choice 2};
-            \node[right=of pc1] (l1) {Left Circular Shift};
+    \node[below=of initial] (round 1) {Round 1};
+    \node[right=of round 1] (pc1) {Permuted Choice 2};
+    \node[right=of pc1] (l1) {Left Circular Shift};
 
-            \node[below=of round 1] (round 2) {Round 2};
-            \node[right=of round 2] (pc2) {Permuted Choice 2};
-            \node[right=of pc2] (l2) {Left Circular Shift};
+    \node[below=of round 1] (round 2) {Round 2};
+    \node[right=of round 2] (pc2) {Permuted Choice 2};
+    \node[right=of pc2] (l2) {Left Circular Shift};
 
-            \node[below=3cm of round 2] (round 16) {Round 16};
-            \node[right=of round 16] (pc16) {Permuted Choice 2};
-            \node[right=of pc16] (l16) {Left Circular Shift};
+    \node[below=3cm of round 2] (round 16) {Round 16};
+    \node[right=of round 16] (pc16) {Permuted Choice 2};
+    \node[right=of pc16] (l16) {Left Circular Shift};
 
-            \node[below=of round 16] (32 bit swap) {32-bit Swap};
-            \node[below=of 32 bit swap,align=center] (inverse) {Inverse Initial\\Permutation};
-            \draw[decoration={brace,mirror,raise=0.5cm,amplitude=5mm},decorate] (inverse.south west) -- (inverse.south east) node[draw=none,fill=none,style=reset preactions,pos=0.5,below=1cm] {64-bit ciphertext};
-            \foreach \i in {0.2,0.6,...,3.5}
-            \draw[->] ([xshift=\i cm]inverse.south west) -- ([xshift=\i cm,yshift=-0.5cm]inverse.south west);
+    \node[below=of round 16] (32 bit swap) {32-bit Swap};
+    \node[below=of 32 bit swap,align=center] (inverse) {Inverse Initial\\Permutation};
+    \draw[decoration={brace,mirror,raise=0.5cm,amplitude=5mm},decorate] (inverse.south west) -- (inverse.south east) node[draw=none,fill=none,style=reset preactions,pos=0.5,below=1cm] {64-bit ciphertext};
+    \foreach \i in {0.2,0.6,...,3.5}
+    \draw[->] ([xshift=\i cm]inverse.south west) -- ([xshift=\i cm,yshift=-0.5cm]inverse.south west);
 
-            \draw[->] (initial) -- (round 1);
-            \draw[->] (round 1) -- (round 2);
-            \draw[->, dashed] (round 2) -- (round 16);
-            \draw[->] (round 16) -- (32 bit swap);
-            \draw[->] (32 bit swap) -- (inverse);
+    \draw[->] (initial) -- (round 1);
+    \draw[->] (round 1) -- (round 2);
+    \draw[->, dashed] (round 2) -- (round 16);
+    \draw[->] (round 16) -- (32 bit swap);
+    \draw[->] (32 bit swap) -- (inverse);
 
-            \draw[->] (permuted) -- (l1);
-            \draw[->] (l1) -- (l2);
-            \draw[->, dashed] (l2) -- (l16);
-            \draw[->] (l1) -- (pc1);
-            \draw[->] (l2) -- (pc2);
-            \draw[->] (l16) -- (pc16);
-            \draw[->] (32 bit swap) -- (inverse);
+    \draw[->] (permuted) -- (l1);
+    \draw[->] (l1) -- (l2);
+    \draw[->, dashed] (l2) -- (l16);
+    \draw[->] (l1) -- (pc1);
+    \draw[->] (l2) -- (pc2);
+    \draw[->] (l16) -- (pc16);
+    \draw[->] (32 bit swap) -- (inverse);
 
-            \draw[->] (pc1) -- (round 1) node[draw=none,fill=none,style=reset preactions,pos=0.5,above] {$k_1$};
-            \draw[->] (pc2) -- (round 2) node[draw=none,fill=none,style=reset preactions,pos=0.5,above] {$k_2$};
-            \draw[->] (pc16) -- (round 16) node[draw=none,fill=none,style=reset preactions,pos=0.5,above] {$k_{16}$};
-        \end{tikzpicture}}
-\end{multicols}
+    \draw[->] (pc1) -- (round 1) node[draw=none,fill=none,style=reset preactions,pos=0.5,above] {$k_1$};
+    \draw[->] (pc2) -- (round 2) node[draw=none,fill=none,style=reset preactions,pos=0.5,above] {$k_2$};
+    \draw[->] (pc16) -- (round 16) node[draw=none,fill=none,style=reset preactions,pos=0.5,above] {$k_{16}$};
+\end{tikzpicture}
 \subsection{Feistel Network}
 Consists of encryption and decrpytion round
-\begin{multicols}{2}
-    \begin{itemize}[nosep]
-        \item Encryption round
-              \begin{itemize}[nosep]
-                  \item input -- block from previous round (or plaintext)
-                  \item divide input in half -- $L_i$ and $R_i$
-                  \item derive round key $k_i$ from secret key (different each round)
-                  \item output
-                        \begin{align*}
-                            L_{i+1} & = R_i                  \\
-                            R_{i+1} & = L_i \xor F(k_i, R_i)
-                        \end{align*}
-              \end{itemize}
-        \item Decryption round
-              \begin{itemize}[nosep]
-                  \item we can invert encryption without inverting $F$
-                        \begin{align*}
-                            R_i & = L_{i + 1}                        \\
-                            L_i & = R_{i + 1} \xor F(k_i, L_{i + 1}) \\
-                                & = R_{i + 1} \xor F(k_i, R_i)
-                        \end{align*}
-              \end{itemize}
-    \end{itemize}
-\end{multicols}
-\begin{multicols}{2}
-    \subsection{AES}
-    \acrfull{aes}
-    \begin{itemize}[nosep]
-        \item Substitution-permutation
-              \begin{itemize}[nosep]\item but \textbf{not} a Feistel network\end{itemize}
-        \item each round must be invertible for decrpytion
-        \item key expansion and schedule -- generates different round key each round
-        \item number of rounds $n$ depends on key size $k$
+\begin{itemize}[nosep]
+    \item Encryption round
+          \begin{itemize}[nosep]
+              \item input -- block from previous round (or plaintext)
+              \item divide input in half -- $L_i$ and $R_i$
+              \item derive round key $k_i$ from secret key (different each round)
+              \item output
+                    \begin{align*}
+                        L_{i+1} & = R_i                  \\
+                        R_{i+1} & = L_i \xor F(k_i, R_i)
+                    \end{align*}
+          \end{itemize}
+    \item Decryption round
+          \begin{itemize}[nosep]
+              \item we can invert encryption without inverting $F$
+                    \begin{align*}
+                        R_i & = L_{i + 1}                        \\
+                        L_i & = R_{i + 1} \xor F(k_i, L_{i + 1}) \\
+                            & = R_{i + 1} \xor F(k_i, R_i)
+                    \end{align*}
+          \end{itemize}
+\end{itemize}
+\subsection{AES}
+\acrfull{aes}
+\begin{itemize}[nosep]
+    \item Substitution-permutation
+          \begin{itemize}[nosep]\item but \textbf{not} a Feistel network\end{itemize}
+    \item each round must be invertible for decrpytion
+    \item key expansion and schedule -- generates different round key each round
+    \item number of rounds $n$ depends on key size $k$
 
-              \begin{tabular}{cc}
-                  $k$ & $n$ \\\toprule
-                  128 & 10  \\
-                  192 & 12  \\
-                  256 & 14  \\\bottomrule
-              \end{tabular}
-    \end{itemize}
-    \subsection{AES Round}
-    \begin{itemize}[nosep]
-        \item input
-              \begin{itemize}[nosep]
-                  \item 128-bit state from previous round (or plaintext) as $4\times4$ byte matrix
-                  \item 128-but round key from key schedule
-              \end{itemize}
-        \item output -- 128-bit state
-        \item each round consists of multiple steps
-              \begin{itemize}[nosep]
-                  \item \textproc{AddRoundKey} -- \textproc{xor} round key to state
-                  \item 128-but round key from key schedule
-                  \item substitution and permutation
-                        \begin{itemize}[nosep]
-                            \item \textproc{SubBytes}
-                            \item \textproc{ShiftRows}
-                            \item \textproc{MixColumns}
-                        \end{itemize}
-              \end{itemize}
-    \end{itemize}
-\end{multicols}
-\begin{multicols}{3}
-    \subsubsection*{\textproc{SubBytes}}
-    \begin{itemize}[nosep]
-        \item Each byte is replaced using an 8-bit substitution box (S-box)
-              \begin{itemize}[nosep]
-                  \item defined using mathematical operations: multiplicative inverse over a finite field + affine transformation
-              \end{itemize}
-        \item designed to resist cryptanalysis
-              \begin{itemize}[nosep]
-                  \item minimize correlation to linear functions
-                  \item minimize difference propagation
-              \end{itemize}
-    \end{itemize}
-    \subsubsection*{\textproc{ShiftRows}}
-    \begin{itemize}[nosep]
-        \item Cyclically shifts 2nd, 3rd, and 4th rows left
+          \begin{tabular}{cc}
+              $k$ & $n$ \\\toprule
+              128 & 10  \\
+              192 & 12  \\
+              256 & 14  \\\bottomrule
+          \end{tabular}
+\end{itemize}
+\subsection{AES Round}
+\begin{itemize}[nosep]
+    \item input
+          \begin{itemize}[nosep]
+              \item 128-bit state from previous round (or plaintext) as $4\times4$ byte matrix
+              \item 128-but round key from key schedule
+          \end{itemize}
+    \item output -- 128-bit state
+    \item each round consists of multiple steps
+          \begin{itemize}[nosep]
+              \item \textproc{AddRoundKey} -- \textproc{xor} round key to state
+              \item 128-but round key from key schedule
+              \item substitution and permutation
+                    \begin{itemize}[nosep]
+                        \item \textproc{SubBytes}
+                        \item \textproc{ShiftRows}
+                        \item \textproc{MixColumns}
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+\subsubsection*{\textproc{SubBytes}}
+\begin{itemize}[nosep]
+    \item Each byte is replaced using an 8-bit substitution box (S-box)
+          \begin{itemize}[nosep]
+              \item defined using mathematical operations: multiplicative inverse over a finite field + affine transformation
+          \end{itemize}
+    \item designed to resist cryptanalysis
+          \begin{itemize}[nosep]
+              \item minimize correlation to linear functions
+              \item minimize difference propagation
+          \end{itemize}
+\end{itemize}
+\subsubsection*{\textproc{ShiftRows}}
+\begin{itemize}[nosep]
+    \item Cyclically shifts 2nd, 3rd, and 4th rows left
 
-              \begin{tabular}{ll}
-                  row & shift \\\toprule
-                  2nd & 1     \\
-                  3rd & 2     \\
-                  4th & 3     \\\bottomrule
-              \end{tabular}
-        \item ensures the 4 bytes of each column are spread to 4 different columns $\rightarrow$ provides \glsname{diffusion}
-              \begin{itemize}[nosep]
-                  \item without this step each input byte would only affect a single column
-              \end{itemize}
-    \end{itemize}
-    \subsubsection*{\textproc{MixColumns}}
-    \begin{itemize}[nosep]
-        \item Each column is multiplied by a fixed matrix
-              \begin{itemize}[nosep]
-                  \item invertible linear transformation
-              \end{itemize}
-        \item good mixing among bytes of each column $\rightarrow$ provides \glsname{diffusion}
-              \begin{itemize}[nosep]
-                  \item in conjunction with \textproc{ShiftRows}, ensures each output bit depends on every input bit after a few rounds
-              \end{itemize}
-    \end{itemize}
-\end{multicols}
+          \begin{tabular}{ll}
+              row & shift \\\toprule
+              2nd & 1     \\
+              3rd & 2     \\
+              4th & 3     \\\bottomrule
+          \end{tabular}
+    \item ensures the 4 bytes of each column are spread to 4 different columns $\rightarrow$ provides \glsname{diffusion}
+          \begin{itemize}[nosep]
+              \item without this step each input byte would only affect a single column
+          \end{itemize}
+\end{itemize}
+\subsubsection*{\textproc{MixColumns}}
+\begin{itemize}[nosep]
+    \item Each column is multiplied by a fixed matrix
+          \begin{itemize}[nosep]
+              \item invertible linear transformation
+          \end{itemize}
+    \item good mixing among bytes of each column $\rightarrow$ provides \glsname{diffusion}
+          \begin{itemize}[nosep]
+              \item in conjunction with \textproc{ShiftRows}, ensures each output bit depends on every input bit after a few rounds
+          \end{itemize}
+\end{itemize}
 \subsection{AES Decryption}
 \begin{itemize}[nosep]
     \item each step is invertible
@@ -970,47 +945,45 @@ Unlike symmetric-key, requires largest keys and is much slower
     Rec. Key Size  & 128 - 256 bits             & 2048 - 15360 bits                        \\
     Performance    & fast                       & slow                                     \\\bottomrule
 \end{tabular}
-\begin{multicols}{2}
-    \subsection{RSA}
-    Choose two large primes $p$ and $q$, set $n=pq$ and choose $e$ such that $\gcd(e, \varphi(n)) = 1$. Set $d=e^{-1}\bmod\varphi(n)$, then
-    \begin{align*}PU&=(e, n)\\PR&=(d, n)\end{align*}
+\subsection{RSA}
+Choose two large primes $p$ and $q$, set $n=pq$ and choose $e$ such that $\gcd(e, \varphi(n)) = 1$. Set $d=e^{-1}\bmod\varphi(n)$, then
+\begin{align*}PU&=(e, n)\\PR&=(d, n)\end{align*}
 
-    Encrypt plaintext $M$ with $C=M^e \bmod{n}$ and decrypt with $M = C^d\bmod{n}$.
+Encrypt plaintext $M$ with $C=M^e \bmod{n}$ and decrypt with $M = C^d\bmod{n}$.
 
-    \subsection{Security of RSA}
-    Security comes from difficulty of determining $C^{\sfrac{1}{e}}\bmod{n}$ efficiently. Best known algorithm is to factor $n=pq$ and compute $e^{-1}\bmod{\varphi(n)}$. Integer factorization is assumed to be hard but this is unproved.
+\subsection{Security of RSA}
+Security comes from difficulty of determining $C^{\sfrac{1}{e}}\bmod{n}$ efficiently. Best known algorithm is to factor $n=pq$ and compute $e^{-1}\bmod{\varphi(n)}$. Integer factorization is assumed to be hard but this is unproved.
 
-    Very slow encryption, so commonly used to encrypt a secret key for use with symmetric-key encryption. Comparable symmetric key security (number of bits):
+Very slow encryption, so commonly used to encrypt a secret key for use with symmetric-key encryption. Comparable symmetric key security (number of bits):
 
-    \begin{tabular}{ll}
-        Symmetric & RSA   \\\toprule
-        80        & 1024  \\
-        128       & 3072  \\
-        256       & 15360 \\\bottomrule
-    \end{tabular}
+\begin{tabular}{ll}
+    Symmetric & RSA   \\\toprule
+    80        & 1024  \\
+    128       & 3072  \\
+    256       & 15360 \\\bottomrule
+\end{tabular}
 
-    \subsection{ElGamal Encryption}
-    Choose a large prime $q$, primitive root $\alpha$ of $q$, and $X \in \set{1, 2, \hdots, q - 1}$. Set $Y = \alpha^x\bmod{q}$ and \begin{align*}PU&=(q,\alpha,U)\\PR&=(q,\alpha,X)\end{align*}
+\subsection{ElGamal Encryption}
+Choose a large prime $q$, primitive root $\alpha$ of $q$, and $X \in \set{1, 2, \hdots, q - 1}$. Set $Y = \alpha^x\bmod{q}$ and \begin{align*}PU&=(q,\alpha,U)\\PR&=(q,\alpha,X)\end{align*}
 
-    Encryption:
+Encryption:
 
-    Choose random $k\in\set{0,1,\hdots, q-2}$ and set $K=y^k\bmod{q}$. Then return $(C_1, C_2)$ where \begin{align*}C_1&=\alpha^k\bmod{q}\\C_2&=KM\bmod{q}\end{align*}
+Choose random $k\in\set{0,1,\hdots, q-2}$ and set $K=y^k\bmod{q}$. Then return $(C_1, C_2)$ where \begin{align*}C_1&=\alpha^k\bmod{q}\\C_2&=KM\bmod{q}\end{align*}
 
-    Decryption:
+Decryption:
 
-    Set $K=C_1^X\bmod{q}$, then $M = C_2K^{-1}\bmod{q}$.
+Set $K=C_1^X\bmod{q}$, then $M = C_2K^{-1}\bmod{q}$.
 
-    \subsection{Security of ElGamal}
-    Security comes from difficulty of discrete logarithm, widely believed to be computationally hard.
+\subsection{Security of ElGamal}
+Security comes from difficulty of discrete logarithm, widely believed to be computationally hard.
 
-    Recover $X$ requires computing discrete-$\log_{\alpha}$ of $Y$ $\bmod{q}$.
+Recover $X$ requires computing discrete-$\log_{\alpha}$ of $Y$ $\bmod{q}$.
 
-    Recover $k$ requires computing discrete-$\log_{\alpha}$ of $C_1$ $\bmod{q}$.
-    \subsection{Elliptic Curve Cryptography}
-    Elliptic Curve is a set of points $(x,y)$ such that \[y^2=x^3+ax+b\] Binary operation $P + Q$: draw line through $P$ and $Q$, find where it intersects the curve, call this $R$. Then $P+Q = -R$. Combined with a point at infinity (the identity), forms an abelian (commutative) group. Can naturally define $kP = \underbrace{P + P + \dots + P}_{k-\text{times}}$ and so can implement ElGamal in a straightforward fashion.
+Recover $k$ requires computing discrete-$\log_{\alpha}$ of $C_1$ $\bmod{q}$.
+\subsection{Elliptic Curve Cryptography}
+Elliptic Curve is a set of points $(x,y)$ such that \[y^2=x^3+ax+b\] Binary operation $P + Q$: draw line through $P$ and $Q$, find where it intersects the curve, call this $R$. Then $P+Q = -R$. Combined with a point at infinity (the identity), forms an abelian (commutative) group. Can naturally define $kP = \underbrace{P + P + \dots + P}_{k-\text{times}}$ and so can implement ElGamal in a straightforward fashion.
 
-    160-bit ECC is comparable in security to 1024-bit RSA key.
-\end{multicols}
+160-bit ECC is comparable in security to 1024-bit RSA key.
 \section{Hash Functions}
 A hash function $H$ maps a variable-length input to a fixed-length hash value. It must be
 \begin{itemize}[nosep]
@@ -1140,7 +1113,287 @@ if $f$ is collision resistant and proper length padding is used, hash function i
     SHA-3     & secure            \\\bottomrule
 \end{tabular}
 \section{Message Authentication}
-\section{Digital Signatuers}
+\begin{tabular}{ll}
+    Term                            & Definition                      \\\toprule
+    \glsname{content modification}  & \glstext{content modification}  \\
+    \glsname{sequence modification} & \glstext{sequence modification} \\
+    \glsname{timing modification}   & \glstext{timing modification}   \\
+    \glsname{masquerade}            & \glstext{masquerade}            \\\bottomrule
+\end{tabular}
+\subsection{Message Authentication Code}
+takes a secret key $k$ and arbitrary-length input $M$ and produces tag $T$
+
+$MAC(k, M)$
+\begin{itemize}[nosep]
+    \item can be efficiently computed given $k$ and $M$
+    \item cannot be efficiently computed given only $M$
+    \item looks like a pseudorandom function to attacker
+    \item does not need to be invertible
+\end{itemize}
+proves \glsname{authenticity} and \glsname{integrity}
+\subsubsection{Brute-Force Attacks}
+Brute-force forging a tag depends on key length
+\begin{itemize}[nosep]
+    \item too short $\rightarrow$ high probability arbitrary tag matching modified message
+          \begin{itemize}[nosep]\item $n$-bit tag, probability is $2^{-n}$\end{itemize}
+    \item too long $\rightarrow$ consumes bandwidth
+\end{itemize}
+\subsubsection{Key Search Attacks}
+If key has length $k$, finding the right key takes $2^{k-1}$ steps on average
+\subsection{Block Cipher MAC}
+\subsubsection*{CBC MAC}
+\begin{itemize}[nosep]
+    \item use different key for CBC encryption and CBC-MAC.
+    \item not secure for variable length messages
+          \begin{itemize}[nosep]\item given one-block message $X$ and tag $T$, $X \mid (X \xor T)$ has tag $T$\end{itemize}
+\end{itemize}
+
+\begin{tikzpicture}[every node/.style={draw, rectangle, fill=gray!40}, node distance=2.5cm, minimum width=2cm, minimum height=0.75cm]
+    \node (m1) {$M_1$};
+    \node[below=of m1] (e1) {Encrypt};
+    \node[draw=none,fill=none,node distance=0.5cm, left=of e1, minimum size=0] (k1) {$K$};
+
+    \node[right=of m1] (m2) {$M_2$};
+    \node[below=of m2] (e2) {Encrypt};
+    \node[draw=none,fill=none,node distance=0.5cm, left=of e2, minimum size=0] (k2) {$K$};
+
+    \node[right=of m2] (m3) {$M_n$};
+    \node[below=of m3] (e3) {Encrypt};
+    \node[node distance=0.5cm,below=of e3,draw=none,fill=none,minimum size=0] (tag) {tag};
+    \node[draw=none,fill=none,node distance=0.5cm, left=of e3, minimum size=0] (k3) {$K$};
+    \path (m2) -- (m3) node[draw=none,fill=none, pos=0.5] {$\dots$};
+
+    \draw[->] (m1.south) -- (e1);
+    \draw[->] (k1) -- (e1);
+    \draw[->] (k2) -- (e2);
+    \draw[->] (k3) -- (e3);
+
+    \path (m2) -- (e2) node[circle,pos=0.5,minimum size=0.5cm] (c2) {};
+    \draw (c2.north) -- (c2.south);
+    \draw (c2.east) -- (c2.west);
+    \path (m3) -- (e3) node[circle,pos=0.5,minimum size=0.5cm] (c3) {};
+    \draw (c3.north) -- (c3.south);
+    \draw (c3.east) -- (c3.west);
+
+    \draw[->] (m2) -- (c2);
+    \draw[->] (c2) -- (e2);
+
+    \draw[->] (m3) -- (c3);
+    \draw[->] (c3) -- (e3);
+    \draw[->] (e3) -- (tag);
+
+    \path[draw,->] (e1.south) -- ([yshift=-0.5cm]e1.south) -- ([xshift=1.75cm,yshift=-0.5cm]e1.south) -- ([xshift=-2.75cm]c2.center) -- (c2.west);
+    \path[dashed,draw,->] (e2.south) -- ([yshift=-0.5cm]e2.south) -- ([xshift=1.75cm,yshift=-0.5cm]e2.south) -- ([xshift=-2.75cm]c3.center) -- (c3.west);
+
+\end{tikzpicture}
+\subsubsection*{Cipher-based MAC (CMAC)}
+\begin{itemize}[nosep]
+    \item thwarts forgery for variable-length messages
+    \item second key $k_1$ derived from $E(k, 0)$
+\end{itemize}
+
+\begin{tikzpicture}[every node/.style={draw, rectangle, fill=gray!40}, node distance=2.5cm, minimum width=2cm, minimum height=0.75cm]
+    \node (m1) {$M_1$};
+    \node[below=of m1] (e1) {Encrypt};
+    \node[draw=none,fill=none,node distance=0.5cm, left=of e1, minimum size=0] (k1) {$K$};
+
+    \node[right=of m1] (m2) {$M_2$};
+    \node[below=of m2] (e2) {Encrypt};
+    \node[draw=none,fill=none,node distance=0.5cm, left=of e2, minimum size=0] (k2) {$K$};
+
+    \node[right=of m2] (m3) {$M_n$};
+    \node[below=of m3] (e3) {Encrypt};
+    \node[node distance=0.5cm,below=of e3] (msb) {$MSB(\texttt{Tlen})$};
+    \node[minimum size=0,draw=none,fill=none,node distance=0.5cm,right=of msb] (t) {$T$};
+    \node[draw=none,fill=none,node distance=0.5cm, left=of e3, minimum size=0] (k3) {$K$};
+    \path (m2) -- (m3) node[draw=none,fill=none, pos=0.5] {$\dots$};
+    \draw[->] (msb.east) -- (t);
+
+    \draw[->] (m1.south) -- (e1);
+    \draw[->] (k1) -- (e1);
+    \draw[->] (k2) -- (e2);
+    \draw[->] (k3) -- (e3);
+
+    \node[node distance=0.5cm,right=of c3),draw=none,fill=none,minimum size=0] (new k) {$K_1$};
+    \draw[->] (new k) -- (c3.east);
+
+    \path (m2) -- (e2) node[circle,pos=0.5,minimum size=0.5cm] (c2) {};
+    \draw (c2.north) -- (c2.south);
+    \draw (c2.east) -- (c2.west);
+    \path (m3) -- (e3) node[circle,pos=0.5,minimum size=0.5cm] (c3) {};
+    \draw (c3.north) -- (c3.south);
+    \draw (c3.east) -- (c3.west);
+
+    \draw[->] (m2) -- (c2);
+    \draw[->] (c2) -- (e2);
+
+    \draw[->] (m3) -- (c3);
+    \draw[->] (c3) -- (e3);
+    \draw[->] (e3) -- (msb);
+
+    \path[draw,->] (e1.south) -- ([yshift=-0.5cm]e1.south) -- ([xshift=1.75cm,yshift=-0.5cm]e1.south) -- ([xshift=-2.75cm]c2.center) -- (c2.west);
+    \path[dashed,draw,->] (e2.south) -- ([yshift=-0.5cm]e2.south) -- ([xshift=1.75cm,yshift=-0.5cm]e2.south) -- ([xshift=-2.75cm]c3.center) -- (c3.west);
+
+\end{tikzpicture}
+\subsection{Hash MAC (HMAC)}
+\begin{itemize}[nosep]
+    \item provably secure if hash is pseudorandom
+    \item works with any hash
+          \begin{itemize}[nosep]\item more efficient with iterative hash\end{itemize}
+    \item widely used
+\end{itemize}
+\subsubsection*{Structure}
+\begin{itemize}[nosep]
+    \item $b$ --- block size of hash
+    \item \texttt{IV} initial value of hash function
+    \item inputs
+          \begin{itemize}[nosep]
+              \item $Y_0$, $Y_1$, $\dots$, $Y_{L-1}$ --- message
+              \item $K^+$ --- 0-padded key
+              \item \texttt{ipad} --- $00110110$ repeated
+              \item \texttt{opad} --- $01011100$ repeated
+          \end{itemize}
+    \item output $\textproc{HMAC(k, M)}$\[H(k^+ \xor \texttt{opad} \mid H(k^+ \xor \texttt{ipad} \mid M))\]
+\end{itemize}
+\subsubsection*{Precomputation}
+\begin{itemize}[nosep]
+    \item precompute
+          \begin{align*}
+               & f\left(\texttt{IV}, k^+ \xor \texttt{ipad}\right) \\
+               & f\left(\texttt{IV}, k^+ \xor \texttt{opad}\right)
+          \end{align*}
+    \item for $L$ input blocks, requires only $L+1$ compressions
+\end{itemize}
+\subsection{Authenticated Encryption}
+\glsdesc{authenticated encryption}
+\begin{itemize}[nosep]
+    \item motivation
+          \begin{itemize}[nosep]
+              \item widely-used cryptographic primitives are (almost always) secure
+              \item secure encryption + secure authentication $\not\rightarrow$ secure combination
+              \item some security protocols have used cryptographic primitives in an insecure way
+          \end{itemize}
+    \item approaches
+          \begin{itemize}[nosep]
+              \item authentication then encryption (e.g. SSL/TLS)
+              \item encryption then authentication (e.g. IPSec)
+              \item independently encrypt and authenticat (e.g. SSH)
+          \end{itemize}
+\end{itemize}
+\subsubsection{Counter with CBC-MAC (CCM)}
+\begin{itemize}[nosep]
+    \item Encryption --- based on CTR block cipher mode
+    \item Authentication --- based on CBC-MAC message authentication
+    \item Combination --- authenticate, then encrypt
+          \begin{itemize}[nosep]
+              \item compute CBC-MAC of message, a nonce, and associated data
+              \item encrypt message and authentication tag in CTR mode
+          \end{itemize}
+\end{itemize}
+
+\subsubsection{Galois/Counter Mode (GCM)}
+\begin{itemize}[nosep]
+    \item Encryption --- based on CTR block cipher mode
+    \item Authentication $\textproc{GHASH}_H(X)$
+          \begin{itemize}[nosep]
+              \item inputs --- hash key $H$, message blocks $X_1$, $X_2$, $\dots$, $X_m$ (128-bit blocks)
+              \item outputs --- $(X_1\cdot H^m) \xor (X_2\cdot H^{m-1}) \xor \dots \xor (X_{m-1}\cdot H^2) \xor (X_m\cdot H)$
+                    \begin{itemize}[nosep]
+                        \item $\cdot$ --- special multiplication for 128-bit numbers
+                        \item $H^m$, $H^{m-1}$, $\dots$, $H^2$ can be precomputed in parallel
+                    \end{itemize}
+          \end{itemize}
+    \item Combination --- encrypt, then authenticate
+          \begin{itemize}[nosep]
+              \item authentication includes message length and associated data
+          \end{itemize}
+    \item very efficient and parallelizable (widely used)
+\end{itemize}
+\section{Digital Signatures}
+\subsubsection*{Motivation}
+\begin{itemize}[nosep]
+    \item Message authentication does not protect sender/receiver from each other
+          \begin{itemize}[nosep]
+              \item receiver can forge a message and claim it is from sender
+              \item sender can deny sending a message and claim it was forged by receiver
+          \end{itemize}
+    \item digital signature $\approx$ authentication + non-repudiation
+          \begin{itemize}[nosep]
+              \item integrity and authenticity protection; non-repudiation
+              \item similar to traditional signature -- signee cannot deny signing document
+              \item in many countries, digital signatures have legal significance
+          \end{itemize}
+\end{itemize}
+Like public-key cryptography
+\begin{itemize}[nosep]
+    \item signee knows private key $\rightarrow$ can sign
+    \item verifier knows public key $\rightarrow$ can verify
+          \begin{itemize}[nosep]\item public key published so anyone can verify\end{itemize}
+    \item attacker (forger) does not know private key $\rightarrow$ cannot sign
+\end{itemize}
+\begin{multicols}{2}
+    Algorithms
+    \begin{itemize}[nosep]
+        \item key generation $G()$
+              \begin{itemize}[nosep]\item randomized algo outputs $(PU, PR)$\end{itemize}
+        \item signature $\textproc{Sign}(PR, M)$
+              \begin{itemize}[nosep]\item takes $PR$ and message $M$ and outputs signature $S$\end{itemize}
+        \item verification $\textproc{Verify}(PU, M, S)$
+              \begin{itemize}[nosep]\item takes $PU$, message $M$, and $S$, and outputs accept/reject\end{itemize}
+    \end{itemize}
+    Public-Key Encryption
+    \begin{itemize}[nosep]
+        \item key generation $G()$
+              \begin{itemize}[nosep]\item randomized algo outputs $(PU, PR)$\end{itemize}
+        \item signature $\textproc{Decryption}(PR, C)$
+              \begin{itemize}[nosep]\item takes $PR$ and ciphertext $C$ and outputs plaintext $M$\end{itemize}
+        \item verification $\textproc{Encryption}(PU, M, S)$
+              \begin{itemize}[nosep]\item takes $PU$ and plaintext $M$ and outputs ciphertext $C$\end{itemize}
+    \end{itemize}
+\end{multicols}
+\subsection{Hash-then-Sign}
+Attacker can forge signature for random messages
+\begin{itemize}[nosep]
+    \item pick aribtrary $X$ and use as signature
+          \begin{itemize}[nosep]\item signature of $E(PU, X)$ is $X$\end{itemize}
+\end{itemize}
+Sign cryptographic hash of message. Advantages
+\begin{itemize}[nosep]
+    \item compatibility --- most public-key encryption algos take fixed-length input
+    \item efficiency --- signature shorter and faster to compute
+    \item security -- prevents existential forgery (attacker cannot compute forged message for arbitrary signature using only public-key)
+\end{itemize}
+\subsection{RSA, DSA, ECDSA}
+\subsubsection*{RSA}
+\begin{itemize}[nosep]
+    \item Very widely used with SHA-256 (and other versions of SHA)
+    \item Standard: PKCS \#1
+          \begin{itemize}[nosep]
+              \item RSASSA-PKCS1-v1\textunderscore5
+              \item RSASSA-PSS
+                    \begin{itemize}[nosep]
+                        \item PSS = Probabilistic Signature Scheme
+                              \begin{itemize}[nosep]\item adds randmized padding (salt) to message\end{itemize}
+                        \item provably secure (if RSA is secure)
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+\subsubsection*{DSA}
+\begin{itemize}[nosep]
+    \item Digital Signature Algorithm
+          \begin{itemize}[nosep]
+              \item designed for signature, cannot be used for encryption
+              \item efficient variant of the ElGamal signature scheme (much smaller signatures, modular arithmetic operations with lower moduli)
+          \end{itemize}
+\end{itemize}
+\subsubsection*{ECDSA}
+\begin{itemize}
+    \item Elliptic Curve Digital Signature algorithms
+          \begin{itemize}[nosep]
+              \item based on elliptic curve cryptography
+              \item shorter keys and increased efficiency
+          \end{itemize}
+\end{itemize}
 \section{Key Distribution}
 \section{Public-Key Distribution}
 \clearpage
