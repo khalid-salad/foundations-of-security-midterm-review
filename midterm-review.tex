@@ -913,6 +913,271 @@ Above has 3 keys, but vulnerable to more sophisted MITM attack -- effectively on
                                         & pre-computation is possible                          &                                                                      \\\bottomrule
     \end{tabular}
 \end{center}
+\subsubsection*{ECB}
+
+\begin{tikzpicture}[node distance=2cm,every node/.style={rectangle, draw, minimum width=2cm}]
+    \node (p1) {$P_1$};
+    \node[fill=gray!50,below=of p1,minimum height=1cm] (e1) {Encrypt};
+    \node[below=of e1] (c1) {$C_1$};
+
+    \node[right=of p1] (p2) {$P_2$};
+    \node[fill=gray!50,below=of p2,minimum height=1cm] (e2) {Encrypt};
+    \node[below=of e2] (c2) {$C_2$};
+
+    \node[draw=none,right=0.5cm of e2, minimum size=0] {$\dots$};
+
+    \node[right=2cm of p2] (p3) {$P_n$};
+    \node[fill=gray!50,below=of p3,minimum height=1cm] (e3) {Encrypt};
+    \node[below=of e3] (c3) {$C_n$};
+
+    \draw[->] (p1) -- (e1);
+    \draw[->] (e1) -- (c1);
+    \draw[->] (p2) -- (e2);
+    \draw[->] (e2) -- (c2);
+    \draw[->] (p3) -- (e3);
+    \draw[->] (e3) -- (c3);
+
+    \node[above left=0.1cm and 0.4cm of e1,draw=none,minimum size=0] (k1) {$K$};
+    \node[above left=0.1cm and 0.4cm of e2,draw=none,minimum size=0] (k2) {$K$};
+    \node[above left=0.1cm and 0.4cm of e3,draw=none,minimum size=0] (k3) {$K$};
+    \draw[->] (k1) |- (e1.west);
+    \draw[->] (k2) |- (e2.west);
+    \draw[->] (k3) |- (e3.west);
+\end{tikzpicture}
+
+% \begin{tikzpicture}[node distance=2cm,every node/.style={rectangle, draw, minimum width=2cm}]
+%     \node (c1) {$C_1$};
+%     \node[fill=gray!50,below=of c1,minimum height=1cm] (d1) {Decrypt};
+%     \node[below=of d1] (p1) {$P_1$};
+
+%     \node[right=of c1] (c2) {$C_2$};
+%     \node[fill=gray!50,below=of c2,minimum height=1cm] (d2) {Decrypt};
+%     \node[below=of d2] (p2) {$P_2$};
+
+%     \node[draw=none,right=0.5cm of d2, minimum size=0] {$\dots$};
+
+%     \node[right=2cm of c2] (c3) {$C_n$};
+%     \node[fill=gray!50,below=of c3,minimum height=1cm] (d3) {Decrypt};
+%     \node[below=of e3] (p3) {$P_n$};
+
+%     \draw[->] (c1) -- (d1);
+%     \draw[->] (d1) -- (p1);
+%     \draw[->] (c2) -- (d2);
+%     \draw[->] (d2) -- (p2);
+%     \draw[->] (c3) -- (d3);
+%     \draw[->] (d3) -- (p3);
+
+%     \node[above left=0.1cm and 0.4cm of d1,draw=none,minimum size=0] (k1) {$K$};
+%     \node[above left=0.1cm and 0.4cm of d2,draw=none,minimum size=0] (k2) {$K$};
+%     \node[above left=0.1cm and 0.4cm of d3,draw=none,minimum size=0] (k3) {$K$};
+%     \draw[->] (k1) |- (d1.west);
+%     \draw[->] (k2) |- (d2.west);
+%     \draw[->] (k3) |- (d3.west);
+% \end{tikzpicture}
+
+\subsubsection*{CBC}
+
+\begin{tikzpicture}[node distance=2cm,every node/.style={rectangle, draw, minimum width=2cm}]
+    \node (p1) {$P_1$};
+    \node[fill=gray!50,below=of p1,minimum height=1cm] (e1) {Encrypt};
+    \node[below=of e1] (c1) {$C_1$};
+
+    \node[right=of p1] (p2) {$P_2$};
+    \node[fill=gray!50,below=of p2,minimum height=1cm] (e2) {Encrypt};
+    \node[below=of e2] (c2) {$C_2$};
+
+    \node[draw=none,right=0.5cm of e2, minimum size=0] (dots) {$\dots$};
+
+    \node[right=2cm of p2] (p3) {$P_n$};
+    \node[fill=gray!50,below=of p3,minimum height=1cm] (e3) {Encrypt};
+    \node[below=of e3] (c3) {$C_n$};
+
+    \draw[->] (p1) -- (e1) node[pos=0.5,circle,minimum size=0.5cm,fill=gray!50] (f1) {};
+    \draw[->] (p1) -- (f1);
+    \draw[->] (e1) -- (c1);
+    \draw[->] (p2) -- (e2) node[pos=0.5,circle,minimum size=0.5cm,fill=gray!50] (f2) {};
+    \draw[->] (p2) -- (f2);
+    \draw[->] (e2) -- (c2);
+    \draw[->] (p3) -- (e3) node[pos=0.5,circle,minimum size=0.5cm,fill=gray!50] (f3) {};
+    \draw[->] (p3) -- (f3);
+    \draw[->] (e3) -- (c3);
+
+    \draw (f1.north) -- (f1.south);
+    \draw (f2.north) -- (f2.south);
+    \draw (f3.north) -- (f3.south);
+    \draw (f1.east) -- (f1.west);
+    \draw (f2.east) -- (f2.west);
+    \draw (f3.east) -- (f3.west);
+
+
+    \node[above left=0.1cm and 0.4cm of e1,draw=none,minimum size=0] (k1) {$K$};
+    \node[above left=0.1cm and 0.4cm of e2,draw=none,minimum size=0] (k2) {$K$};
+    \node[above left=0.1cm and 0.4cm of e3,draw=none,minimum size=0] (k3) {$K$};
+    \node[above=1.25cm of k1,draw=none,minimum size=0] (iv) {$IV$};
+    \draw[->] (k1) |- (e1.west);
+    \draw[->] (k2) |- (e2.west);
+    \draw[->] (k3) |- (e3.west);
+
+    \draw[->] (iv) |- (f1);
+    \path[draw,->] (c1.east) -- ([xshift=1cm]c1.east) -- ([xshift=-1.75cm]f2.west) -- (f2.west);
+    \draw (c2.east) -| (dots.south west);
+    \draw[->] (dots.north) |- (f3.west);
+\end{tikzpicture}
+
+\subsubsection*{OFB}
+
+\begin{tikzpicture}[node distance=2cm,every node/.style={rectangle, draw, minimum width=2cm}]
+    \node (nonce) {Nonce};
+
+    \node[fill=gray!50,minimum height=1cm,below=1cm of nonce] (e1) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e1,draw=none,minimum size=0] (k1) {$K$};
+    \draw[->] (k1) |- (e1);
+    \draw[->] (nonce) -- (e1);
+    \node[below=of e1] (c1) {$C_1$};
+    \path (e1) -- (c1) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f1) {};
+    \draw (f1.north) -- (f1.south);
+    \draw (f1.east) -- (f1.west);
+    \node[above left=0.25cm and 1cm of f1] (p1) {$P_1$};
+    \draw[->] (p1.south) |- (f1.west);
+    \draw[->] (e1) -- (f1);
+    \draw[->] (f1) -- (c1);
+
+    \node[fill=gray!50,minimum height=1cm,right=of e1] (e2) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e2,draw=none,minimum size=0] (k2) {$K$};
+    \draw[->] (k2) |- (e2);
+    \node[below=of e2] (c2) {$C_2$};
+    \path (e2) -- (c2) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f2) {};
+    \draw (f2.north) -- (f2.south);
+    \draw (f2.east) -- (f2.west);
+    \node[above left=0.25cm and 1cm of f2] (p2) {$P_2$};
+    \draw[->] (p2.south) |- (f2.west);
+    \draw[->] (e2) -- (f2);
+    \draw[->] (f2) -- (c2);
+
+    \node[draw=none,right=0.5cm of e2, minimum size=0] (dots) {$\dots$};
+
+    \node[fill=gray!50,minimum height=1cm,right=of dots] (e3) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e3,draw=none,minimum size=0] (k3) {$K$};
+    \draw[->] (k3) |- (e3);
+    \node[below=of e3] (c3) {$C_n$};
+    \path (e3) -- (c3) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f3) {};
+    \draw (f3.north) -- (f3.south);
+    \draw (f3.east) -- (f3.west);
+    \node[above left=0.25cm and 1cm of f3] (p3) {$P_n$};
+    \draw[->] (p3.south) |- (f3.west);
+    \draw[->] (e3) -- (f3);
+    \draw[->] (f3) -- (c3);
+
+    \draw[->] ([yshift=-0.1cm]e1.south) -- ([xshift=1.5cm, yshift=-0.1cm]e1.south) -- ([xshift=1.5cm, yshift=2cm]e1.south) -| (e2.north);
+    \draw ([yshift=-0.1cm]e2.south) -- ([xshift=1.5cm, yshift=-0.1cm]e2.south) -- (dots.south west);
+    \draw[->] (dots.north) |- ([yshift=1cm]e3.north) -- (e3.north);
+
+    \draw[dashed] ([xshift=-1cm,yshift=0.1cm]nonce.north west) rectangle ([xshift=1cm,yshift=-0.1cm]e3.south east);
+\end{tikzpicture}
+
+\subsubsection*{CFB}
+
+\begin{tikzpicture}[node distance=2cm,every node/.style={rectangle, draw, minimum width=2cm}]
+    \node[draw=none,minimum size=0] (iv) {$IV$};
+
+    \node[fill=gray!50,minimum height=1cm,below=1cm of iv] (e1) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e1,draw=none,minimum size=0] (k1) {$K$};
+    \draw[->] (k1) |- (e1);
+    \draw[->] (iv) -- (e1);
+    \node[below=of e1] (c1) {$C_1$};
+    \path (e1) -- (c1) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f1) {};
+    \draw (f1.north) -- (f1.south);
+    \draw (f1.east) -- (f1.west);
+    \node[above left=0.25cm and 1cm of f1] (p1) {$P_1$};
+    \draw[->] (p1.south) |- (f1.west);
+    \draw[->] (e1) -- (f1);
+    \draw[->] (f1) -- (c1);
+
+    \node[fill=gray!50,minimum height=1cm,right=of e1] (e2) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e2,draw=none,minimum size=0] (k2) {$K$};
+    \draw[->] (k2) |- (e2);
+    \node[below=of e2] (c2) {$C_2$};
+    \path (e2) -- (c2) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f2) {};
+    \draw (f2.north) -- (f2.south);
+    \draw (f2.east) -- (f2.west);
+    \node[above left=0.25cm and 1cm of f2] (p2) {$P_2$};
+    \draw[->] (p2.south) |- (f2.west);
+    \draw[->] (e2) -- (f2);
+    \draw[->] (f2) -- (c2);
+
+    \node[draw=none,right=0.5cm of e2, minimum size=0] (dots) {$\dots$};
+
+    \node[fill=gray!50,minimum height=1cm,right=of dots] (e3) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e3,draw=none,minimum size=0] (k3) {$K$};
+    \draw[->] (k3) |- (e3);
+    \node[below=of e3] (c3) {$C_n$};
+    \path (e3) -- (c3) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f3) {};
+    \draw (f3.north) -- (f3.south);
+    \draw (f3.east) -- (f3.west);
+    \node[above left=0.25cm and 1cm of f3] (p3) {$P_n$};
+    \draw[->] (p3.south) |- (f3.west);
+    \draw[->] (e3) -- (f3);
+    \draw[->] (f3) -- (c3);
+
+    \draw[->] (c1.east) -- ([xshift=0.5cm]c1.east) -- ([xshift=0.5cm, yshift=4cm]c1.east) -| (e2.north);
+    \draw (c2.east) -- ([xshift=0.5cm]c2.east) -- (dots.south west);
+    \draw[->] (dots.north) |- node[draw=none,pos=0.65,above]{$C_{n-1}$} ([yshift=1cm]e3.north) -- (e3.north);
+
+\end{tikzpicture}
+
+\subsubsection*{CTR}
+
+\begin{tikzpicture}[node distance=2cm,every node/.style={rectangle, draw, minimum width=2cm}]
+    \node (ctr1) {Counter 1};
+    \node[fill=gray!50,minimum height=1cm,below=1cm of ctr1] (e1) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e1,draw=none,minimum size=0] (k1) {$K$};
+    \draw[->] (k1) |- (e1);
+    \draw[->] (ctr1) -- (e1);
+    \node[below=of e1] (c1) {$C_1$};
+    \path (e1) -- (c1) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f1) {};
+    \draw (f1.north) -- (f1.south);
+    \draw (f1.east) -- (f1.west);
+    \node[above left=0.25cm and 1cm of f1] (p1) {$P_1$};
+    \draw[->] (p1.south) |- (f1.west);
+    \draw[->] (e1) -- (f1);
+    \draw[->] (f1) -- (c1);
+
+
+    \node[right=of ctr1] (ctr2) {Counter 2};
+    \node[fill=gray!50,minimum height=1cm,below=1cm of ctr2] (e2) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e2,draw=none,minimum size=0] (k2) {$K$};
+    \draw[->] (k2) |- (e2);
+    \draw[->] (ctr2) -- (e2);
+    \node[below=of e2] (c2) {$C_2$};
+    \path (e2) -- (c2) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f2) {};
+    \draw (f2.north) -- (f2.south);
+    \draw (f2.east) -- (f2.west);
+    \node[above left=0.25cm and 1cm of f2] (p2) {$P_2$};
+    \draw[->] (p2.south) |- (f2.west);
+    \draw[->] (e2) -- (f2);
+    \draw[->] (f2) -- (c2);
+
+    \node[draw=none,right=0.5cm of e2, minimum size=0] (dots) {$\dots$};
+
+    \node[right=3.25cm of ctr2] (ctr3) {Counter $n$};
+    \node[fill=gray!50,minimum height=1cm,below=1cm of ctr3] (e3) {Encrypt};
+    \node[above left=0.25cm and 0.5cm of e3,draw=none,minimum size=0] (k3) {$K$};
+    \draw[->] (k3) |- (e3);
+    \draw[->] (ctr3) -- (e3);
+    \node[below=of e3] (c3) {$C_n$};
+    \path (e3) -- (c3) node[circle,fill=gray!50,minimum size=0.5cm,pos=0.6] (f3) {};
+    \draw (f3.north) -- (f3.south);
+    \draw (f3.east) -- (f3.west);
+    \node[above left=0.25cm and 1cm of f3] (p3) {$P_n$};
+    \draw[->] (p3.south) |- (f3.west);
+    \draw[->] (e3) -- (f3);
+    \draw[->] (f3) -- (c3);
+
+
+    \draw[dashed] ([xshift=-1cm,yshift=0.1cm]nonce.north west) rectangle ([xshift=1cm,yshift=-0.1cm]e3.south east);
+\end{tikzpicture}
+
+
 \section{Public-Key Cryptography}
 \glsname{public-key cryptography}, also called \glsname{asymmetric-key cryptography}
 
