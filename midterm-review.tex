@@ -693,6 +693,45 @@ Consists of encryption and decrpytion round
                     \end{align*}
           \end{itemize}
 \end{itemize}
+\begin{tikzpicture}[node distance=2cm,every node/.style={rectangle,minimum width=2cm}]
+    \node (l0) {$LE_0$};
+    \node[right=0cm of l0] (r0) {$RE_0$};
+    \draw (l0.north west) rectangle (r0.south east);
+    \draw[dashed] (l0.south east) -- (l0.north east);
+
+    \node[below=of l0] (l1) {$LE_1$};
+    \node[right=0cm of l1] (r1) {$RE_1$};
+    \draw (l1.north west) rectangle (r1.south east);
+    \draw[dashed] (l1.south east) -- (l1.north east);
+
+    \node[below=of l1] (l2) {$LE_2$};
+    \node[right=0cm of l2] (r2) {$RE_2$};
+    \draw (l2.north west) rectangle (r2.south east);
+    \draw[dashed] (l2.south east) -- (l2.north east);
+
+    \path (r0.south) -- (r1.north) node[minimum size=0.5cm,draw,pos=0.25] (f1) {$F$} node[draw,circle,minimum size=0.25cm,pos=0.75] (oplus1) {};
+    \node[right=1cm of f1,minimum size=0] (k1) {$K_1$};
+    \draw ([yshift=-0.1cm]oplus1.north) -- ([yshift=0.1cm]oplus1.south);
+    \draw ([xshift=-0.1cm]oplus1.east) -- ([xshift=0.1cm]oplus1.west);
+
+    \path (r1.south) -- (r2.north) node[minimum size=0.5cm,draw,pos=0.25] (f2) {$F$} node[draw,circle,minimum size=0.25cm,pos=0.75] (oplus2) {};
+    \node[right=1cm of f2,minimum size=0] (k2) {$K_2$};
+    \draw ([yshift=-0.1cm]oplus2.north) -- ([yshift=0.1cm]oplus2.south);
+    \draw ([xshift=-0.1cm]oplus2.east) -- ([xshift=0.1cm]oplus2.west);
+
+    \draw[->] (l0.south) -- (oplus1.north west);
+    \draw[->] (l1.south) -- (oplus2.north west);
+    \draw[->] (r0) -- (f1);
+    \draw[->] (r0.south) -- (l1.north);
+    \draw[->] (f1) -- (oplus1);
+    \draw[->] (oplus1) -- (r1);
+    \draw[->] (r1) -- (f2);
+    \draw[->] (r1.south) -- (l2.north);
+    \draw[->] (f2) -- (oplus2);
+    \draw[->] (oplus2) -- (r2);
+    \draw[->] (k1) -- (f1.east);
+    \draw[->] (k2) -- (f2.east);
+\end{tikzpicture}
 \subsection{AES}
 \acrfull{aes}
 \begin{itemize}[nosep]
@@ -1520,6 +1559,34 @@ If key has length $k$, finding the right key takes $2^{k-1}$ steps on average
           \end{itemize}
     \item output $\textproc{HMAC(k, M)}$\[H(k^+ \xor \texttt{opad} \mid H(k^+ \xor \texttt{ipad} \mid M))\]
 \end{itemize}
+\begin{tikzpicture}[every node/.style={draw, rectangle, minimum height=0.6cm}]
+    \node[fill=gray!50,minimum size=0.5cm] (oplus1) {$\oplus$};
+    \node[draw=none,minimum size=0,above left of=oplus1] (k1) {$K^+$};
+    \node[draw=none,minimum size=0,above right of=oplus1] (ipad) {\texttt{ipad}};
+    \draw[->] (k1) |- (oplus1);
+    \draw[->] (ipad) |- (oplus1);
+
+    \node[below=0.5cm of oplus1,minimum width=1.5cm] (si) {$S_i$};
+    \node[right=0cm of si, minimum width=3cm] (m1) {$M$};
+    \draw[->] (oplus1) -- (si);
+
+    \node[fill=gray!50,minimum size=0.5cm, below=2cm of oplus1] (oplus2) {$\oplus$};
+    \node[draw=none,minimum size=0,above left of=oplus2] (k2) {$K^+$};
+    \node[draw=none,minimum size=0,above right of=oplus2] (opad) {\texttt{opad}};
+    \draw[->] (k2) |- (oplus2);
+    \draw[->] (opad) |- (oplus2);
+
+    \node[below right=0.5cm and 0.5cm of oplus2.south west,minimum width=1.5cm] (so) {$S_o$};
+    \node[right=0cm of so, minimum width=1.5cm] (m2) {};
+    \draw[->] (oplus2.south) -- ([yshift=-0.25cm]oplus2.south) -| (so.north);
+
+    \node[minimum size=1cm,below=0.25cm of m1,fill=gray!30] (h1) {Hash};
+    \node[minimum size=1cm,right=0.25cm of m2,fill=gray!30] (h2) {Hash};
+
+    \draw[->] (m1) -- (h1);
+    \draw[->] (h1) -- ([xshift=-0.25cm]m2.north);
+    \draw[->] (m2) -- (h2);
+\end{tikzpicture}
 \subsubsection*{Precomputation}
 \begin{itemize}[nosep]
     \item precompute
