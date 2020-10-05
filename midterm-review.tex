@@ -1123,7 +1123,7 @@ if $f$ is collision resistant and proper length padding is used, hash function i
 \subsection{Message Authentication Code}
 takes a secret key $k$ and arbitrary-length input $M$ and produces tag $T$
 
-$MAC(k, M)$
+$\textproc{MAC}(k, M)$
 \begin{itemize}[nosep]
     \item can be efficiently computed given $k$ and $M$
     \item cannot be efficiently computed given only $M$
@@ -1395,7 +1395,136 @@ Sign cryptographic hash of message. Advantages
           \end{itemize}
 \end{itemize}
 \section{Key Distribution}
+\subsection{Key Freshness}
+\begin{itemize}[nosep]
+    \item Secret keys may become insecure when used for a long time
+    \item key freshness requirement --- renew secret key frequently
+\end{itemize}
+\subsection{Secret-Key Hierarchy}
+\begin{itemize}[nosep]
+    \item session key
+          \begin{itemize}[nosep]
+              \item renewed frequently
+              \item used to encrypt and authenticate data
+          \end{itemize}
+    \item master key
+          \begin{itemize}[nosep]
+              \item renewed infrequently
+              \item used to distribute session keys
+          \end{itemize}
+\end{itemize}
+\subsection{Approaches}
+\begin{itemize}[nosep]
+    \item decentralized
+          \begin{itemize}[nosep]
+              \item master key required for each pair
+                    \begin{itemize}[nosep]\item then any pair can agree on session keys easily\end{itemize}
+              \item may work for small local networks
+              \item does not scale well -- requires $\binom{n}{2} = \sfrac{(n)(n-1)}{2} = \bigO{n^2}$ master keys
+          \end{itemize}
+    \item key distribution center (KDC)
+          \   \begin{itemize}[nosep]
+              \item acts as trusted third party
+              \item each party shares their secret master key with KDC
+              \item scales well -- requires $n$ master keys
+          \end{itemize}
+\end{itemize}
+\subsection{Kerberos}
+\glsname{extended needham-schroeder protocol} --- \glsdesc{extended needham-schroeder protocol}
+
+uses nonces
+
+\glsname{kerberos network authentication protocol}
+\begin{itemize}[nosep]
+    \item nodes can communicate over a non-secure network and to prove their identities to each other
+    \item similar to \glsname{extended needham-schroeder protocol} but uses timestamp instead of nonce
+\end{itemize}
 \section{Public-Key Distribution}
+Difficult to distribute keys manually through secure channel.
+
+Using public-key cryptography $\rightarrow$ parties do not need a shared secret key
+
+\subsection{Diffie-Hellman Key Exchange}
+\begin{itemize}[nosep]
+    \item Security depends on hardness of discrete logarithms
+    \item ElGamal based on Diffie-Hellman
+    \item Secure against eavesdropping (passive attack)
+    \item Elliptic Curve D-H (ECDH) --- same principle, more efficient
+\end{itemize}
+\subsection{Station-to-Station Protocol}
+\begin{itemize}[nosep]
+    \item Assume $A$ knows $PU_B$ and $B$ knows $PU_A$
+    \item sign messages with public keys
+    \item provides key and entity authentication
+    \item secure against man-in-the-middle attacks
+\end{itemize}
+\subsection{Distribution of Public Keys}
+\begin{itemize}[nosep]
+    \item Public Announcement
+          \begin{itemize}[nosep]
+              \item announce publicly on broadcast channel
+              \item weakness --- anyone can forge announcement
+                    \begin{itemize}[nosep]
+                        \item impersonated entity can detect and inform
+                        \item forger can impersonate entity until detection
+                    \end{itemize}
+          \end{itemize}
+    \item Public-Key Authority
+          \begin{itemize}[nosep]
+              \item everyone knows public key of authority
+              \item authority maintains directory of public keys
+              \item weakness
+                    \begin{itemize}[nosep]
+                        \item authority is single point of failure
+                        \item authority must be online
+                    \end{itemize}
+          \end{itemize}
+\end{itemize}
+\subsection{Digital Certificates}
+\begin{itemize}[nosep]
+    \item enable participants to securely exchange keys without contacting authority
+    \item certificate = $\underbrace{\text{owner's name, public key, timestamp,}\dots}_{\text{signed by certificate authority}}$
+    \item requirements
+          \begin{enumerate}[nosep]
+              \item any participant can read certificate to determine name/public key of owner
+              \item only certificate authority can create certificates
+              \item any participant can verify certificate originated from authority
+              \item any participant can verify certificate is recent
+          \end{enumerate}
+\end{itemize}
+\glsname{X.509 certificate} --- \glsdesc{X.509 certificate}
+\subsection{Certificate Authorities in Practice}
+\begin{itemize}[nosep]
+    \item OS and browsers come with list of trusted certificate authorities
+          \begin{itemize}[nosep]
+              \item CAs trusted by developers
+              \item user can add or remove CAs to list
+          \end{itemize}
+    \item types of CAs
+          \begin{itemize}[nosep]
+              \item commercial --- charges fee for issuing certificate
+              \item governmental
+              \item private non-profit (e.g. CAcert)
+          \end{itemize}
+\end{itemize}
+Use certificate chains to establish trust when two entities do not share a common CA.
+
+\subsection{Certificate Revocation}
+\begin{itemize}[nosep]
+    \item revocation necessary if
+          \begin{itemize}[nosep]
+              \item private key is compromised
+                    \begin{itemize}[nosep]\item attacker can use their certificate to impersonate the entity\end{itemize}
+              \item owner no longer certified
+              \item authority's certificate is compromised
+          \end{itemize}
+    \item each CA maintains a Certificate Revocation List (CRL)
+          \begin{itemize}[nosep]
+              \item signed and published by the CA
+              \item when checking validity of certificate, first check if it is in CRL
+              \item for efficiency, clients cache list $\rightarrow$ revoked cert may be accepted until cache expires
+          \end{itemize}
+\end{itemize}
 \clearpage
 
 \glsaddall

@@ -10,7 +10,7 @@
 \newglossaryentry{computer security}
 {
     name=computersecurity,
-    description={protection afforded to an automated information system in order to attain the applicable objectives of preserving the \gls{integrity}, \gls{availability}, and \gls{confidentiality} of information system resources (includes hardware, software, firmware, information/data, and telecommunications)}
+    description={protection afforded to an automated information system in order to attain the applicable objectives of preserving the \glsname{integrity}, \glsname{availability}, and \glsname{confidentiality} of information system resources (includes hardware, software, firmware, information/data, and telecommunications)}
 }
 
 \newglossaryentry{confidentiality}
@@ -43,7 +43,7 @@
 \newglossaryentry{non-repudiation}
 {
     name={non-repudiation},
-    description={see \gls{accountability}}
+    description={see \glsname{accountability}}
 }
 
 \newglossaryentry{authenticity}
@@ -233,13 +233,13 @@
 \newglossaryentry{salsa20}
 {
     name={Salsa20},
-    description={fixed-length key stream cipher that uses 32-bit operations and which can seek to any position in output sequence. 64-bit \gls{nonce} is part of the algorithm to mitigate \gls{key-reuse problem}}
+    description={fixed-length key stream cipher that uses 32-bit operations and which can seek to any position in output sequence. 64-bit \glsname{nonce} is part of the algorithm to mitigate \glsname{key-reuse problem}}
 }
 
 \newglossaryentry{chacha20}
 {
     name={ChaCha20},
-    description={more secure and efficient variant of \gls{salsa20}}
+    description={more secure and efficient variant of \glsname{salsa20}}
 }
 
 \newglossaryentry{block cipher}
@@ -342,7 +342,7 @@
 \newglossaryentry{asymmetric-key cryptography}
 {
     name={asymmetric-key cryptography},
-    description={see \gls{public-key cryptography}}
+    description={see \glsname{public-key cryptography}}
 }
 
 \newglossaryentry{rsa cryptosystem}
@@ -441,25 +441,25 @@
 \newglossaryentry{md5 message-digest algorithm}
 {
     name={MD5 Message-Digest Algorithm},
-    description={hash function based on \gls{merkle-damgard construction} consisting of four rounds, each consisting of 16 operations, with 512-bit block length and 128-bit hash length; not collision resistant -- can be broken in $2^{18} = 262144$ steps, less than a second on an average computer}
+    description={hash function based on \glsname{merkle-damgard construction} consisting of four rounds, each consisting of 16 operations, with 512-bit block length and 128-bit hash length; not collision resistant -- can be broken in $2^{18} = 262144$ steps, less than a second on an average computer}
 }
 
 \newglossaryentry{sha1}
 {
     name={SHA-1},
-    description={160-bit hash with \gls{merkle-damgard construction}; collision can be found in $2^{65}$ steps}
+    description={160-bit hash with \glsname{merkle-damgard construction}; collision can be found in $2^{65}$ steps}
 }
 
 \newglossaryentry{sha2}
 {
     name={SHA-2},
-    description={family of functions: SHA-224, 256, 384, and 512, producing 224, 256, 384, and 512-bit ouputs, respectively; same underlying structure and operations as \gls{sha1}; some weaknesses have been found}
+    description={family of functions: SHA-224, 256, 384, and 512, producing 224, 256, 384, and 512-bit ouputs, respectively; same underlying structure and operations as \glsname{sha1}; some weaknesses have been found}
 }
 
 \newglossaryentry{sha3}
 {
     name={SHA-3},
-    description={hash function to replace \gls{sha2}, uses \gls{sponge construction}; output length can be arbitrary}
+    description={hash function to replace \glsname{sha2}, uses \glsname{sponge construction}; output length can be arbitrary}
 }
 
 \newglossaryentry{sponge construction}
@@ -517,7 +517,7 @@
 \newglossaryentry{hash-based mac}
 {
     name={hash-based MAC},
-    description={\acrshort{mac} that uses a hash function; provably secure if the hash is pseudorandom; more efficient with \gls{iterative hash function}; used in IPSsec and SSL/TLS protocols}
+    description={\acrshort{mac} that uses a hash function; provably secure if the hash is pseudorandom; more efficient with \glsname{iterative hash function}; used in IPSsec and SSL/TLS protocols}
 }
 
 \newglossaryentry{authenticated encryption}
@@ -529,7 +529,7 @@
 \newglossaryentry{counter with cbc-mac}
 {
     name={counter with CBC-MAC},
-    description={encryption based on \acrfull{ctr}; authentication based on \gls{cbcmac}; authenticate, then encrypt}
+    description={encryption based on \acrfull{ctr}; authentication based on \glsname{cbcmac}; authenticate, then encrypt}
 }
 
 \newglossaryentry{galois/counter mode}
@@ -541,7 +541,7 @@
 \newglossaryentry{digital signature}
 {
     name={digital signature},
-    description={a mathematical scheme to provide both message \gls{authenticity} and \gls{non-repudiation}}
+    description={a mathematical scheme to provide both message \glsname{authenticity} and \glsname{non-repudiation}}
 }
 
 \newglossaryentry{hash-then-sign}
@@ -571,7 +571,7 @@
 \newglossaryentry{rsassa-pss}
 {
     name={RSASSA-PSS},
-    description={\acrfull{pss} form of RSA encryption which adds a \gls{salt}; provably secure assuming RSA is secure}
+    description={\acrfull{pss} form of RSA encryption which adds a \glsname{salt}; provably secure assuming RSA is secure}
 }
 
 \newglossaryentry{digital signature standard}
@@ -583,7 +583,7 @@
 \newglossaryentry{digital signature algorithm}
 {
     name={digital signature algorithm},
-    description={NIST algorithm designed for signature; cannot be used for encryption; efficient variant of \gls{elgamal encryption} with much smaller signatures and modular arithmetic operations with smaller moduli}
+    description={NIST algorithm designed for signature; cannot be used for encryption; efficient variant of \glsname{elgamal encryption} with much smaller signatures and modular arithmetic operations with smaller moduli}
 }
 
 \newglossaryentry{elliptic curve digital signature algorithm}
@@ -607,13 +607,13 @@
 \newglossaryentry{decentralized secret-key}
 {
     name={decentralized secret-key},
-    description={system in which each pair of communication parties shares a secret \gls{master key}; easy to set up but does not scale well, as it requires $\binom{n}{2}=\sfrac{(n)(n-1)}{2}$ keys}
+    description={system in which each pair of communication parties shares a secret \glsname{master key}; easy to set up but does not scale well, as it requires $\binom{n}{2}=\sfrac{(n)(n-1)}{2}$ keys}
 }
 
 \newglossaryentry{key distribution center}
 {
     name={key distribution center},
-    description={a centralized key distributor, acting as a trusted third party, shares a secret \gls{master key} with each communication party; scales well, requiring only $n$ keys, but must trust third party}
+    description={a centralized key distributor, acting as a trusted third party, shares a secret \glsname{master key} with each communication party; scales well, requiring only $n$ keys, but must trust third party}
 }
 
 \newglossaryentry{public-key cryptography key distribution}
@@ -631,13 +631,13 @@
 \newglossaryentry{extended needham-schroeder protocol}
 {
     name={Extended Needham-Schroeder Protocol},
-    description={protocol that aims to establish a \gls{session key} between two parties on a network}
+    description={protocol that aims to establish a \glsname{session key} between two parties on a network}
 }
 
 \newglossaryentry{kerberos network authentication protocol}
 {
     name={Kerberos Network Authentication Protocol},
-    description={protocol based on the \gls{extended needham-schroeder protocol} that allows communication over non-secure network; uses timestamps instead of \glsplural{nonce}}
+    description={protocol based on the \glsname{extended needham-schroeder protocol} that allows communication over non-secure network; uses timestamps instead of \glsplural{nonce}}
 }
 
 \newglossaryentry{diffie-hellman key exchange}
@@ -649,7 +649,7 @@
 \newglossaryentry{station-to-station protocol}
 {
     name={Station-to-Station Protocol},
-    description={cryptographic key agreement scheme based on \gls{diffie-hellman key exchange}; provides key and entity authentication and security against \glspl{man-in-the-middle attack}}
+    description={cryptographic key agreement scheme based on \glsname{diffie-hellman key exchange}; provides key and entity authentication and security against \glspl{man-in-the-middle attack}}
 }
 
 \newglossaryentry{public-key certificate}
@@ -673,7 +673,7 @@
 \newglossaryentry{certificate chain}
 {
     name={cerificate chain},
-    description={chain of \glspl{certificate authority} used to verify a \gls{public-key certificate} should two entities not share a common \gls*{certificate authority}}
+    description={chain of \glspl{certificate authority} used to verify a \glsname{public-key certificate} should two entities not share a common \gls*{certificate authority}}
 }
 
 \newacronym{cia}{CIA}{\glsname{confidentiality}, \glsname{integrity}, and \glsname{availability}}
